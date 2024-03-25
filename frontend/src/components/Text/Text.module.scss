@@ -1,0 +1,30 @@
+.textBlock {
+  max-width: 1360px;
+  padding: 0 30px;
+  margin: 0 auto;
+}
+
+.text {
+  font-weight: 300;
+  font-size: 18px;
+  line-height: 172%;
+  margin-top: 60px;
+}
+
+.img {
+  cursor: pointer;
+}
+
+.lineBlock {
+  margin-top: 20px;
+  display: flex;
+  gap: 40px;
+  align-items: center;
+  justify-content: center;
+}
+
+.line {
+  width: 200px;
+  height: 2px;
+  background-color: #8D8B8B;
+}

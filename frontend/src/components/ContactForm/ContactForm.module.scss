@@ -1,0 +1,54 @@
+.contactForm {
+  max-width: 1230px;
+  background-color: #1e1d1d;
+
+  padding: 20px 20px 120px;
+  margin: 100px auto 0;
+
+  position: relative;
+
+  background-image: url("./iconLine.svg");
+  background-size: 666px;
+  background-repeat: no-repeat;
+  background-position: right;
+}
+
+.content {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.text {
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 167%;
+  max-width: 520px;
+  margin-top: 30px;
+}
+
+.form {
+  display: flex;
+  align-items: end;
+  gap: 40px;
+}
+
+.input {
+  all: unset;
+  font-weight: 400;
+  font-size: 18px;
+  background: none;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #4b4a4a;
+}
+
+.form button {
+  width: 200px;
+  height: 60px;
+  margin-left: 30px;
+}
+
+.img {
+  position: absolute;
+  right: 10px;
+  top: -110px;
+}

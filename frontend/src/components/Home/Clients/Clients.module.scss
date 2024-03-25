@@ -1,0 +1,115 @@
+.clients {
+  margin-top: 110px;
+}
+
+.content {
+  gap: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 60px;
+}
+
+@media (max-width: 1440px) {
+  .content {
+    gap: 60px;
+  }
+
+  .bionovatic {
+    width: 280px;
+    height: 80px;
+  }
+
+  .bayer {
+    width: 80px;
+    height: 80px;
+  }
+
+  .corteva {
+    width: 280px;
+    height: 80px;
+  }
+
+  .kws {
+    width: 140px;
+    height: 140px;
+  }
+}
+
+@media (max-width: 1000px) {
+  .content {
+    gap: 50px;
+  }
+
+  .bionovatic {
+    width: 200px;
+    height: 60px;
+  }
+
+  .bayer {
+    width: 60px;
+    height: 60px;
+  }
+
+  .corteva {
+    width: 200px;
+    height: 60px;
+  }
+
+  .kws {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+@media (max-width: 750px) {
+  .content {
+    gap: 20px;
+  }
+
+  .bionovatic {
+    width: 110px;
+    height: 30px;
+  }
+
+  .bayer {
+    width: 40px;
+    height: 40px;
+  }
+
+  .corteva {
+    width: 110px;
+    height: 30px;
+  }
+
+  .kws {
+    width: 80px;
+    height: 80px;
+  }
+}
+
+@media (max-width: 420px) {
+  .content {
+    gap: 12px;
+  }
+
+  .bionovatic {
+    width: 100px;
+    height: 25px;
+  }
+
+  .bayer {
+    width: 20px;
+    height: 20px;
+  }
+
+  .corteva {
+    width: 90px;
+    height: 20px;
+  }
+
+  .kws {
+    width: 40px;
+    height: 40px;
+  }
+}

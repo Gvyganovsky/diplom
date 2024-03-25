@@ -1,0 +1,73 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  list-style-type: none;
+  color: white;
+}
+
+@font-face {
+  font-family: "RF-Rufo";
+  src: url("./fonts/RFRufo-Regular.woff2") format("woff2");
+}
+
+body {
+  font-family: "RF-Rufo";
+  background-color: #181818;
+}
+
+.container {
+  max-width: 1360px;
+  padding: 0 30px;
+  margin: 0 auto;
+  font-weight: 400;
+  position: relative;
+}
+
+.title {
+  font-size: 120px;
+  font-weight: bold;
+  opacity: 0.2;
+}
+
+.content {
+  display: flex;
+}
+
+.catalog {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+
+@media (max-width: 1010px) {
+  .content {
+    display: block;
+  }
+
+  .catalog {
+    justify-content: space-between;
+  }
+}
+
+@media (max-width: 900px) {
+  .title {
+    font-size: 64px;
+  }
+}
+
+@media (max-width: 710px) {
+  .catalog {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 500px) {
+  .title {
+    font-size: 38px;
+  }
+}

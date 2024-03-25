@@ -1,0 +1,88 @@
+.hero {
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 660px;
+  max-width: 1920px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.hero div {
+  padding-top: 24px;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("./Vector.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  z-index: 0;
+}
+
+.title {
+  font-weight: 400;
+  font-size: 72px;
+  max-width: 700px;
+  padding-top: 60px;
+  line-height: 80px;
+}
+
+.textInfo {
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 167%;
+  margin-top: 40px;
+  max-width: 560px;
+}
+
+.img {
+  margin-top: 30px;
+  position: absolute;
+  right: 50%;
+}
+
+.list {
+  display: flex;
+  margin-top: 150px;
+  gap: 55px;
+  align-items: center;
+}
+
+.item__title {
+  font-weight: 400;
+  font-size: 48px;
+}
+
+.item__text {
+  margin-top: 10px;
+  font-size: 24px;
+}
+
+.listAlt {
+  max-width: 700px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  margin-top: 70px;
+  justify-content: space-between;
+}
+
+.itemAlt {
+  display: flex;
+  width: 200px;
+}
+
+.icon {
+  margin-right: 10px;
+}
+
+.text {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 222%;
+}

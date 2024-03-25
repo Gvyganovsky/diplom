@@ -1,0 +1,43 @@
+.post {
+  max-width: 1360px;
+  padding: 0 30px;
+  margin: 0 auto;
+}
+
+.text {
+  font-weight: 300;
+  font-size: 18px;
+  line-height: 172%;
+  max-width: 1000px;
+  margin-top: 30px;
+}
+
+.content {
+  margin-top: 70px;
+  background-color: #1e1d1d;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: relative;
+}
+
+.img {
+    position: absolute;
+    left: -34px;
+}
+
+.textBlock {
+  max-width: 620px;
+}
+
+.description {
+  font-weight: 300;
+  font-size: 18px;
+  line-height: 172%;
+  margin-left: 220px;
+  margin-top: 50px;
+
+  width: 100%;
+}
