@@ -1,11 +1,23 @@
 import Breadcrumbs from "../components/Breadcrumbs";
 import styles from "../App.module.scss";
 import Filter from "../components/Catalog/Filter";
-import OurOffersData from "./OurOffersData.tsx";
 import Product from "../components/Product/index.tsx";
 import Hero from "../components/Hero/index.tsx";
+import React from "react";
 
 const Catalog = () => {
+    const [product, setProduct] = React.useState([]);
+
+    React.useEffect(() => {
+        fetch("https://6630f40fc92f351c03dbb255.mockapi.io/product")
+            .then((res) => {
+                return res.json();
+            })
+            .then((json) => {
+                setProduct(json);
+            });
+    }, []);
+
   return (
     <>
       <Hero
@@ -28,8 +40,14 @@ const Catalog = () => {
         <div className={styles.content}>
           <Filter />
           <div className={styles.catalog}>
-            {OurOffersData.map((OurOffersData, index) => (
-              <Product key={index} {...OurOffersData} />
+            {product.map((product) => (
+              <Product
+                  img={product.img}
+                  title={product.title}
+                  brand={product.brand}
+                  model={product.model}
+                  price={product.price}
+              />
             ))}
           </div>
         </div>
