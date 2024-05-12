@@ -1,17 +1,22 @@
+.trust {
+  margin: 60px auto 0;
+  max-width: 1360px;
+  padding: 0 30px;
+}
+
 .content {
-  margin-top: 60px;
   display: flex;
-  gap: 30px;
-  flex-wrap: wrap;
   justify-content: space-between;
-  align-items: center;
+  flex-wrap: wrap;
+  gap: 24px;
+  margin-top: 60px;
   position: relative;
 }
 
 .img {
   position: absolute;
   top: -90px;
-  right: -60px;
+  right: -90px;
   z-index: 1;
 }
 
@@ -23,12 +28,7 @@
 
 @media (max-width: 1260px) {
   .content {
-    justify-content: start;
-  }
-}
-
-@media (max-width: 756px) {
-  .content {
     justify-content: center;
+    margin-top: 40px;
   }
 }

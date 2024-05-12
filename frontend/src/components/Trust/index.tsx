@@ -1,13 +1,13 @@
-import stylesTrust from "./Trust.module.scss";
-import stylesApp from "../../App.module.scss";
+import styles from "./Trust.module.scss";
 import trustData from "./trustData.tsx";
 import Info from "../Home/Info/index.tsx";
+import Title from "../Title";
 
-const index = (props: any) => {
+const index = () => {
   return (
-    <div className={stylesApp.container}>
-      <h2 className={stylesApp.title}>{props.title}</h2>
-      <div className={stylesTrust.content}>
+    <div className={styles.trust}>
+      <Title text="Почему нам доверяют?" />
+      <div className={styles.content}>
         {trustData.map((trustData, index) => (
           <Info key={index} {...trustData} />
         ))}
@@ -16,7 +16,7 @@ const index = (props: any) => {
           alt=""
           width={265}
           height={265}
-          className={stylesTrust.img}
+          className={styles.img}
         />
       </div>
     </div>

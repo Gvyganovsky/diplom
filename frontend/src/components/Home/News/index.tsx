@@ -1,14 +1,14 @@
-import stylesNews from "./News.module.scss";
-import stylesApp from "../../../App.module.scss";
+import styles from "./News.module.scss";
 import newsData from './newsData';
 import New from '../New';
+import Title from "../../Title";
 
 const index = () => {
   return (
     <section>
-      <div className={stylesApp.container}>
-        <h2 className={stylesApp.title}>Что у нас нового</h2>
-        <ul className={stylesNews.content}>
+      <div className={styles.container}>
+        <Title text="Что у нас нового" />
+        <ul className={styles.content}>
           {newsData.map((newsData, index) => (
             <New key={index} {...newsData} />
           ))}

@@ -6,10 +6,14 @@
   background-size: auto, auto;
   height: 650px;
   margin-top: 110px;
+
+  display: flex;
+  align-items: center;
 }
 
-.applications div {
-  padding-top: 140px;
+.container {
+  max-width: 1360px;
+  margin: 0 auto 0 160px;
 }
 
 .title {
@@ -31,4 +35,24 @@
   font-weight: 400;
   font-size: 28px;
   line-height: 100%;
+}
+
+@media (max-width: 1450px) {
+  .applications {
+    background-image: url("../../../public/Vector3.png"),
+      url("../../../public/bgBackgroundbanner.jpg");
+    background-position: center, right;
+    background-repeat: no-repeat, no-repeat;
+    background-size: auto, auto;
+  }
+}
+
+@media (max-width: 950px) {
+  .applications {
+    background-image: url("../../../public/Vector3.png"),
+      url("../../../public/bgBackgroundbanner.jpg");
+    background-position: center, right;
+    background-repeat: no-repeat, no-repeat;
+    background-size: auto, auto;
+  }
 }

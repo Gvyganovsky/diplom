@@ -43,8 +43,17 @@ body {
   gap: 10px;
 }
 
+@media (max-width: 1260px) {
+  .title {
+    text-align: center;
+  }
+}
 
 @media (max-width: 1010px) {
+  .title {
+    font-size: 110px;
+  }
+
   .content {
     display: block;
   }
@@ -56,7 +65,7 @@ body {
 
 @media (max-width: 900px) {
   .title {
-    font-size: 64px;
+    font-size: 84px;
   }
 }
 
@@ -68,6 +77,6 @@ body {
 
 @media (max-width: 500px) {
   .title {
-    font-size: 38px;
+    font-size: 48px;
   }
 }
