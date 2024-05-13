@@ -1,5 +1,5 @@
 import styles from "./Applications.module.scss";
-import { ButtonGreen } from "../../Button";
+import Button from "../../Button";
 
 const index = () => {
   return (
@@ -10,7 +10,7 @@ const index = () => {
           Принимаем заявки по биологической и химической защите растений
           дронами, картографии и мониторингу.
         </p>
-        <ButtonGreen title="Оставить заявку" />
+        <Button title="Оставить заявку" className="ButtonGreen" />
       </div>
     </div>
   );

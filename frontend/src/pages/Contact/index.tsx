@@ -1,6 +1,6 @@
 import stylesContact from "./Contact.module.scss";
 import stylesApp from "../../App.module.scss";
-import { ButtonWhite } from "../../components/Button/index";
+import Button from "../../components/Button";
 
 const index = () => {
   return (
@@ -24,9 +24,7 @@ const index = () => {
               className={stylesContact.img}
               height={130}
             />
-            <ButtonWhite
-              title="Написать нам"
-            />
+            <Button title="Написать нам" className="buttonWhite" />
           </div>
           <img src="./map.jpg" alt="map" width={1130} height={510}/>
         </div>

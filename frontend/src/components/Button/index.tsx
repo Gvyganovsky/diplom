@@ -2,9 +2,9 @@ import { Link } from "react-router-dom";
 import styles from "./Button.module.scss";
 
 interface buttonProps {
-  id: number;
+  id?: number;
   title: string;
-  link: string;
+  link?: string;
   className: string;
 }
 

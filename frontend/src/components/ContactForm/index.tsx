@@ -1,6 +1,6 @@
 import stylesApp from "../../App.module.scss";
 import styles from "./ContactForm.module.scss";
-import { ButtonGreen } from "../Button";
+import Button from "../Button";
 
 const index = () => {
   return (
@@ -34,7 +34,7 @@ const index = () => {
             className={styles.input}
           />
 
-          <ButtonGreen title="Отправить" />
+          <Button title="Отправить" className="ButtonGreen" />
         </form>
         <img src="./image_Drone.png" alt="Drone" width={525} height={350} className={styles.img}/>
         {/* <img src="./iconLine.svg" alt="Line" /> */}

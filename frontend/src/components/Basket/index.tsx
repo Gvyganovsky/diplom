@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import style from "./Basket.module.scss";
-import { ButtonGreen } from "../Button";
+import Button from "../Button";
 
 const index = () => {
   return (
@@ -53,7 +53,7 @@ const index = () => {
               <p className={style.allPrice}>
                 Всего: <span className={style.number}>$15001.27</span>
               </p>
-              <ButtonGreen title="Оформить заказ" />
+              <Button title="Оформить заказ" className="ButtonGreen" />
             </div>
           </ul>
         </div>

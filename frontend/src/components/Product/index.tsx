@@ -1,5 +1,5 @@
 import styles from "./Product.module.scss";
-import { ButtonGreen } from "../Button";
+import Button from "../Button";
 
 const index = (props: any) => {
   return (
@@ -18,7 +18,7 @@ const index = (props: any) => {
           <p className={styles.product__text}>Модель: {props.model}</p>
         </div>
         <p className={styles.price}>{props.price}</p>
-        <ButtonGreen title="Добавить в корзину" />
+        <Button title="Добавить в корзину" className="ButtonGreen" />
       </div>
     </li>
   );
