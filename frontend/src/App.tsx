@@ -15,48 +15,20 @@ import Basket from "./components/Basket";
 function App() {
   return (
     <>
-      <Header />       <Basket />
-
+      <Header />
+      <Basket />
       <Routes>
         <Route path="/" element={<Home />} />
-      </Routes>
-
-      <Routes>
         <Route path="/Entomophages" element={<Entomophages />} />
-      </Routes>
-
-      <Routes>
         <Route path="/Spraying" element={<Spraying />} />
-      </Routes>
-
-      <Routes>
         <Route path="/MapMonitoring" element={<MapMonitoring />} />
-      </Routes>
-
-      <Routes>
         <Route path="/AboutUs" element={<AboutUs />} />
-      </Routes>
-
-      <Routes>
         <Route path="/Product" element={<Product />} />
-      </Routes>
-
-      <Routes>
         <Route path="/Contact" element={<Contact />} />
-      </Routes>
-
-      <Routes>
         <Route path="/News" element={<News />} />
-      </Routes>
-
-      <Routes>
         <Route path="/Catalog" element={<Catalog />} />
-      </Routes>
-
-      <Routes>
         <Route path="/Product/:id" element={<Product />} />
       </Routes>
-
       <Footer />
     </>
   );

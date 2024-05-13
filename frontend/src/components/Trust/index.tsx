@@ -1,6 +1,6 @@
 import styles from "./Trust.module.scss";
 import trustData from "./trustData.tsx";
-import Info from "../Home/Info/index.tsx";
+import Info from "../Info/index.tsx";
 import Title from "../Title";
 
 const index = () => {

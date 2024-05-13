@@ -42,11 +42,13 @@ const Catalog = () => {
           <div className={styles.catalog}>
             {product.map((product) => (
               <Product
+                  key={product.id}
                   img={product.img}
                   title={product.title}
                   brand={product.brand}
                   model={product.model}
                   price={product.price}
+                  id={product.id}
               />
             ))}
           </div>
