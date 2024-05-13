@@ -1,5 +1,5 @@
 import styles from "./Applications.module.scss";
-import { ButtonGreen } from "../../Buttons";
+import { ButtonGreen } from "../../Button";
 
 const index = () => {
   return (

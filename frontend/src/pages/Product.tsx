@@ -1,9 +1,9 @@
-import Cart from '../../components/Item/Cart'
+import Cart from '../components/Item/Cart'
 import style from '../../App.module.scss';
 
 const index = () => {
   return (
-    <section className={style.container}>
+    <section className={style.pageProduct}>
       <Cart />
     </section>
   )

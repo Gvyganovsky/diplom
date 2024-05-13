@@ -1,6 +1,6 @@
 import stylesContact from "./Contact.module.scss";
 import stylesApp from "../../App.module.scss";
-import { ButtonWhite } from "../../components/Buttons/index";
+import { ButtonWhite } from "../../components/Button/index";
 
 const index = () => {
   return (

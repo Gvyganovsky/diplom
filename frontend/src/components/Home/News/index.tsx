@@ -5,8 +5,8 @@ import Title from "../../Title";
 
 const index = () => {
   return (
-    <section>
-      <div className={styles.container}>
+    <div>
+      <div className={styles.news}>
         <Title text="Что у нас нового" />
         <ul className={styles.content}>
           {newsData.map((newsData, index) => (
@@ -14,7 +14,7 @@ const index = () => {
           ))}
         </ul>
       </div>
-    </section>
+    </div>
   );
 };
 

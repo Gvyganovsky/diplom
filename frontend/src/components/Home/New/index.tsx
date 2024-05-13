@@ -7,8 +7,8 @@ const index = (props: any) => {
       <img
         src={props.img}
         alt="News"
-        width={375}
-        height={260}
+        width={420}
+        height={300}
         className={styles.img}
       />
       <h5 className={styles.title}>{props.title}</h5>

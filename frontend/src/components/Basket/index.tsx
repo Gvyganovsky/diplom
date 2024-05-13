@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import style from "./Basket.module.scss";
-import { ButtonGreen } from "../Buttons";
+import { ButtonGreen } from "../Button";
 
 const index = () => {
   return (

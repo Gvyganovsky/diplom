@@ -1,5 +1,5 @@
 import styles from "./Product.module.scss";
-import { ButtonGreen } from "../Buttons";
+import { ButtonGreen } from "../Button";
 
 const index = (props: any) => {
   return (

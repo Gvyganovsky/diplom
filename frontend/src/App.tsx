@@ -54,7 +54,7 @@ function App() {
       </Routes>
 
       <Routes>
-        <Route path="/Product" element={<Product />} />
+        <Route path="/Product/:id" element={<Product />} />
       </Routes>
 
       <Footer />
