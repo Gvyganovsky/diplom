@@ -13,16 +13,28 @@ const ImageCatalog: React.FC<ImageCatalogProps> = ({ images }) => {
     };
 
     return (
-        <>
-            <img src={`/Product/${selectedImage}`} alt="Product" />
-            <ul className={styles.imageCatalog}>
+        <div className={styles.imageCatalog}>
+            <img
+                src={`/Product/${selectedImage}`}
+                alt="Product"
+                width={630}
+                height={370}
+                className={styles.heroImage}
+            />
+            <ul className={styles.images}>
                 {images.map((imageUrl, index) => (
                     <li key={index} onClick={() => handleImageClick(imageUrl)}>
-                        <img src={`/Product/${imageUrl}`} alt="Product" />
+                        <img
+                            src={`/Product/${imageUrl}`}
+                            alt="Product"
+                            width={200}
+                            height={160}
+                            className={styles.image}
+                        />
                     </li>
                 ))}
             </ul>
-        </>
+        </div>
     );
 };
 
