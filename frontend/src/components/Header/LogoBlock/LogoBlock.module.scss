@@ -1,0 +1,16 @@
+.logoBlock {
+    display: flex;
+    align-items: center;
+  }
+  
+  .logo_item {
+    margin-right: 10px;
+  }
+
+  .phone {
+    background-image: url("../../../public/phone.svg");
+    background-repeat: no-repeat;
+    background-position: center left;
+    padding-left: 24px;
+    font-size: 18px;
+  }
