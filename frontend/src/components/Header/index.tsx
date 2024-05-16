@@ -43,7 +43,7 @@ const HeaderDropDownNav = [
 
 const HeaderDropDownUser = [
   {
-    link: "/Profile",
+    link: "/profile",
     image: "IconHome-outlined.svg",
     text: "Профиль"
   },
@@ -53,12 +53,12 @@ const HeaderDropDownUser = [
     text: "Мои заказы"
   },
   {
-    link: "/Auth/Authorization",
+    link: "/auth/login",
     image: "IconHome-outlined.svg",
     text: "Авторизация"
   },
   {
-    link: "/Auth/Registration",
+    link: "/auth/signup",
     image: "IconHome-outlined.svg",
     text: "Регистрация"
   },
