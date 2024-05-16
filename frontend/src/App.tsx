@@ -11,6 +11,8 @@ import Spraying from "./pages/Spraying";
 import MapMonitoring from "./pages/MapMonitoring";
 import AboutUs from "./pages/About Us";
 import Basket from "./components/Basket";
+import Registration from "./pages/Auth/Registration";
+import Authorization from "./pages/Auth/Authorization";
 
 function App() {
   return (
@@ -28,6 +30,8 @@ function App() {
         <Route path="/News" element={<News />} />
         <Route path="/Catalog" element={<Catalog />} />
         <Route path="/Product/:id" element={<Product />} />
+        <Route path="/Auth/Registration" element={<Registration />} />
+        <Route path="/Auth/Authorization" element={<Authorization />} />
       </Routes>
       <Footer />
     </>
