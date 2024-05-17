@@ -48,7 +48,7 @@ const ProductDetail = () => {
       img: "./Trust/iconPeople.svg",
       title: "Официальная гарантия",
       text: "На всю продукцию представленную в магазине",
-    },
+    }
   ];
 
   return (

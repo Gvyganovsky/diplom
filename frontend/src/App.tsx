@@ -14,10 +14,11 @@ import Basket from "./components/Basket";
 import Registration from "./pages/Auth/Registration";
 import Authorization from "./pages/Auth/Authorization";
 import Profile from "./pages/Profile/Profile";
+import { AuthProvider } from './AuthContext';
 
 function App() {
   return (
-    <>
+    <AuthProvider>
       <Header />
       <Basket />
       <Routes>
@@ -37,7 +38,7 @@ function App() {
         <Route path="/auth/login" element={<Authorization />} />
       </Routes>
       <Footer />
-    </>
+    </AuthProvider>
   );
 }
 

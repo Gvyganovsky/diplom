@@ -1,7 +1,15 @@
+import { useContext } from 'react';
+import { AuthContext } from '../../AuthContext';
 import Button from '../../components/Button';
 import styles from './Profile.module.scss';
 
 const Profile = () => {
+    const { user } = useContext(AuthContext) || {};
+
+    if (!user) {
+      return <div>Пожалуйста, войдите в систему</div>;
+    }
+
     return (
         <div className={styles.container}>
             <div className={styles.content}>
@@ -9,21 +17,21 @@ const Profile = () => {
                     <h2>Личный кабинет</h2>
                     <div className={styles.profileInfo}>
                         <label className={styles.label}>Имя:</label>
-                        <p className={styles.profileText}>Иван Иванов</p>
+                        <p className={styles.profileText}>{user.login}</p>
                     </div>
                     <div className={styles.profileInfo}>
                         <label className={styles.label}>Email:</label>
-                        <p className={styles.profileText}>ivan@example.com</p>
+                        <p className={styles.profileText}>{user.email}</p>
                     </div>
                     <div className={styles.profileInfo}>
                         <label className={styles.label}>Телефон:</label>
-                        <p className={styles.profileText}>+7 (123) 456-7890</p>
+                        <p className={styles.profileText}>{user.phone}</p>
                     </div>
                     <Button title="Редактировать профиль" className="buttonBlue" />
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
-export default Profile
+export default Profile;

@@ -90,7 +90,7 @@ const index = () => {
               height={33}
               className={styles.nav__img}
             />
-            <HeaderDropdown HeaderDropdownData={HeaderDropDownNav} />
+            <HeaderDropdown HeaderDropdownData={HeaderDropDownUser} />
           </li>
 
           <li className={styles.nav__item}>
@@ -101,7 +101,7 @@ const index = () => {
               height={33}
               className={styles.nav__img}
             />
-            <HeaderDropdown HeaderDropdownData={HeaderDropDownUser} />
+            <HeaderDropdown HeaderDropdownData={HeaderDropDownNav} />
           </li>
 
           <li className={`${styles.nav__item} ${styles.nav__item_phone}`}>
