@@ -1,18 +1,17 @@
 import styles from "./Trust.module.scss";
-import trustData from "./trustData.tsx";
 import Info from "../Info/index.tsx";
 import Title from "../Title";
 
-const index = () => {
+const index = (props:any) => {
   return (
     <div className={styles.trust}>
-      <Title text="Почему нам доверяют?" />
+      <Title text={props.title} />
       <div className={styles.content}>
-        {trustData.map((trustData, index) => (
-          <Info key={index} {...trustData} />
+        {props.data.map((data: any, index: any) => (
+          <Info key={index} {...data} />
         ))}
         <img
-          src="./Trust/iconDron.svg"
+          src="/Trust/iconDron.svg"
           alt=""
           width={265}
           height={265}

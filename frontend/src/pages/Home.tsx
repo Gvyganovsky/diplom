@@ -6,6 +6,7 @@ import Clients from "../components/Home/Clients";
 import News from "../components/Home/News";
 import WhereWeWork from "../components/Where We Work";
 import Text from "../components/Text";
+import trustData from "../components/Trust/trustData";
 
 const Home = () => {
   return (
@@ -20,7 +21,7 @@ const Home = () => {
           { title: "10 команд", text: "специалистов" },
         ]}
       />
-      <Trust />
+      <Trust title="Почему нам доверяют?" data={trustData} />
       <OurOffers />
       <Applications />
       <Clients />
