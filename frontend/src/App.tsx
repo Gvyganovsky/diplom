@@ -14,30 +14,35 @@ import Basket from "./components/Basket";
 import Registration from "./pages/Auth/Registration";
 import Authorization from "./pages/Auth/Authorization";
 import Profile from "./pages/Profile/Profile";
-import { AuthProvider } from './AuthContext';
+import { AuthProvider } from './context/AuthContext';
+import React from "react";
+import BasketContext from "./context/BasketContext";
 
 function App() {
+  const [basketOpened, setBasketOpened] = React.useState(false);
+
   return (
     <AuthProvider>
-      <Header />
-      <Basket />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/Entomophages" element={<Entomophages />} />
-        <Route path="/Spraying" element={<Spraying />} />
-        <Route path="/MapMonitoring" element={<MapMonitoring />} />
-        <Route path="/AboutUs" element={<AboutUs />} />
-        <Route path="/Product" element={<Product />} />
-        <Route path="/Contact" element={<Contact />} />
-        <Route path="/News" element={<News />} />
-        <Route path="/Catalog" element={<Catalog />} />
-        <Route path="/Product/:id" element={<Product />} />
-
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/auth/signup" element={<Registration />} />
-        <Route path="/auth/login" element={<Authorization />} />
-      </Routes>
-      <Footer />
+      <BasketContext.Provider value={{ setBasketOpened }}>
+        <Header />
+        {basketOpened && <Basket />}
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/Entomophages" element={<Entomophages />} />
+          <Route path="/Spraying" element={<Spraying />} />
+          <Route path="/MapMonitoring" element={<MapMonitoring />} />
+          <Route path="/AboutUs" element={<AboutUs />} />
+          <Route path="/Product" element={<Product />} />
+          <Route path="/Contact" element={<Contact />} />
+          <Route path="/News" element={<News />} />
+          <Route path="/Catalog" element={<Catalog />} />
+          <Route path="/Product/:id" element={<Product />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/auth/signup" element={<Registration />} />
+          <Route path="/auth/login" element={<Authorization />} />
+        </Routes>
+        <Footer />
+      </BasketContext.Provider>
     </AuthProvider>
   );
 }

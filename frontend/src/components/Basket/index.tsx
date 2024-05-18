@@ -1,10 +1,14 @@
 import { Link } from "react-router-dom";
 import style from "./Basket.module.scss";
 import Button from "../Button";
+import BasketContext from "../../context/BasketContext";
+import React from "react";
 
 const index = () => {
+  const { setBasketOpened } = React.useContext(BasketContext);
+
   return (
-    <div className={style.shadow}>
+    <div className={style.shadow} onClick={() => setBasketOpened(false)}>
       <div className={style.basket}>
         <div className={style.container}>
           <h3 className={style.title}>Корзина</h3>
@@ -14,6 +18,7 @@ const index = () => {
             width={38}
             height={38}
             className={style.iconClose}
+            onClick={() => setBasketOpened(false)}
           />
           <ul className={style.list}>
             <li className={style.item}>

@@ -2,6 +2,8 @@ import styles from "./Header.module.scss";
 import SocialIcons from "./SocialIcons";
 import LogoBlock from "./LogoBlock";
 import HeaderDropdown from "./HeaderDropdown";
+import React from "react";
+import BasketContext from "../../context/BasketContext";
 
 const HeaderDropDownNav = [
   {
@@ -65,6 +67,8 @@ const HeaderDropDownUser = [
 ];
 
 const index = () => {
+  const { setBasketOpened } = React.useContext(BasketContext);
+
   return (
     <header className={styles.header}>
       <div className={styles.container}>
@@ -73,7 +77,7 @@ const index = () => {
         <SocialIcons />
 
         <ul className={styles.nav}>
-          <li className={styles.nav__item}>
+          <li className={styles.nav__item} onClick={() => setBasketOpened(true)}>
             <img
               src="../../../public/iconBasket.svg"
               alt="Basket"
