@@ -28,22 +28,25 @@ interface BasketItem {
 
 interface AuthContextType {
     user: User | null;
+    basket: BasketItem[];
     login: (email: string, password: string) => Promise<void>;
     logout: () => void;
     register: (userData: Omit<User, 'id'>) => Promise<void>;
     addToBasket: (product: Product, quantity: number) => Promise<void>;
+    loadBasket: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [user, setUser] = useState<User | null>(null);
+    const [basket, setBasket] = useState<BasketItem[]>([]);
 
     useEffect(() => {
-        // Проверяем, есть ли сохраненный пользователь в localStorage при инициализации приложения
         const storedUser = localStorage.getItem('user');
         if (storedUser) {
             setUser(JSON.parse(storedUser));
+            loadBasket();
         }
     }, []);
 
@@ -54,8 +57,8 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
             const foundUser = users.find(user => user.email === email && user.password === password);
             if (foundUser) {
                 setUser(foundUser);
-                // Сохранение пользователя в localStorage
                 localStorage.setItem('user', JSON.stringify(foundUser));
+                await loadBasket();
             } else {
                 throw new Error('Invalid credentials');
             }
@@ -67,7 +70,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     const logout = () => {
         setUser(null);
-        // Удаление пользователя из localStorage при выходе
+        setBasket([]);
         localStorage.removeItem('user');
     };
 
@@ -75,6 +78,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
         try {
             const response = await axios.post('https://6630f40fc92f351c03dbb255.mockapi.io/user', userData);
             setUser(response.data);
+            await loadBasket();
         } catch (error) {
             console.error('Ошибка регистрации:', error);
             throw error;
@@ -85,19 +89,38 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
         try {
             const response = await axios.post('https://6648b1ce4032b1331bec22b7.mockapi.io/basket', {
                 user: user?.id,
-                product: product.id, // Отправляем только id продукта, а не весь объект продукта
-                count: quantity // Отправляем количество товара
+                product: product.id,
+                count: quantity
             });
             console.log('Товар успешно добавлен в корзину:', response.data);
+            await loadBasket();
         } catch (error) {
             console.error('Ошибка добавления товара в корзину:', error);
             throw error;
         }
     };
-    
+
+    const loadBasket = async () => {
+        if (!user) return;
+        try {
+            const response = await axios.get(`https://6648b1ce4032b1331bec22b7.mockapi.io/basket?user=${user.id}`);
+            const basketItems = response.data;
+            const productRequests = basketItems.map((item: any) =>
+                axios.get(`https://6630f40fc92f351c03dbb255.mockapi.io/product/${item.product}`)
+            );
+            const productsResponses = await Promise.all(productRequests);
+            const loadedBasket = productsResponses.map((response, index) => ({
+                product: response.data,
+                quantity: basketItems[index].count
+            }));
+            setBasket(loadedBasket);
+        } catch (error) {
+            console.error('Ошибка загрузки корзины:', error);
+        }
+    };
 
     return (
-        <AuthContext.Provider value={{ user, login, logout, register, addToBasket }}>
+        <AuthContext.Provider value={{ user, basket, login, logout, register, addToBasket, loadBasket }}>
             {children}
         </AuthContext.Provider>
     );
