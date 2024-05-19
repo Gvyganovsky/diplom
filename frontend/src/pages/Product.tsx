@@ -53,14 +53,14 @@ const ProductDetail = () => {
 
       <Trust data={bonusData} />
 
-      {description.map((desc, index) => (
+      {/* {description.map((desc, index) => (
         <DescriptionProduct
           key={index}
           title={desc.title}
           text={desc.text}
           image={desc.image}
         />
-      ))}
+      ))} */}
     </>
   );
 }

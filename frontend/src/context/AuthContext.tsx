@@ -85,7 +85,8 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
         try {
             const response = await axios.post('https://6648b1ce4032b1331bec22b7.mockapi.io/basket', {
                 user: user?.id,
-                products: [{ product, quantity }]
+                product: product.id, // Отправляем только id продукта, а не весь объект продукта
+                count: quantity // Отправляем количество товара
             });
             console.log('Товар успешно добавлен в корзину:', response.data);
         } catch (error) {
@@ -93,6 +94,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
             throw error;
         }
     };
+    
 
     return (
         <AuthContext.Provider value={{ user, login, logout, register, addToBasket }}>
