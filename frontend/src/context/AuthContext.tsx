@@ -10,11 +10,28 @@ interface User {
     password: string;
 }
 
+interface Product {
+    name: string;
+    image: string[];
+    brand: string;
+    model: string;
+    price: number;
+    description: string[];
+    count: number;
+    id: string;
+}
+
+interface BasketItem {
+    product: Product;
+    quantity: number;
+}
+
 interface AuthContextType {
     user: User | null;
     login: (email: string, password: string) => Promise<void>;
     logout: () => void;
     register: (userData: Omit<User, 'id'>) => Promise<void>;
+    addToBasket: (product: Product, quantity: number) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -64,8 +81,21 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
         }
     };
 
+    const addToBasket = async (product: Product, quantity: number) => {
+        try {
+            const response = await axios.post('https://6648b1ce4032b1331bec22b7.mockapi.io/basket', {
+                user: user?.id,
+                products: [{ product, quantity }]
+            });
+            console.log('Товар успешно добавлен в корзину:', response.data);
+        } catch (error) {
+            console.error('Ошибка добавления товара в корзину:', error);
+            throw error;
+        }
+    };
+
     return (
-        <AuthContext.Provider value={{ user, login, logout, register }}>
+        <AuthContext.Provider value={{ user, login, logout, register, addToBasket }}>
             {children}
         </AuthContext.Provider>
     );
