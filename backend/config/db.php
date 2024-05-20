@@ -2,9 +2,9 @@
 
 return [
     'class' => 'yii\db\Connection',
-    'dsn' => 'mysql:host=localhost;dbname=yii2basic',
+    'dsn' => 'mysql:host=localhost;dbname=322-20_AgroScout',
     'username' => 'root',
-    'password' => '',
+    'password' => '123123123dD@',
     'charset' => 'utf8',
 
     // Schema cache options (for production environment)
