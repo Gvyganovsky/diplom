@@ -2,103 +2,91 @@
 
 namespace app\models;
 
-class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
+use Yii;
+
+/**
+ * This is the model class for table "user".
+ *
+ * @property int $id
+ * @property string $login
+ * @property string $email
+ * @property string $phone
+ * @property string $address
+ * @property string $password
+ *
+ * @property Basket[] $baskets
+ * @property Order[] $orders
+ */
+class User extends \yii\db\ActiveRecord
 {
-    public $id;
-    public $username;
-    public $password;
-    public $authKey;
-    public $accessToken;
-
-    private static $users = [
-        '100' => [
-            'id' => '100',
-            'username' => 'admin',
-            'password' => 'admin',
-            'authKey' => 'test100key',
-            'accessToken' => '100-token',
-        ],
-        '101' => [
-            'id' => '101',
-            'username' => 'demo',
-            'password' => 'demo',
-            'authKey' => 'test101key',
-            'accessToken' => '101-token',
-        ],
-    ];
-
-
     /**
      * {@inheritdoc}
      */
-    public static function findIdentity($id)
+    public static function tableName()
     {
-        return isset(self::$users[$id]) ? new static(self::$users[$id]) : null;
+        return 'user';
     }
 
     /**
      * {@inheritdoc}
      */
-    public static function findIdentityByAccessToken($token, $type = null)
+    public function rules()
     {
-        foreach (self::$users as $user) {
-            if ($user['accessToken'] === $token) {
-                return new static($user);
+        return [
+            [['login', 'email', 'phone', 'address', 'password'], 'required'],
+            ['email', 'email'],
+            ['email', 'unique', 'targetClass' => self::class, 'message' => 'Этот адрес электронной почты уже используется'],
+            ['password', 'string', 'min' => 8],
+            ['password', 'match', 'pattern' => '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/', 'message' => 'Пароль должен содержать хотя бы одну заглавную букву, одну строчную букву и одну цифру'],
+            ['login', 'match', 'pattern' => '/^[а-яА-Я]+$/u', 'message' => 'Логин должен содержать только кириллические символы'],
+            ['login', 'string', 'min' => 3, 'max' => 20, 'tooShort' => 'Логин должен содержать минимум 3 символа', 'tooLong' => 'Логин должен содержать максимум 20 символов'],
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'login' => 'Login',
+            'email' => 'Email',
+            'phone' => 'Phone',
+            'address' => 'Address',
+            'password' => 'Password',
+        ];
+    }
+
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+            if ($this->isNewRecord || !empty($this->password)) {
+                $this->password_hash = Yii::$app->security->generatePasswordHash($this->password);
+                $this->auth_key = Yii::$app->security->generateRandomString();
             }
+            return true;
         }
-
-        return null;
+        return false;
     }
 
     /**
-     * Finds user by username
+     * Gets query for [[Baskets]].
      *
-     * @param string $username
-     * @return static|null
+     * @return \yii\db\ActiveQuery
      */
-    public static function findByUsername($username)
+    public function getBaskets()
     {
-        foreach (self::$users as $user) {
-            if (strcasecmp($user['username'], $username) === 0) {
-                return new static($user);
-            }
-        }
-
-        return null;
+        return $this->hasMany(Basket::class, ['user' => 'id']);
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getAuthKey()
-    {
-        return $this->authKey;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function validateAuthKey($authKey)
-    {
-        return $this->authKey === $authKey;
-    }
-
-    /**
-     * Validates password
+     * Gets query for [[Orders]].
      *
-     * @param string $password password to validate
-     * @return bool if password provided is valid for current user
+     * @return \yii\db\ActiveQuery
      */
-    public function validatePassword($password)
+    public function getOrders()
     {
-        return $this->password === $password;
+        return $this->hasMany(Order::class, ['user' => 'id']);
     }
 }

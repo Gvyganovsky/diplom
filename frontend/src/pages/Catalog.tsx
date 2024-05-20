@@ -9,7 +9,7 @@ const Catalog = () => {
     const [product, setProduct] = React.useState([]);
 
     React.useEffect(() => {
-        fetch("https://6630f40fc92f351c03dbb255.mockapi.io/product")
+        fetch("http://dp-viganovsky.xn--80ahdri7a.site/api/products")
             .then((res) => {
                 return res.json();
             })
