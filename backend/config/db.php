@@ -3,7 +3,7 @@
 return [
     'class' => 'yii\db\Connection',
     'dsn' => 'mysql:host=localhost;dbname=322-20_AgroScout',
-    'username' => 'root',
+    'username' => '322-20_AgroScout',
     'password' => '123123123dD@',
     'charset' => 'utf8',
 
