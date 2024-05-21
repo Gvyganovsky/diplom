@@ -16,7 +16,7 @@ class UserController extends Controller
         $model = new User();
         $model->load(Yii::$app->request->post(), '');
 
-        if ($model->signUp()) {
+        if ($model->save()) {
             Yii::$app->response->statusCode = 201;
             return ['message' => 'Успешная регистрация!', 'user' => $model];
         } else {
