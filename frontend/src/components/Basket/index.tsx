@@ -63,20 +63,30 @@ const Basket = () => {
                       className={style.Urn}
                     />
                   </div>
+                  <div className={style.footer}>
+                    <Link to="./Catalog" className={style.link}>
+                      Продолжить покупки
+                    </Link>
+                    <p className={style.allPrice}>
+                      Всего: <span className={style.number}>${basket.reduce((total, item) => total + item.product.price * item.quantity, 0)}</span>
+                    </p>
+                    <Button title="Оформить заказ" className="ButtonGreen" onClick={handleOrder} />
+                  </div>
                 </li>
               ))
             ) : (
-              <p>Ваша корзина пуста</p>
+              <>
+                <img
+                  src="/basketNull.svg"
+                  alt="basketNull"
+                  width={320}
+                  height={230}
+                  className={style.image}
+                />
+                <p className={style.text}>Корзина пуста</p>
+                <Link to="/Catalog" className={style.cont}>Продолжить покупки</Link>
+              </>
             )}
-            <div className={style.footer}>
-              <Link to="./Catalog" className={style.link}>
-                Продолжить покупки
-              </Link>
-              <p className={style.allPrice}>
-                Всего: <span className={style.number}>${basket.reduce((total, item) => total + item.product.price * item.quantity, 0)}</span>
-              </p>
-              <Button title="Оформить заказ" className="ButtonGreen" onClick={handleOrder} />
-            </div>
           </ul>
         </div>
       </div>
