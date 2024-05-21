@@ -8,7 +8,7 @@ const index = () => {
         <ul className={styles.logoBlock}>
           <li className={styles.logo_item}>
             <img
-              src="../../../public/logo.svg"
+              src="/logo.svg"
               alt="logo"
               width={70}
               height={70}
@@ -22,7 +22,7 @@ const index = () => {
         <ul className={styles.socialNetwork}>
           <li className={styles.socialNetwork__icon}>
             <img
-              src="../../../public/iconVk.svg"
+              src="/iconVk.svg"
               alt="Vk"
               width={40}
               height={40}
@@ -30,7 +30,7 @@ const index = () => {
           </li>
           <li className={styles.socialNetwork__icon}>
             <img
-              src="../../../public/iconInstagram.svg"
+              src="/iconInstagram.svg"
               alt="Instagram"
               width={40}
               height={40}
@@ -38,7 +38,7 @@ const index = () => {
           </li>
           <li className={styles.socialNetwork__icon}>
             <img
-              src="../../../public/iconTikTok.svg"
+              src="/iconTikTok.svg"
               alt="TikTok"
               width={40}
               height={40}

@@ -1,6 +1,6 @@
 .applications {
-  background-image: url("../../../public/Vector3.png"),
-    url("../../../public/bgBackgroundbanner.jpg");
+  background-image: url("/Vector3.png"),
+    url("/bgBackgroundbanner.jpg");
   background-position: center, center;
   background-repeat: no-repeat, no-repeat;
   background-size: auto, auto;
@@ -39,8 +39,8 @@
 
 @media (max-width: 1450px) {
   .applications {
-    background-image: url("../../../public/Vector3.png"),
-      url("../../../public/bgBackgroundbanner.jpg");
+    background-image: url("/Vector3.png"),
+      url("/bgBackgroundbanner.jpg");
     background-position: center, right;
     background-repeat: no-repeat, no-repeat;
     background-size: auto, auto;
@@ -49,8 +49,8 @@
 
 @media (max-width: 950px) {
   .applications {
-    background-image: url("../../../public/Vector3.png"),
-      url("../../../public/bgBackgroundbanner.jpg");
+    background-image: url("/Vector3.png"),
+      url("/bgBackgroundbanner.jpg");
     background-position: center, right;
     background-repeat: no-repeat, no-repeat;
     background-size: auto, auto;

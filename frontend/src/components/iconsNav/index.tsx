@@ -63,21 +63,21 @@ const Index: React.FC<iconsNavProps> = ({ icons }) => {
                             ))}
                             <li className={styles.menu__item}>
                                 <img
-                                    src="../../../public/iconWhatsapp.svg"
+                                    src="/iconWhatsapp.svg"
                                     alt="Whatsapp"
                                     className={styles.menu__icon}
                                     width={30}
                                     height={30}
                                 />
                                 <img
-                                    src="../../../public/iconTelegram.svg"
+                                    src="/iconTelegram.svg"
                                     alt="Telegram"
                                     className={styles.menu__icon}
                                     width={30}
                                     height={30}
                                 />
                                 <img
-                                    src="../../../public/iconWechat.svg"
+                                    src="/iconWechat.svg"
                                     alt="Wechat"
                                     className={styles.menu__icon}
                                     width={30}

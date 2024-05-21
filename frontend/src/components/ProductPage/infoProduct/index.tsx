@@ -10,12 +10,12 @@ const Index = (props: any) => {
   const authContext = useContext(AuthContext); // Получаем контекст пользователя
 
   const FeatureListData = [
-    { img: '../../../../public/IconFuel.svg', text: 'Бак для распыления 22 л' },
-    { img: '../../../../public/iconWidth.svg', text: 'Ширина захвата 5-8 м' },
-    { img: '../../../../public/RTK.svg', text: 'Высокоточное позиционирование' },
-    { img: '../../../../public/iconTree.svg', text: 'Датчик высоты и обхода препятствий' },
-    { img: '../../../../public/IP67.svg', text: 'Воднепроницаемость' },
-    { img: '../../../../public/iconDroneone.svg', text: 'Скорость полета 10 м/с' },
+    { img: '/IconFuel.svg', text: 'Бак для распыления 22 л' },
+    { img: '/iconWidth.svg', text: 'Ширина захвата 5-8 м' },
+    { img: '/RTK.svg', text: 'Высокоточное позиционирование' },
+    { img: '/iconTree.svg', text: 'Датчик высоты и обхода препятствий' },
+    { img: '/IP67.svg', text: 'Воднепроницаемость' },
+    { img: '/iconDroneone.svg', text: 'Скорость полета 10 м/с' },
   ];
 
   const handleAddToBasket = () => {
