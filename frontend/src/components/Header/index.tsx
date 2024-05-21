@@ -1,7 +1,6 @@
 import styles from "./Header.module.scss";
-import SocialIcons from "./SocialIcons";
+import IconsNav from "../iconsNav";
 import LogoBlock from "./LogoBlock";
-import HeaderDropdown from "./HeaderDropdown";
 import React from "react";
 import BasketContext from "../../context/BasketContext";
 
@@ -69,55 +68,29 @@ const HeaderDropDownUser = [
 const index = () => {
   const { setBasketOpened } = React.useContext(BasketContext);
 
+  const iconsNavData = [
+    {
+      image: 'iconBasket.svg',
+      alt: 'Basket',
+      onClick: () => setBasketOpened(true)
+    },
+    {
+      image: 'iconUser.svg',
+      alt: 'User',
+      dropDown: HeaderDropDownUser
+    },
+    {
+      image: 'iconMenu.svg',
+      alt: 'Menu',
+      dropDown: HeaderDropDownNav
+    },
+  ];
+
   return (
     <header className={styles.header}>
       <div className={styles.container}>
         <LogoBlock />
-
-        <SocialIcons />
-
-        <ul className={styles.nav}>
-          <li className={styles.nav__item} onClick={() => setBasketOpened(true)}>
-            <img
-              src="../../../public/iconBasket.svg"
-              alt="Basket"
-              width={33}
-              height={33}
-              className={styles.nav__img}
-            />
-          </li>
-          <li className={styles.nav__item}>
-            <img
-              src="../../../public/iconUser.svg"
-              alt="User"
-              width={33}
-              height={33}
-              className={styles.nav__img}
-            />
-            <HeaderDropdown HeaderDropdownData={HeaderDropDownUser} />
-          </li>
-
-          <li className={styles.nav__item}>
-            <img
-              src="../../../public/iconMenu.svg"
-              alt="Menu"
-              width={33}
-              height={33}
-              className={styles.nav__img}
-            />
-            <HeaderDropdown HeaderDropdownData={HeaderDropDownNav} />
-          </li>
-
-          <li className={`${styles.nav__item} ${styles.nav__item_phone}`}>
-            <img
-              src="../../../public/iconPhone.svg"
-              alt="Menu"
-              width={33}
-              height={33}
-              className={styles.nav__img}
-            />
-          </li>
-        </ul>
+        <IconsNav icons={iconsNavData} />
       </div>
     </header>
   );
