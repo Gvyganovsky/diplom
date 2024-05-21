@@ -48,7 +48,9 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                'GET product/<id:\d+>' => 'product/view',
                 'GET products' => 'product/products',
+
                 'POST signup' => 'user/signup',
             ],
         ],
