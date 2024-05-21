@@ -1,6 +1,6 @@
-import Button from '../../Button';
-import styles from './SignUp.module.scss';
-import { AuthContext } from '../../../contexts/AuthContext';
+import Button from '../components/Button';
+import styles from './Auth.module.scss';
+import { AuthContext } from '../contexts/AuthContext';
 import { useContext, useState } from 'react';
 
 const SignUp = () => {
@@ -107,7 +107,7 @@ const SignUp = () => {
   return (
     <div className={styles.container}>
       <div className={styles.content}>
-        <form className={styles.registrationForm} onSubmit={handleSubmit}>
+        <form className={styles.form} onSubmit={handleSubmit}>
           <h2>Регистрация</h2>
           <input
             type="text"

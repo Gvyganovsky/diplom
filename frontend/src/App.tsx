@@ -11,8 +11,8 @@ import Spraying from "./pages/Spraying";
 import MapMonitoring from "./pages/MapMonitoring";
 import AboutUs from "./pages/About Us";
 import Basket from "./components/Basket";
-import Registration from "./pages/Auth/Registration";
-import Authorization from "./pages/Auth/Authorization";
+import SignUp from "./auth/SignUp";
+import SignIn from "./auth/SignIn";
 import Profile from "./pages/Profile/Profile";
 import { AuthProvider } from './contexts/delete';
 import React from "react";
@@ -38,8 +38,8 @@ function App() {
           <Route path="/Catalog" element={<Catalog />} />
           <Route path="/Product/:id" element={<Product />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/auth/signup" element={<Registration />} />
-          <Route path="/auth/login" element={<Authorization />} />
+          <Route path="/auth/signup" element={<SignUp />} />
+          <Route path="/auth/login" element={<SignIn />} />
         </Routes>
         <Footer />
       </BasketContext.Provider>

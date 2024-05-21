@@ -12,11 +12,13 @@ interface User {
 interface AuthContextType {
     user: User | null;
     signUp: (userData: User) => Promise<void>;
+    signIn: (email: string, password: string) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType>({
     user: null,
-    signUp: async () => { }
+    signUp: async () => { },
+    signIn: async () => { }
 });
 
 interface AuthProviderProps {
@@ -28,7 +30,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
     const signUp = async (userData: User) => {
         try {
-            const response = await axios.post("https://dp-viganovsky.xn--80ahdri7a.site/api/signup", userData);
+            await axios.post("https://dp-viganovsky.xn--80ahdri7a.site/api/signup", userData);
             setUser(userData);
         } catch (error) {
             console.log("Ошибка регистрации:", error);
@@ -36,8 +38,18 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         }
     };
 
+    const signIn = async (email: string, password: string) => {
+        try {
+            const response = await axios.post("https://dp-viganovsky.xn--80ahdri7a.site/api/signin", { email, password });
+            setUser(response.data.user);
+        } catch (error) {
+            console.log("Ошибка авторизации:", error);
+            throw error;
+        }
+    };
+
     return (
-        <AuthContext.Provider value={{ user, signUp }}>
+        <AuthContext.Provider value={{ user, signUp, signIn }}>
             {children}
         </AuthContext.Provider>
     );
