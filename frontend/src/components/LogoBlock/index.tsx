@@ -5,7 +5,7 @@ const index = () => {
         <ul className={styles.logoBlock}>
             <li className={styles.logo_item}>
                 <img
-                    src="../../../public/logo.svg"
+                    src="/logo.svg"
                     alt="logo"
                     width={70}
                     height={70}

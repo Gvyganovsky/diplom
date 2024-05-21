@@ -1,43 +1,43 @@
 import styles from "./Header.module.scss";
 import IconsNav from "../iconsNav";
-import LogoBlock from "./LogoBlock";
+import LogoBlock from "../LogoBlock";
 import React from "react";
 import BasketContext from "../../contexts/BasketContext";
 
 const HeaderDropDownNav = [
   {
     link: "/",
-    image: "IconHome-outlined.svg",
+    image: "/IconHome-outlined.svg",
     text: "Главная"
   },
   {
     link: "/Entomophages",
-    image: "IconInsects-outlined.svg",
+    image: "/IconInsects-outlined.svg",
     text: "Энтомофаги"
   },
   {
     link: "/Spraying",
-    image: "iconDrone-outlined.svg",
+    image: "/iconDrone-outlined.svg",
     text: "Опрыскивание"
   },
   {
     link: "/MapMonitoring",
-    image: "IconMap-outlined.svg",
+    image: "/IconMap-outlined.svg",
     text: "Картография и мониторинг"
   },
   {
     link: "/Catalog",
-    image: "IconCatalog-outlined.svg",
+    image: "/IconCatalog-outlined.svg",
     text: "Каталог продукции"
   },
   {
     link: "/News",
-    image: "IconNews-outlined.svg",
+    image: "/IconNews-outlined.svg",
     text: "Новости"
   },
   {
     link: "/Contact",
-    image: "iconPhone-outlined.svg",
+    image: "/iconPhone-outlined.svg",
     text: "Контакты"
   },
 ];
@@ -45,22 +45,22 @@ const HeaderDropDownNav = [
 const HeaderDropDownUser = [
   {
     link: "/profile",
-    image: "IconUser-outlined.svg",
+    image: "/IconUser-outlined.svg",
     text: "Профиль"
   },
   {
     link: "/",
-    image: "IconOrders-outlined.svg",
+    image: "/IconOrders-outlined.svg",
     text: "Мои заказы"
   },
   {
     link: "/auth/login",
-    image: "IconSignIn-outlined.svg",
+    image: "/IconSignIn-outlined.svg",
     text: "Авторизация"
   },
   {
     link: "/auth/signup",
-    image: "IconSignUp-outlined.svg",
+    image: "/IconSignUp-outlined.svg",
     text: "Регистрация"
   },
 ];
@@ -70,17 +70,17 @@ const index = () => {
 
   const iconsNavData = [
     {
-      image: 'iconBasket.svg',
+      image: '/iconBasket.svg',
       alt: 'Basket',
       onClick: () => setBasketOpened(true)
     },
     {
-      image: 'iconUser.svg',
+      image: '/iconUser.svg',
       alt: 'User',
       dropDown: HeaderDropDownUser
     },
     {
-      image: 'iconMenu.svg',
+      image: '/iconMenu.svg',
       alt: 'Menu',
       dropDown: HeaderDropDownNav
     },
