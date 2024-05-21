@@ -1,45 +1,44 @@
-import stylesHero from "./Hero.module.scss";
-import stylesApp from "../../App.module.scss";
+import styles from "./Hero.module.scss";
 
 const index = (props: any) => {
   return (
     <div
-      className={stylesHero.hero}
       style={{
         backgroundImage: `url(${props.backgroundImage}), url("./Vector.png")`,
       }}
+      className={styles.hero}
     >
-      <div className={stylesApp.container}>
-        <h1 className={stylesHero.title}>{props.title}</h1>
+      <div className={styles.container}>
+        <h1 className={styles.title}>{props.title}</h1>
 
         {props.imageSrc && (
           <img
             src={props.imageSrc}
             alt="Drone flying"
-            className={stylesHero.img}
+            className={styles.img}
             height={120}
           />
         )}
 
-        {props.text && <p className={stylesHero.textInfo}>{props.text}</p>}
+        {props.text && <p className={styles.textInfo}>{props.text}</p>}
 
         {props.listItems && props.listItems.length > 0 && (
-          <ul className={stylesHero.list}>
+          <ul className={styles.list}>
             {props.listItems.map((item: any, index: any) => (
-              <li key={index} className={stylesHero.item}>
-                <h3 className={stylesHero.item__title}>{item.title}</h3>
-                <p className={stylesHero.item__text}>{item.text}</p>
+              <li key={index} className={styles.item}>
+                <h3 className={styles.item__title}>{item.title}</h3>
+                <p className={styles.item__text}>{item.text}</p>
               </li>
             ))}
           </ul>
         )}
 
         {props.listAltItems && props.listAltItems.length > 0 && (
-          <ul className={stylesHero.listAlt}>
+          <ul className={styles.listAlt}>
             {props.listAltItems.map((item: any, index: any) => (
-              <li key={index} className={stylesHero.itemAlt}>
-                <img src={item.img} alt="icon" width={40} height={40} className={stylesHero.icon} />
-                <h3 className={stylesHero.text}>{item.title}</h3>
+              <li key={index} className={styles.itemAlt}>
+                <img src={item.img} alt="icon" width={40} height={40} className={styles.icon} />
+                <h3 className={styles.text}>{item.title}</h3>
               </li>
             ))}
           </ul>

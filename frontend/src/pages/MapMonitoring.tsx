@@ -2,6 +2,7 @@ import ContactForm from "../components/ContactForm";
 import Hero from "../components/Hero";
 import AreasOfApplication from "../components/MapMonitoring/Areas of application";
 import DataReceived from "../components/MapMonitoring/DataReceived";
+import HowItWorks from "../components/MapMonitoring/How it works";
 
 const MapMonitoring = () => {
   return (
@@ -28,8 +29,11 @@ const MapMonitoring = () => {
 
       <DataReceived />
 
+
       <AreasOfApplication />
 
+      <HowItWorks />
+      
       <ContactForm />
     </>
   );
