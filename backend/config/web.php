@@ -49,7 +49,7 @@ $config = [
             'showScriptName' => false,
             'rules' => [
                 'GET products' => 'product/products',
-                'POST SignUp' => 'user/SignUp',
+                'POST signup' => 'user/signup',
             ],
         ],
     ],

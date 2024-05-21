@@ -3,7 +3,7 @@ import Button from "../../Button";
 import FeatureList from "../../FeatureList/FeatureList";
 import ImageCatalog from "../ImageCatalog";
 import styles from "./infoProduct.module.scss";
-import { AuthContext } from '../../../context/AuthContext'; // Импортируем контекст пользователя
+import { AuthContext } from '../../../contexts/delete'; // Импортируем контекст пользователя
 
 const Index = (props: any) => {
   const { product } = props;

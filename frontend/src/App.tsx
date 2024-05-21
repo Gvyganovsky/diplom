@@ -14,9 +14,9 @@ import Basket from "./components/Basket";
 import Registration from "./pages/Auth/Registration";
 import Authorization from "./pages/Auth/Authorization";
 import Profile from "./pages/Profile/Profile";
-import { AuthProvider } from './context/AuthContext';
+import { AuthProvider } from './contexts/delete';
 import React from "react";
-import BasketContext from "./context/BasketContext";
+import BasketContext from "./contexts/BasketContext";
 
 function App() {
   const [basketOpened, setBasketOpened] = React.useState(false);

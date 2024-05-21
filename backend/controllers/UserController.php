@@ -11,12 +11,12 @@ use yii\web\ConflictHttpException;
 
 class UserController extends Controller
 {
-    public function actionSignUp()
+    public function actionSignup()
     {
         $model = new User();
         $model->load(Yii::$app->request->post(), '');
 
-        if ($model->register()) {
+        if ($model->signUp()) {
             Yii::$app->response->statusCode = 201;
             return ['message' => 'Успешная регистрация!', 'user' => $model];
         } else {

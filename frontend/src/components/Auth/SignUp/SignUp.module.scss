@@ -35,13 +35,18 @@
     all: unset;
     width: 100%;
     padding: 10px;
-    margin-bottom: 20px;
+    margin: 12px 0 8px;
     border: 1px solid #02e502;
     border-radius: 4px;
     box-sizing: border-box;
 }
 
-a button {
+.registrationForm button {
     margin: 0 auto;
     display: block;
+    margin-top: 20px;
+}
+
+.error {
+    color: red;
 }

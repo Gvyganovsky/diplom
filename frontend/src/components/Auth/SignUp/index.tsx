@@ -1,10 +1,11 @@
-import React, { useState, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Button from '../../Button';
 import styles from './SignUp.module.scss';
-import { AuthContext } from '../../../context/AuthContext';
+import { AuthContext } from '../../../contexts/AuthContext';
+import { useContext, useState } from 'react';
 
 const SignUp = () => {
+  const { signUp } = useContext(AuthContext);
+
   const [formData, setFormData] = useState({
     login: '',
     email: '',
@@ -14,59 +15,100 @@ const SignUp = () => {
     confirmPassword: ''
   });
 
-  const [error, setError] = useState('');
-  const navigate = useNavigate();
-  const authContext = useContext(AuthContext);
+  const [errors, setErrors] = useState({
+    login: '',
+    email: '',
+    phone: '',
+    address: '',
+    password: '',
+    confirmPassword: ''
+  });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
+    setFormData(prevState => ({
+      ...prevState,
       [name]: value
-    });
+    }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if (formData.password !== formData.confirmPassword) {
-      setError('Пароли не совпадают');
+
+    // Очистка предыдущих ошибок перед новой валидацией
+    setErrors({
+      login: '',
+      email: '',
+      phone: '',
+      address: '',
+      password: '',
+      confirmPassword: ''
+    });
+
+    // Валидация логина
+    if (!/^[a-zA-Z]{3,20}$/.test(formData.login)) {
+      setErrors(prevState => ({
+        ...prevState,
+        login: 'Логин должен содержать только латинские символы и иметь длину от 3 до 20 символов'
+      }));
       return;
     }
 
-    if (authContext) {
-      try {
-        await authContext.register({
-          login: formData.login,
-          email: formData.email,
-          phone: formData.phone,
-          address: formData.address,
-          password: formData.password
-        });
-        // Очистка формы после успешной регистрации
-        setFormData({
-          login: '',
-          email: '',
-          phone: '',
-          address: '',
-          password: '',
-          confirmPassword: ''
-        });
-        setError('');
-        // Перенаправление пользователя в личный кабинет
-        navigate('/profile');
-      } catch (error) {
-        console.error('Ошибка регистрации', error);
-        setError('Произошла ошибка при регистрации');
-      }
+    // Валидация электронной почты
+    if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      setErrors(prevState => ({
+        ...prevState,
+        email: 'Некорректный формат электронной почты'
+      }));
+      return;
     }
+
+    // Валидация телефона
+    if (!/^\+7\(\d{3}\)-\d{3}-\d{2}-\d{2}$/.test(formData.phone)) {
+      setErrors(prevState => ({
+        ...prevState,
+        phone: 'Некорректный формат телефона'
+      }));
+      return;
+    }
+
+    // Валидация адреса
+    const keywords = ['г.', 'ул.', 'д.'];
+    if (!keywords.every(keyword => formData.address.includes(keyword))) {
+      setErrors(prevState => ({
+        ...prevState,
+        address: 'Адрес должен содержать ключевые слова "г.", "ул." и "д."'
+      }));
+      return;
+    }
+
+    // Валидация пароля
+    if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{6,}$/.test(formData.password)) {
+      setErrors(prevState => ({
+        ...prevState,
+        password: 'Пароль должен содержать минимум 6 символов, хотя бы одну заглавную букву, одну прописную букву и один специальный символ'
+      }));
+      return;
+    }
+
+    // Проверка совпадения паролей
+    if (formData.password !== formData.confirmPassword) {
+      setErrors(prevState => ({
+        ...prevState,
+        confirmPassword: 'Пароли не совпадают'
+      }));
+      return;
+    }
+
+    signUp(formData);
   };
+
 
   return (
     <div className={styles.container}>
       <div className={styles.content}>
         <form className={styles.registrationForm} onSubmit={handleSubmit}>
           <h2>Регистрация</h2>
-          {error && <p className={styles.error}>{error}</p>}
           <input
             type="text"
             name="login"
@@ -74,8 +116,8 @@ const SignUp = () => {
             className={styles.inputField}
             value={formData.login}
             onChange={handleChange}
-            required
           />
+          {errors.login && <span className={styles.error}>{errors.login}</span>}
           <input
             type="email"
             name="email"
@@ -83,8 +125,8 @@ const SignUp = () => {
             className={styles.inputField}
             value={formData.email}
             onChange={handleChange}
-            required
           />
+          {errors.email && <span className={styles.error}>{errors.email}</span>}
           <input
             type="tel"
             name="phone"
@@ -92,8 +134,8 @@ const SignUp = () => {
             className={styles.inputField}
             value={formData.phone}
             onChange={handleChange}
-            required
           />
+          {errors.phone && <span className={styles.error}>{errors.phone}</span>}
           <input
             type="text"
             name="address"
@@ -101,8 +143,8 @@ const SignUp = () => {
             className={styles.inputField}
             value={formData.address}
             onChange={handleChange}
-            required
           />
+          {errors.address && <span className={styles.error}>{errors.address}</span>}
           <input
             type="password"
             name="password"
@@ -110,8 +152,8 @@ const SignUp = () => {
             className={styles.inputField}
             value={formData.password}
             onChange={handleChange}
-            required
           />
+          {errors.password && <span className={styles.error}>{errors.password}</span>}
           <input
             type="password"
             name="confirmPassword"
@@ -119,8 +161,8 @@ const SignUp = () => {
             className={styles.inputField}
             value={formData.confirmPassword}
             onChange={handleChange}
-            required
           />
+          {errors.confirmPassword && <span className={styles.error}>{errors.confirmPassword}</span>}
           <Button title="Зарегистрироваться" className="buttonGreen" type="submit" />
         </form>
       </div>

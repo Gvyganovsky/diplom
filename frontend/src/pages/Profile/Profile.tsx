@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { AuthContext } from '../../context/AuthContext';
+import { AuthContext } from '../../contexts/delete';
 import Button from '../../components/Button';
 import styles from './Profile.module.scss';
 

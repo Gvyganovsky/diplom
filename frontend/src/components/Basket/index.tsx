@@ -2,8 +2,8 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import style from "./Basket.module.scss";
 import Button from "../Button";
-import { AuthContext } from "../../context/AuthContext";
-import BasketContext from "../../context/BasketContext";
+import { AuthContext } from "../../contexts/delete";
+import BasketContext from "../../contexts/BasketContext";
 
 const Basket = () => {
   const { createOrder, basket } = useContext(AuthContext);

@@ -2,7 +2,7 @@ import styles from "./Header.module.scss";
 import IconsNav from "../iconsNav";
 import LogoBlock from "./LogoBlock";
 import React from "react";
-import BasketContext from "../../context/BasketContext";
+import BasketContext from "../../contexts/BasketContext";
 
 const HeaderDropDownNav = [
   {
