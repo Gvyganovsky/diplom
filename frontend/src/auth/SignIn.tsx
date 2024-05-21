@@ -1,7 +1,7 @@
-import { useContext, useState } from 'react';
 import Button from '../components/Button';
 import styles from './Auth.module.scss';
 import { AuthContext } from '../contexts/AuthContext';
+import { useContext, useState } from 'react';
 
 const SignIn = () => {
   const { signIn } = useContext(AuthContext);
@@ -11,10 +11,7 @@ const SignIn = () => {
     password: ''
   });
 
-  const [errors, setErrors] = useState({
-    email: '',
-    password: ''
-  });
+  const [error, setError] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,45 +21,26 @@ const SignIn = () => {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Очистка предыдущих ошибок перед новой валидацией
-    setErrors({
-      email: '',
-      password: ''
-    });
+    // Очистка предыдущей ошибки перед новой валидацией
+    setError('');
 
-    // Валидация электронной почты
-    if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      setErrors(prevState => ({
-        ...prevState,
-        email: 'Некорректный формат электронной почты'
-      }));
+    // Валидация электронной почты и пароля
+    if (!formData.email || !formData.password) {
+      setError('Неверная почта или пароль');
+      return;
     }
 
-    // Если есть ошибки валидации, не отправлять данные
-    for (const errorKey in errors) {
-      if (errors[errorKey]) {
-        return;
-      }
-    }
-
-    // Отправка данных для авторизации
-    try {
-      await signIn(formData.email, formData.password);
-      // Можно добавить перенаправление или другие действия после успешной авторизации
-    } catch (error) {
-      console.error('Ошибка авторизации:', error);
-      // Можно обработать ошибку авторизации здесь
-    }
+    signIn(formData);
   };
 
   return (
     <div className={styles.container}>
       <div className={styles.content}>
-        <form className={styles.form} onSubmit={handleSubmit}>
-          <h2>Авторизация</h2>
+        <form className={styles.form} onSubmit={handleSubmit} noValidate>
+          <h2>Вход</h2>
           <input
             type="email"
             name="email"
@@ -71,7 +49,6 @@ const SignIn = () => {
             value={formData.email}
             onChange={handleChange}
           />
-          {errors.email && <span className={styles.error}>{errors.email}</span>}
           <input
             type="password"
             name="password"
@@ -80,8 +57,8 @@ const SignIn = () => {
             value={formData.password}
             onChange={handleChange}
           />
-          {errors.password && <span className={styles.error}>{errors.password}</span>}
-          <Button title="Авторизация" className="buttonGreen" type="submit" />
+          {error && <span className={styles.error}>{error}</span>}
+          <Button title="Войти" className="buttonGreen" type="submit" />
         </form>
       </div>
     </div>

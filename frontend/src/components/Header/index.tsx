@@ -54,7 +54,7 @@ const HeaderDropDownUser = [
     text: "Мои заказы"
   },
   {
-    link: "/auth/login",
+    link: "/auth/signin",
     image: "/IconSignIn-outlined.svg",
     text: "Авторизация"
   },

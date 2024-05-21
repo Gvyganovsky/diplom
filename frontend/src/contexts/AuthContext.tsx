@@ -12,7 +12,7 @@ interface User {
 interface AuthContextType {
     user: User | null;
     signUp: (userData: User) => Promise<void>;
-    signIn: (email: string, password: string) => Promise<void>;
+    signIn: (credentials: { email: string, password: string }) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType>({
@@ -38,9 +38,9 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         }
     };
 
-    const signIn = async (email: string, password: string) => {
+    const signIn = async (credentials: { email: string, password: string }) => {
         try {
-            const response = await axios.post("https://dp-viganovsky.xn--80ahdri7a.site/api/signin", { email, password });
+            const response = await axios.post("https://dp-viganovsky.xn--80ahdri7a.site/api/signin", credentials);
             setUser(response.data.user);
         } catch (error) {
             console.log("Ошибка авторизации:", error);

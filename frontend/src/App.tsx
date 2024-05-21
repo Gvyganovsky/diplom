@@ -39,7 +39,7 @@ function App() {
           <Route path="/Product/:id" element={<Product />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/auth/signup" element={<SignUp />} />
-          <Route path="/auth/login" element={<SignIn />} />
+          <Route path="/auth/signin" element={<SignIn />} />
         </Routes>
         <Footer />
       </BasketContext.Provider>
