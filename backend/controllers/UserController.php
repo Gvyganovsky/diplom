@@ -11,16 +11,18 @@ class UserController extends Controller
     public function actionSignup()
     {
         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-    
+
         $csrfToken = Yii::$app->request->getHeaders()->get('X-CSRF-Token');
         if (!$csrfToken) {
             Yii::$app->response->statusCode = 400;
             return ['message' => 'Ошибка запроса', 'errors' => 'Отсутствует CSRF токен'];
         }
-    
+
+        $jsonData = json_decode(Yii::$app->request->getRawBody(), true);
+
         $model = new User();
-        $model->load(Yii::$app->request->getBodyParams(), '');
-    
+        $model->load($jsonData, ''); 
+
         if ($model->save()) {
             Yii::$app->response->statusCode = 201;
             return ['message' => 'Успешная регистрация!', 'user' => $model];
@@ -36,7 +38,7 @@ class UserController extends Controller
                 return ['message' => 'Этот адрес электронной почты уже используется'];
             }
         }
-    }    
+    }
 
     public function actionSignin()
     {
@@ -48,8 +50,15 @@ class UserController extends Controller
             return ['message' => 'Ошибка запроса', 'errors' => 'Отсутствует CSRF токен'];
         }
 
-        $email = $request->getBodyParam('email');
-        $password = $request->getBodyParam('password');
+        $jsonData = json_decode(Yii::$app->request->getRawBody(), true);
+
+        if (!isset($jsonData['email']) || !isset($jsonData['password'])) {
+            Yii::$app->response->statusCode = 400;
+            return ['message' => 'Ошибка запроса', 'errors' => 'Некорректные данные'];
+        }
+
+        $email = $jsonData['email'];
+        $password = $jsonData['password'];
 
         if (!$email || !$password) {
             Yii::$app->response->statusCode = 400;
@@ -65,4 +74,3 @@ class UserController extends Controller
         return ['message' => 'Ошибка авторизации', 'errors' => 'Неверный логин или пароль'];
     }
 }
-

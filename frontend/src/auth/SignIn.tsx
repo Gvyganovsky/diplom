@@ -14,24 +14,14 @@ const SignIn = () => {
     password: ''
   });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prevState => ({
-      ...prevState,
-      [name]: value
-    }));
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Очистка предыдущих ошибок перед новой валидацией
     setErrors({
       email: '',
       password: ''
     });
 
-    // Валидация электронной почты
     if (!/\S+@\S+\.\S+/.test(formData.email)) {
       setErrors(prevState => ({
         ...prevState,
@@ -40,7 +30,6 @@ const SignIn = () => {
       return;
     }
 
-    // Валидация пароля
     if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{6,}$/.test(formData.password)) {
       setErrors(prevState => ({
         ...prevState,
@@ -50,7 +39,11 @@ const SignIn = () => {
     }
 
     try {
-      const response = await axios.post('https://dp-viganovsky.xn--80ahdri7a.site/api/signin', formData);
+      const response = await axios.post('https://dp-viganovsky.xn--80ahdri7a.site/api/signin', formData, {
+        headers: {
+          'X-CSRF-Token': 'J8HioBlDmCc38Uo0qHGn_F2uUVmBq9F6' 
+        }
+      });
       console.log(response.data.message);
       // Можно обработать успешный вход
     } catch (error) {
@@ -66,6 +59,15 @@ const SignIn = () => {
         }));
       }
     }
+    
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prevState => ({
+      ...prevState,
+      [name]: value
+    }));
   };
 
   return (
