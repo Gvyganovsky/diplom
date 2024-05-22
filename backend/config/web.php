@@ -52,6 +52,7 @@ $config = [
                 'GET products' => 'product/products',
 
                 'POST signup' => 'user/signup',
+                'POST signin' => 'user/signin',
             ],
         ],
     ],

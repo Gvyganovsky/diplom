@@ -36,10 +36,11 @@ class User extends \yii\db\ActiveRecord
             [['login', 'email', 'phone', 'address', 'password'], 'required'],
             ['email', 'email'],
             ['email', 'unique', 'targetClass' => self::class, 'message' => 'Этот адрес электронной почты уже используется'],
-            ['password', 'string', 'min' => 8],
-            ['password', 'match', 'pattern' => '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/', 'message' => 'Пароль должен содержать хотя бы одну заглавную букву, одну строчную букву и одну цифру'],
-            ['login', 'match', 'pattern' => '/^[а-яА-Я]+$/u', 'message' => 'Логин должен содержать только кириллические символы'],
-            ['login', 'string', 'min' => 3, 'max' => 20, 'tooShort' => 'Логин должен содержать минимум 3 символа', 'tooLong' => 'Логин должен содержать максимум 20 символов'],
+            ['password', 'string', 'min' => 6],
+            ['password', 'match', 'pattern' => '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{6,}$/', 'message' => 'Пароль должен содержать минимум 6 символов, хотя бы одну заглавную букву, одну прописную букву и один специальный символ'],
+            ['login', 'match', 'pattern' => '/^[a-zA-Z]{3,20}$/', 'message' => 'Логин должен содержать только латинские символы и иметь длину от 3 до 20 символов'],
+            ['phone', 'match', 'pattern' => '/^\+7\(\d{3}\)-\d{3}-\d{2}-\d{2}$/', 'message' => 'Некорректный формат телефона'],
+            ['address', 'match', 'pattern' => '/г\..+|ул\..+|д\..+/', 'message' => 'Адрес должен содержать ключевые слова "г.", "ул." и "д."'],
         ];
     }
 
@@ -61,13 +62,17 @@ class User extends \yii\db\ActiveRecord
     public function beforeSave($insert)
     {
         if (parent::beforeSave($insert)) {
-            if ($this->isNewRecord || !empty($this->password)) {
-                $this->password_hash = Yii::$app->security->generatePasswordHash($this->password);
-                $this->auth_key = Yii::$app->security->generateRandomString();
+            if ($this->isNewRecord || $this->isAttributeChanged('password')) {
+                $this->password = Yii::$app->security->generatePasswordHash($this->password);
             }
             return true;
         }
         return false;
+    }
+
+    public function validatePassword($password)
+    {
+        return Yii::$app->security->validatePassword($password, $this->password);
     }
 
     /**

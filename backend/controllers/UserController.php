@@ -3,39 +3,61 @@
 namespace app\controllers;
 
 use Yii;
-use yii\web\Controller;
+use yii\rest\Controller;
 use app\models\User;
-use yii\web\UnprocessableEntityHttpException;
-use yii\web\ConflictHttpException;
-
 
 class UserController extends Controller
 {
     public function actionSignup()
     {
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+    
+        $csrfToken = Yii::$app->request->getHeaders()->get('X-CSRF-Token');
+        if (!$csrfToken) {
+            Yii::$app->response->statusCode = 400;
+            return ['message' => 'Ошибка запроса', 'errors' => 'Отсутствует CSRF токен'];
+        }
+    
         $model = new User();
-        $model->load(Yii::$app->request->post(), '');
-
+        $model->load(Yii::$app->request->getBodyParams(), '');
+    
         if ($model->save()) {
             Yii::$app->response->statusCode = 201;
             return ['message' => 'Успешная регистрация!', 'user' => $model];
         } else {
             if ($model->hasErrors()) {
                 Yii::$app->response->statusCode = 422;
-                throw new UnprocessableEntityHttpException('Ошибка валидации', 422, null, $model->getErrors());
+                return [
+                    'message' => 'Ошибка валидации',
+                    'errors' => $model->getErrors()
+                ];
             } else {
                 Yii::$app->response->statusCode = 409;
-                throw new ConflictHttpException('Этот адрес электронной почты уже используется', 409);
+                return ['message' => 'Этот адрес электронной почты уже используется'];
             }
         }
-    }
+    }    
 
-    public function actionSignIn()
+    public function actionSignin()
     {
-        $request = Yii::$app->request->post();
-        $user = User::findOne(['email' => $request['email']]);
+        $request = Yii::$app->request;
+        $csrfToken = $request->getHeaders()->get('X-CSRF-Token');
 
-        if ($user && $user->validatePassword($request['password'])) {
+        if (!$csrfToken) {
+            Yii::$app->response->statusCode = 400;
+            return ['message' => 'Ошибка запроса', 'errors' => 'Отсутствует CSRF токен'];
+        }
+
+        $email = $request->getBodyParam('email');
+        $password = $request->getBodyParam('password');
+
+        if (!$email || !$password) {
+            Yii::$app->response->statusCode = 400;
+            return ['message' => 'Ошибка запроса', 'errors' => 'Некорректные данные'];
+        }
+
+        $user = User::findOne(['email' => $email]);
+        if ($user && $user->validatePassword($password)) {
             return ['message' => 'Успешная авторизация!', 'user' => $user];
         }
 
