@@ -1,7 +1,9 @@
+import React, { useState } from 'react';
+import axios from 'axios';
 import Button from '../components/Button';
 import styles from './Auth.module.scss';
 import { AuthContext } from '../contexts/AuthContext';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 
 const SignUp = () => {
   const { signUp } = useContext(AuthContext);
@@ -32,7 +34,7 @@ const SignUp = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Очистка предыдущих ошибок перед новой валидацией
@@ -100,7 +102,20 @@ const SignUp = () => {
       return;
     }
 
-    signUp(formData);
+    try {
+      // Исключаем confirmPassword из formData перед отправкой
+      const { confirmPassword, ...dataToSend } = formData;
+      console.log(dataToSend);
+      const response = await axios.post('https://dp-viganovsky.xn--80ahdri7a.site/api/signup', dataToSend);
+      console.log(response.data.message);
+      // Можно установить сообщение об успешной регистрации
+    } catch (error) {
+      if (error.response.status === 422) {
+        setErrors(error.response.data.errors);
+      } else {
+        setErrors([error.response.data.message]);
+      }
+    }
   };
 
 

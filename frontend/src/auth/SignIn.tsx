@@ -1,17 +1,18 @@
+import React, { useState } from 'react';
+import axios from 'axios';
 import Button from '../components/Button';
 import styles from './Auth.module.scss';
-import { AuthContext } from '../contexts/AuthContext';
-import { useContext, useState } from 'react';
 
 const SignIn = () => {
-  const { signIn } = useContext(AuthContext);
-
   const [formData, setFormData] = useState({
     email: '',
     password: ''
   });
 
-  const [error, setError] = useState('');
+  const [errors, setErrors] = useState({
+    email: '',
+    password: ''
+  });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -21,19 +22,50 @@ const SignIn = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Очистка предыдущей ошибки перед новой валидацией
-    setError('');
+    // Очистка предыдущих ошибок перед новой валидацией
+    setErrors({
+      email: '',
+      password: ''
+    });
 
-    // Валидация электронной почты и пароля
-    if (!formData.email || !formData.password) {
-      setError('Неверная почта или пароль');
+    // Валидация электронной почты
+    if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      setErrors(prevState => ({
+        ...prevState,
+        email: 'Некорректный формат электронной почты'
+      }));
       return;
     }
 
-    signIn(formData);
+    // Валидация пароля
+    if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{6,}$/.test(formData.password)) {
+      setErrors(prevState => ({
+        ...prevState,
+        password: 'Пароль должен содержать минимум 6 символов, хотя бы одну заглавную букву, одну прописную букву и один специальный символ'
+      }));
+      return;
+    }
+
+    try {
+      const response = await axios.post('https://dp-viganovsky.xn--80ahdri7a.site/api/signin', formData);
+      console.log(response.data.message);
+      // Можно обработать успешный вход
+    } catch (error) {
+      if (error.response.status === 401) {
+        setErrors(prevState => ({
+          ...prevState,
+          email: 'Неверная почта или пароль'
+        }));
+      } else {
+        setErrors(prevState => ({
+          ...prevState,
+          email: 'Произошла ошибка. Попробуйте еще раз.'
+        }));
+      }
+    }
   };
 
   return (
@@ -49,6 +81,7 @@ const SignIn = () => {
             value={formData.email}
             onChange={handleChange}
           />
+          {errors.email && <span className={styles.error}>{errors.email}</span>}
           <input
             type="password"
             name="password"
@@ -57,7 +90,7 @@ const SignIn = () => {
             value={formData.password}
             onChange={handleChange}
           />
-          {error && <span className={styles.error}>{error}</span>}
+          {errors.password && <span className={styles.error}>{errors.password}</span>}
           <Button title="Войти" className="buttonGreen" type="submit" />
         </form>
       </div>

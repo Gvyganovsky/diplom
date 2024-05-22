@@ -65,3 +65,4 @@ class UserController extends Controller
         return ['message' => 'Ошибка авторизации', 'errors' => 'Неверный логин или пароль'];
     }
 }
+
