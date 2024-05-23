@@ -51,7 +51,8 @@ const Entomophages = () => {
     <>
       <Hero
         title="Высокоэффективные Энтомофаги"
-        backgroundImage="./Background/Entomophages.jpg"
+        Background="/Background/Entomophages.jpg"
+        imageAdapt="/Background/2.png"
         text="Внесение энтофагов при помощи БПЛА увеличивает эффективность защиты растений до 90%"
         listAltItems={[
           { img: "./Hero/iconSoy.svg", title: "до 90% сои" },
@@ -59,10 +60,7 @@ const Entomophages = () => {
           { img: "./Hero/iconRape.svg", title: "до 70% рапса" },
           { img: "./Hero/iconSunflower.svg", title: "до 85% подсолнуха" },
           { img: "./Hero/iconCorn.svg", title: "до 80 % кукурудзы" },
-          {
-            img: "./Hero/iconFruits.svg",
-            title: "до 90 % овощных и плодовых культ",
-          },
+          { img: "./Hero/iconFruits.svg", title: "до 90 % овощных и плодовых культ" },
         ]}
       />
 
