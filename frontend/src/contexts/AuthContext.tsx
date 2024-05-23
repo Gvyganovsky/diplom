@@ -1,58 +1,45 @@
-import React, { ReactNode, createContext, useState } from "react";
-import axios from "axios";
+// В контексте AuthContext:
 
-interface User {
-    login: string;
-    email: string;
-    phone: string;
-    address: string;
-    password: string;
-}
+import React, { createContext, useContext, useState, useEffect } from 'react';
 
-interface AuthContextType {
-    user: User | null;
-    signUp: (userData: User) => Promise<void>;
-    signIn: (credentials: { email: string, password: string }) => Promise<void>;
-}
+const AuthContext = createContext();
 
-const AuthContext = createContext<AuthContextType>({
-    user: null,
-    signUp: async () => { },
-    signIn: async () => { }
-});
+export const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+  const [token, setToken] = useState(null);
 
-interface AuthProviderProps {
-    children: ReactNode;
-}
+  useEffect(() => {
+    // При загрузке страницы восстанавливаем данные о пользователе из localStorage
+    const storedToken = localStorage.getItem('token');
+    const storedUser = localStorage.getItem('user');
 
-const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-    const [user, setUser] = useState<User | null>(null);
+    if (storedToken && storedUser) {
+      setToken(storedToken);
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
 
-    const signUp = async (userData: User) => {
-        try {
-            await axios.post("https://dp-viganovsky.xn--80ahdri7a.site/api/signup", userData);
-            setUser(userData);
-        } catch (error) {
-            console.log("Ошибка регистрации:", error);
-            throw error;
-        }
-    };
+  const login = (userData, authToken) => {
+    setUser(userData);
+    setToken(authToken);
+    // Сохраняем данные пользователя и токен в localStorage
+    localStorage.setItem('user', JSON.stringify(userData));
+    localStorage.setItem('token', authToken);
+  };
 
-    const signIn = async (credentials: { email: string, password: string }) => {
-        try {
-            const response = await axios.post("https://dp-viganovsky.xn--80ahdri7a.site/api/signin", credentials);
-            setUser(response.data.user);
-        } catch (error) {
-            console.log("Ошибка авторизации:", error);
-            throw error;
-        }
-    };
+  const logout = () => {
+    setUser(null);
+    setToken(null);
+    // Удаляем данные пользователя и токен из localStorage
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
+  };
 
-    return (
-        <AuthContext.Provider value={{ user, signUp, signIn }}>
-            {children}
-        </AuthContext.Provider>
-    );
-}
+  return (
+    <AuthContext.Provider value={{ user, token, login, logout }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
 
-export { AuthContext, AuthProvider };
+export const useAuth = () => useContext(AuthContext);

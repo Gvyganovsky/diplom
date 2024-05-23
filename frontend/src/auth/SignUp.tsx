@@ -3,8 +3,10 @@ import axios from 'axios';
 import Button from '../components/Button';
 import styles from './Auth.module.scss';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext'; 
 
 const SignUp = () => {
+  const { login } = useAuth();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     login: '',
@@ -110,6 +112,8 @@ const SignUp = () => {
         }
       });
       console.log(response.data.message);
+      const { user, token } = response.data;
+      login(user, token);
       navigate("/profile");
       // Можно установить сообщение об успешной регистрации
     } catch (error) {

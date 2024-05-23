@@ -2,8 +2,13 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import Button from '../components/Button';
 import styles from './Auth.module.scss';
+import { useAuth } from '../contexts/AuthContext'; // Импортируем контекст авторизации
+import { useNavigate } from 'react-router-dom';
 
 const SignIn = () => {
+  const { login } = useAuth(); // Получаем метод login из контекста авторизации
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -22,6 +27,7 @@ const SignIn = () => {
       password: ''
     });
 
+    // Валидация email и пароля
     if (!/\S+@\S+\.\S+/.test(formData.email)) {
       setErrors(prevState => ({
         ...prevState,
@@ -39,13 +45,21 @@ const SignIn = () => {
     }
 
     try {
+      // Отправляем данные на сервер
       const response = await axios.post('https://dp-viganovsky.xn--80ahdri7a.site/api/signin', formData, {
         headers: {
           'X-CSRF-Token': 'J8HioBlDmCc38Uo0qHGn_F2uUVmBq9F6' 
         }
       });
-      console.log(response.data.message);
-      // Можно обработать успешный вход
+
+      // Если вход прошел успешно, получаем данные пользователя и токен из ответа сервера
+      const { user, token } = response.data;
+
+      // Используем метод login из контекста для сохранения данных пользователя и токена
+      login(user, token);
+      navigate("/profile");
+
+      // Можно выполнить дополнительные действия после успешного входа
     } catch (error) {
       if (error.response.status === 401) {
         setErrors(prevState => ({
@@ -59,7 +73,6 @@ const SignIn = () => {
         }));
       }
     }
-    
   };
 
   const handleChange = (e) => {

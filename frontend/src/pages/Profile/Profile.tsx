@@ -1,14 +1,12 @@
-import { useContext } from 'react';
-import { AuthContext } from '../../contexts/delete';
+// В компоненте Profile:
+
+import React from 'react';
+import { useAuth } from '../../contexts/AuthContext';
 import Button from '../../components/Button';
 import styles from './Profile.module.scss';
 
 const Profile = () => {
-    const { user } = useContext(AuthContext) || {};
-
-    if (!user) {
-      return <div>Пожалуйста, войдите в систему</div>;
-    }
+    const { user } = useAuth();
 
     return (
         <div className={styles.container}>
@@ -17,15 +15,15 @@ const Profile = () => {
                     <h2>Личный кабинет</h2>
                     <div className={styles.profileInfo}>
                         <label className={styles.label}>Имя:</label>
-                        <p className={styles.profileText}>{user.login}</p>
+                        <p className={styles.profileText}>{user ? user.login : ''}</p>
                     </div>
                     <div className={styles.profileInfo}>
                         <label className={styles.label}>Email:</label>
-                        <p className={styles.profileText}>{user.email}</p>
+                        <p className={styles.profileText}>{user ? user.email : ''}</p>
                     </div>
                     <div className={styles.profileInfo}>
                         <label className={styles.label}>Телефон:</label>
-                        <p className={styles.profileText}>{user.phone}</p>
+                        <p className={styles.profileText}>{user ? user.phone : ''}</p>
                     </div>
                     <Button title="Редактировать профиль" className="buttonBlue" />
                 </div>
