@@ -13,7 +13,6 @@ const Home = () => {
     <>
       <Hero
         title="AgroScout - беспилотные технологии для сельского хозяйства и промышлености"
-        imageSrc="./iconDrone_flying.svg"
         backgroundImage="./bgBackground.jpg"
         listItems={[
           { title: "50 000 Га", text: "ежегодной обработки" },
