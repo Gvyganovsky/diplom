@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import Button from '../components/Button';
 import styles from './Auth.module.scss';
+import { useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     login: '',
     email: '',
@@ -108,6 +110,7 @@ const SignUp = () => {
         }
       });
       console.log(response.data.message);
+      navigate("/profile");
       // Можно установить сообщение об успешной регистрации
     } catch (error) {
       if (error.response.status === 422) {

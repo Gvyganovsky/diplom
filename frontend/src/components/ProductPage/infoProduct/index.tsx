@@ -3,11 +3,10 @@ import Button from "../../Button";
 import FeatureList from "../../FeatureList/FeatureList";
 import ImageCatalog from "../ImageCatalog";
 import styles from "./infoProduct.module.scss";
-import { AuthContext } from '../../../contexts/delete'; // Импортируем контекст пользователя
 
 const Index = (props: any) => {
   const { product } = props;
-  const authContext = useContext(AuthContext); // Получаем контекст пользователя
+  // const authContext = useContext(AuthContext); // Получаем контекст пользователя
 
   const FeatureListData = [
     { img: '/IconFuel.svg', text: 'Бак для распыления 22 л' },
@@ -18,11 +17,11 @@ const Index = (props: any) => {
     { img: '/iconDroneone.svg', text: 'Скорость полета 10 м/с' },
   ];
 
-  const handleAddToBasket = () => {
-    if (authContext && product) {
-      authContext.addToBasket(product, 1); // Добавляем товар в корзину с количеством 1
-    }
-  };
+  // const handleAddToBasket = () => {
+  //   if (authContext && product) {
+  //     authContext.addToBasket(product, 1); // Добавляем товар в корзину с количеством 1
+  //   }
+  // };
 
   if (!product) {
     return <div>ЫЫы</div>
@@ -46,7 +45,7 @@ const Index = (props: any) => {
           </div>
           <div>
             {/* При нажатии на кнопку вызываем функцию handleAddToBasket */}
-            <Button title="Добавить в корзину" onClick={handleAddToBasket} className={styles.buttonAlt} />
+            {/* <Button title="Добавить в корзину" onClick={handleAddToBasket} className={styles.buttonAlt} /> */}
             <Button title="Купить в 1 клик" link="Product" className={styles.buttonAlt} />
           </div>
         </div>

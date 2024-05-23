@@ -14,7 +14,7 @@ import Basket from "./components/Basket";
 import SignUp from "./auth/SignUp";
 import SignIn from "./auth/SignIn";
 import Profile from "./pages/Profile/Profile";
-import { AuthProvider } from './contexts/delete';
+import { AuthProvider } from './contexts/AuthContext';
 import React from "react";
 import BasketContext from "./contexts/BasketContext";
 

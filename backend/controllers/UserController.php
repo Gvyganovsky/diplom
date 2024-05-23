@@ -5,9 +5,21 @@ namespace app\controllers;
 use Yii;
 use yii\rest\Controller;
 use app\models\User;
+use Firebase\JWT\JWT;
 
 class UserController extends Controller
 {
+    protected function generateToken($userId)
+    {
+        $secretKey = 'c8qC@34V1zgM#T!k%Fp5vD@7^Rp6fKb!';
+        $payload = [
+            'user_id' => $userId,
+            'exp' => time() + 3600
+        ];
+        $token = JWT::encode($payload, $secretKey, 'HS256');
+        return $token;
+    }
+
     public function actionSignup()
     {
         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
@@ -24,8 +36,9 @@ class UserController extends Controller
         $model->load($jsonData, ''); 
 
         if ($model->save()) {
+            $token = $this->generateToken($model->id);
             Yii::$app->response->statusCode = 201;
-            return ['message' => 'Успешная регистрация!', 'user' => $model];
+            return ['message' => 'Успешная регистрация!', 'user' => $model, 'token' => $token];
         } else {
             if ($model->hasErrors()) {
                 Yii::$app->response->statusCode = 422;
@@ -67,7 +80,8 @@ class UserController extends Controller
 
         $user = User::findOne(['email' => $email]);
         if ($user && $user->validatePassword($password)) {
-            return ['message' => 'Успешная авторизация!', 'user' => $user];
+            $token = $this->generateToken($user->id);
+            return ['message' => 'Успешная авторизация!', 'user' => $user, 'token' => $token];
         }
 
         Yii::$app->response->statusCode = 401;

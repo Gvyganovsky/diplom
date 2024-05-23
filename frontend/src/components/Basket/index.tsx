@@ -2,21 +2,21 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import style from "./Basket.module.scss";
 import Button from "../Button";
-import { AuthContext } from "../../contexts/delete";
+// import { AuthContext } from "../../contexts/AuthContext";
 import BasketContext from "../../contexts/BasketContext";
 
 const Basket = () => {
-  const { createOrder, basket } = useContext(AuthContext);
+  // const { createOrder, basket } = useContext(AuthContext);
   const { setBasketOpened } = useContext(BasketContext);
 
-  const handleOrder = async () => {
-    try {
-      await createOrder();
-      setBasketOpened(false); // Закрываем корзину после успешного создания заказа
-    } catch (error) {
-      console.error('Ошибка создания заказа:', error);
-    }
-  };
+  // const handleOrder = async () => {
+  //   try {
+  //     await createOrder();
+  //     setBasketOpened(false); // Закрываем корзину после успешного создания заказа
+  //   } catch (error) {
+  //     console.error('Ошибка создания заказа:', error);
+  //   }
+  // };
 
   return (
     <div className={style.shadow} onClick={() => setBasketOpened(false)}>
@@ -31,7 +31,7 @@ const Basket = () => {
             className={style.iconClose}
             onClick={() => setBasketOpened(false)}
           />
-          <ul className={style.list}>
+          {/* <ul className={style.list}>
             {basket && basket.length > 0 ? (
               basket.map((item, index) => (
                 <li className={style.item} key={index}>
@@ -87,7 +87,7 @@ const Basket = () => {
                 <Link to="/Catalog" className={style.cont}>Продолжить покупки</Link>
               </>
             )}
-          </ul>
+          </ul> */}
         </div>
       </div>
     </div>
