@@ -22,8 +22,9 @@ const Catalog = () => {
     <>
       <Hero
         title="Дрон опрыскиватель AGR A22"
-        imageSrc="./iconDrone_flying.svg"
-        backgroundImage="./Background/Catalog.jpg"
+        Background="/Background/Catalog.jpg"
+        imageAdapt="/Background/5.png"
+        text="Высокое качество продукции и хороший урожай - результат точного планирования и быстрого реагирования на возникающие посевам угроз."
         listAltItems={[
           { img: "./Catalog/iconTime.svg", title: "Время полета 15 минут" },
           { img: "./Catalog/icoFly.svg", title: "Скорость полета" },

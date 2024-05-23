@@ -9,7 +9,8 @@ const MapMonitoring = () => {
     <>
       <Hero
         title="Агромониторинг для управления бизнесом"
-        backgroundImage="./Background/MapMonitoring.jpg"
+        Background="/Background/MapMonitoring.jpg"
+        imageAdapt="/Background/4.png"
         text="Высокое качество продукции и хороший урожай - результат точного планирования и быстрого реагирования на возникающие посевам угроз."
         listAltItems={[
           {
