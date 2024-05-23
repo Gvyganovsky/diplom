@@ -62,3 +62,41 @@
         font-size: 16px;
     }
 }
+
+@media (max-width: 1000px) {
+    .imageBlock {
+        display: none;
+    }
+}
+
+@media (max-width: 1000px) {
+    .title {
+        font-size: 42px;
+        text-align: center;
+    }
+
+    .text {
+        font-size: 24px;
+        text-align: center;
+    }
+}
+
+@media (max-width: 550px) {
+    .title {
+        font-size: 32px;
+    }
+
+    .text {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 450px) {
+    .title {
+        font-size: 20px;
+    }
+
+    .text {
+        font-size: 14px;
+    }
+}
