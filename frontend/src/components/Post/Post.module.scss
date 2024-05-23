@@ -18,14 +18,13 @@
 
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
 
   position: relative;
 }
 
 .img {
-    position: absolute;
-    left: -34px;
+
 }
 
 .textBlock {
@@ -36,8 +35,42 @@
   font-weight: 300;
   font-size: 18px;
   line-height: 172%;
-  margin-left: 220px;
-  margin-top: 50px;
 
   width: 100%;
+}
+
+.icon {
+  margin-right: 20px;
+}
+
+.enemyBlock {
+  display: flex;
+  align-items: center;
+  margin-top: 30px;
+}
+
+.list {
+  margin-top: 30px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  max-width: 480px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  align-items: center;
+  margin-right: 24px;
+  margin: 6px 24px 6px 0;
+  width: 100px;
+}
+
+.iconCheck {
+  margin-right: 12px;
+}
+
+.postText {
+  font-weight: 300;
+  font-size: 18px;
 }

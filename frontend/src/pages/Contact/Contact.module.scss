@@ -1,5 +1,14 @@
 .contact {
-  margin-top: 40px;
+  margin: 40px 0 110px;
+  height: 80vh;
+}
+
+.container {
+  max-width: 1360px;
+  padding: 0 30px;
+  margin: 0 auto;
+  font-weight: 400;
+  position: relative;
 }
 
 .content {
@@ -33,11 +42,6 @@
   position: relative;
 }
 
-.title {
-  font-weight: 400;
-  font-size: 62px;
-}
-
 .text__small {
   font-weight: 300;
   font-size: 18px;
@@ -59,4 +63,10 @@
 
 .info button {
   margin-top: 80px;
+}
+
+@media (max-width: 1600px) {
+  .map {
+    width: 800px;
+  }
 }
