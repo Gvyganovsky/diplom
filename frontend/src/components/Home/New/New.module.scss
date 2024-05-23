@@ -1,8 +1,8 @@
 .new {
   width: 420px;
-  height: 600px;
   margin: 0 auto;
   text-align: justify;
+  display: grid;
 }
 
 .img {
@@ -11,9 +11,9 @@
 }
 
 .title {
-  margin-top: 50px;
   font-size: 22px;
   font-weight: 400;
+  margin-top: 24px;
 }
 
 .text {
@@ -21,6 +21,7 @@
   font-size: 18px;
   line-height: 172%;
   margin: 30px 0;
+  height: 180px;
 }
 
 .link {
@@ -30,4 +31,10 @@
 
   border-bottom: 1px solid #02e502;
   padding-bottom: 12px;
+}
+
+
+.block {
+  max-width: 375px;
+  margin: 0 auto;
 }

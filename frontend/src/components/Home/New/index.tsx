@@ -11,11 +11,13 @@ const index = (props: any) => {
         height={300}
         className={styles.img}
       />
-      <h5 className={styles.title}>{props.title}</h5>
-      <p className={styles.text}>{props.text}</p>
-      <Link to="/" className={styles.link}>
-        Читать полностью
-      </Link>
+      <div className={styles.block}>
+        <h5 className={styles.title}>{props.title}</h5>
+        <p className={styles.text}>{props.text}</p>
+        <Link to="/" className={styles.link}>
+          Читать полностью
+        </Link>
+      </div>
     </article>
   );
 };

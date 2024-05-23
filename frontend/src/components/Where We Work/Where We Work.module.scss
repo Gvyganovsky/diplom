@@ -48,6 +48,24 @@
 
 @media (max-width: 1400px) {
   .img {
+    max-width: 720px;
+    max-height: 800px;
+    top: -160px;
+  }
+}
+
+@media (max-width: 1260px) {
+  .img {
     position: static;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .whereWeWork {
+    display: grid;
+  }
+
+  .container {
+    margin: 20px auto;
   }
 }
