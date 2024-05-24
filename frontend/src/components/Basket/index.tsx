@@ -33,11 +33,15 @@ const Basket = () => {
           const productResponses = await Promise.all(productRequests);
           const productData = await Promise.all(productResponses.map(res => res.json()));
 
-          // Объединяем данные корзины и продуктов
-          const combinedData = data.map((item, index) => ({
-            ...item,
-            productDetails: productData[index]
-          }));
+          // Парсинг строки image в массив и объединение данных корзины и продуктов
+          const combinedData = data.map((item, index) => {
+            const productDetails = productData[index];
+            productDetails.image = JSON.parse(productDetails.image); // Парсинг image
+            return {
+              ...item,
+              productDetails
+            };
+          });
 
           setProducts(combinedData);
         } else {
@@ -76,7 +80,7 @@ const Basket = () => {
                 <li className={style.item} key={index}>
                   <div className={style.hero}>
                     <img
-                      src={item.productDetails.image}
+                      src={`/Product/${item.productDetails.name}/${item.productDetails.image[0]}`} // Получение первого элемента из массива image
                       alt={item.productDetails.name}
                       width={225}
                       height={150}
@@ -103,7 +107,7 @@ const Basket = () => {
                     />
                   </div>
                   <div className={style.footer}>
-                    <Link to="./Catalog" className={style.link} onClick={() => setBasketOpened(false)}>
+                    <Link to="./Catalog" className={style.link}>
                       Продолжить покупки
                     </Link>
                     <p className={style.allPrice}>
