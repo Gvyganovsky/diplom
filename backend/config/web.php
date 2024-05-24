@@ -51,6 +51,8 @@ $config = [
                 'GET product/<id:\d+>' => 'product/view',
                 'GET products' => 'product/products',
 
+                'POST basket/add' => 'basket/add',
+
                 'POST signup' => 'user/signup',
                 'POST signin' => 'user/signin',
             ],
