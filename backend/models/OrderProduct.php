@@ -7,6 +7,7 @@ use Yii;
 /**
  * This is the model class for table "order_product".
  *
+ * @property int $id
  * @property int|null $order_id
  * @property int|null $product_id
  * @property int|null $quantity
@@ -42,6 +43,7 @@ class OrderProduct extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
+            'id' => 'ID',
             'order_id' => 'Order ID',
             'product_id' => 'Product ID',
             'quantity' => 'Quantity',
