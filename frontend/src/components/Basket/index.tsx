@@ -57,6 +57,31 @@ const Basket = () => {
     fetchBasketData();
   }, []);
 
+  const handleCheckout = async () => {
+    try {
+      // Получаем информацию о пользователе из локального хранилища
+      const userData = localStorage.getItem("user");
+      if (!userData) {
+        console.error("Данные пользователя отсутствуют в локальном хранилище");
+        return;
+      }
+      const { id: userId } = JSON.parse(userData);
+
+      const response = await fetch(`https://dp-viganovsky.xn--80ahdri7a.site/api/checkout/${userId}`, {
+        method: "POST"
+      });
+      const data = await response.json();
+      if (data.success) {
+        console.log("Заказ успешно оформлен");
+        // Здесь можно добавить дополнительную логику, например, очистку корзины или переход на страницу с подтверждением заказа
+      } else {
+        console.error("Ошибка при оформлении заказа:", data.message);
+      }
+    } catch (error) {
+      console.error("Ошибка при оформлении заказа:", error);
+    }
+  };
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -106,15 +131,6 @@ const Basket = () => {
                       className={style.Urn}
                     />
                   </div>
-                  <div className={style.footer}>
-                    <Link to="./Catalog" className={style.link}>
-                      Продолжить покупки
-                    </Link>
-                    <p className={style.allPrice}>
-                      Всего: <span className={style.number}>23</span>
-                    </p>
-                    <Button title="Оформить заказ" className="ButtonGreen" />
-                  </div>
                 </li>
               ))
             ) : (
@@ -129,6 +145,17 @@ const Basket = () => {
                 <p className={style.text}>Корзина пуста</p>
                 <Link to="/Catalog" className={style.cont}>Продолжить покупки</Link>
               </>
+            )}
+           {products.length > 0 && (
+              <div className={style.footer}>
+                <Link to="./Catalog" className={style.link}>
+                  Продолжить покупки
+                </Link>
+                <p className={style.allPrice}>
+                  Всего: <span className={style.number}>23</span>
+                </p>
+                <Button title="Оформить заказ" className="ButtonGreen" onClick={handleCheckout} />
+              </div>
             )}
           </ul>
         </div>

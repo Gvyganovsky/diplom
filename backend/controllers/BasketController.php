@@ -6,11 +6,49 @@ use Yii;
 use yii\web\Controller;
 use yii\web\Response;
 use app\models\Basket;
+use app\models\Order;
+use app\models\OrderProduct;
 
 class BasketController extends Controller
 {
     // Отключаем проверку CSRF для действия добавления в корзину
     public $enableCsrfValidation = false;
+
+    public function actionCheckout($userId)
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
+        // Создаем новый заказ
+        $order = new Order();
+        $order->user = $userId;
+        $order->createdAt = time(); // Установим текущую дату и время создания заказа
+        if (!$order->save()) {
+            return ['success' => false, 'message' => 'Произошла ошибка при создании заказа.'];
+        }
+
+        // Получаем товары из корзины пользователя
+        $basketItems = Basket::find()
+            ->where(['user' => $userId])
+            ->all();
+
+        // Добавляем товары в заказ и сохраняем их
+        foreach ($basketItems as $basketItem) {
+            $orderProduct = new OrderProduct();
+            $orderProduct->order_id = $order->id;
+            $orderProduct->product_id = $basketItem->product;
+            $orderProduct->quantity = $basketItem->count;
+            if (!$orderProduct->save()) {
+                // Если сохранение не удалось, откатываем транзакцию и возвращаем ошибку
+                $order->delete(); // Удаляем созданный заказ
+                return ['success' => false, 'message' => 'Произошла ошибка при добавлении товаров в заказ.'];
+            }
+        }
+
+        // Удаляем все записи из корзины пользователя
+        Basket::deleteAll(['user' => $userId]);
+
+        return ['success' => true, 'message' => 'Заказ успешно оформлен.'];
+    }
 
     public function actionAdd()
     {
@@ -51,13 +89,13 @@ class BasketController extends Controller
     }
 
     public function actionGet($userId)
-{
-    Yii::$app->response->format = Response::FORMAT_JSON;
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
 
-    $basketItems = Basket::find()
-        ->where(['user' => $userId])
-        ->all();
+        $basketItems = Basket::find()
+            ->where(['user' => $userId])
+            ->all();
 
-    return $basketItems;
-}
+        return $basketItems;
+    }
 }
