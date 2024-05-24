@@ -49,4 +49,15 @@ class BasketController extends Controller
             return ['success' => false, 'message' => 'Недостаточно данных для добавления товара в корзину.'];
         }
     }
+
+    public function actionGet($userId)
+{
+    Yii::$app->response->format = Response::FORMAT_JSON;
+
+    $basketItems = Basket::find()
+        ->where(['user' => $userId])
+        ->all();
+
+    return $basketItems;
+}
 }

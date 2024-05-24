@@ -1,22 +1,61 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import style from "./Basket.module.scss";
 import Button from "../Button";
-// import { AuthContext } from "../../contexts/AuthContext";
 import BasketContext from "../../contexts/BasketContext";
 
 const Basket = () => {
-  // const { createOrder, basket } = useContext(AuthContext);
   const { setBasketOpened } = useContext(BasketContext);
+  const [basketData, setBasketData] = useState([]);
+  const [products, setProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  // const handleOrder = async () => {
-  //   try {
-  //     await createOrder();
-  //     setBasketOpened(false); // Закрываем корзину после успешного создания заказа
-  //   } catch (error) {
-  //     console.error('Ошибка создания заказа:', error);
-  //   }
-  // };
+  useEffect(() => {
+    const fetchBasketData = async () => {
+      try {
+        // Получаем информацию о пользователе из локального хранилища
+        const userData = localStorage.getItem("user");
+        if (!userData) {
+          console.error("Данные пользователя отсутствуют в локальном хранилище");
+          return;
+        }
+        const { id: userId } = JSON.parse(userData);
+
+        const response = await fetch(`https://dp-viganovsky.xn--80ahdri7a.site/api/basket/get/${userId}`);
+        if (response.ok) {
+          const data = await response.json();
+          setBasketData(data);
+
+          // Получаем данные о продуктах
+          const productRequests = data.map(item =>
+            fetch(`https://dp-viganovsky.xn--80ahdri7a.site/api/product/${item.product}`)
+          );
+          const productResponses = await Promise.all(productRequests);
+          const productData = await Promise.all(productResponses.map(res => res.json()));
+
+          // Объединяем данные корзины и продуктов
+          const combinedData = data.map((item, index) => ({
+            ...item,
+            productDetails: productData[index]
+          }));
+
+          setProducts(combinedData);
+        } else {
+          console.error("Ошибка получения данных с сервера");
+        }
+      } catch (error) {
+        console.error("Ошибка получения данных:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchBasketData();
+  }, []);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className={style.shadow} onClick={() => setBasketOpened(false)}>
@@ -31,30 +70,30 @@ const Basket = () => {
             className={style.iconClose}
             onClick={() => setBasketOpened(false)}
           />
-          {/* <ul className={style.list}>
-            {basket && basket.length > 0 ? (
-              basket.map((item, index) => (
+          <ul className={style.list}>
+            {products.length > 0 ? (
+              products.map((item, index) => (
                 <li className={style.item} key={index}>
                   <div className={style.hero}>
                     <img
-                      src={item.product.image[0]}
-                      alt={item.product.name}
+                      src={item.productDetails.image}
+                      alt={item.productDetails.name}
                       width={225}
                       height={150}
                       className={style.img}
                     />
                     <div className={style.textBlock}>
-                      <h5 className={style.name}>{item.product.name}</h5>
-                      <p className={style.article}>Артикул: {item.product.id}</p>
+                      <h5 className={style.name}>{item.productDetails.name}</h5>
+                      <p className={style.article}>Артикул: {item.productDetails.id}</p>
                     </div>
                   </div>
                   <div className={style.priceBlock}>
                     <div className={style.countBlock}>
                       <p className={style.countIcon}>-</p>
-                      <p className={style.count}>{item.quantity}</p>
+                      <p className={style.count}>{item.count}</p>
                       <p className={style.countIcon}>+</p>
                     </div>
-                    <p className={style.price}>${item.product.price}</p>
+                    <p className={style.price}>${item.productDetails.price}</p>
                     <img
                       src="./iconUrn.svg"
                       alt="iconUrn"
@@ -64,13 +103,13 @@ const Basket = () => {
                     />
                   </div>
                   <div className={style.footer}>
-                    <Link to="./Catalog" className={style.link}>
+                    <Link to="./Catalog" className={style.link} onClick={() => setBasketOpened(false)}>
                       Продолжить покупки
                     </Link>
                     <p className={style.allPrice}>
-                      Всего: <span className={style.number}>${basket.reduce((total, item) => total + item.product.price * item.quantity, 0)}</span>
+                      Всего: <span className={style.number}>23</span>
                     </p>
-                    <Button title="Оформить заказ" className="ButtonGreen" onClick={handleOrder} />
+                    <Button title="Оформить заказ" className="ButtonGreen" />
                   </div>
                 </li>
               ))
@@ -87,7 +126,7 @@ const Basket = () => {
                 <Link to="/Catalog" className={style.cont}>Продолжить покупки</Link>
               </>
             )}
-          </ul> */}
+          </ul>
         </div>
       </div>
     </div>
