@@ -53,6 +53,8 @@ $config = [
 
                 'POST checkout/<userId:\d+>' => 'basket/checkout',
 
+                'GET orders/<userId:\d+>' => 'order/orders',
+
                 'POST basket/add' => 'basket/add',
                 'GET basket/get/<userId:\d+>' => 'basket/get',
 

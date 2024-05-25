@@ -17,6 +17,7 @@ import Profile from "./pages/Profile/Profile";
 import { AuthProvider } from './contexts/AuthContext';
 import React from "react";
 import BasketContext from "./contexts/BasketContext";
+import Orders from "./pages/Orders/Orders";
 
 function App() {
   const [basketOpened, setBasketOpened] = React.useState(false);
@@ -37,6 +38,8 @@ function App() {
           <Route path="/News" element={<News />} />
           <Route path="/Catalog" element={<Catalog />} />
           <Route path="/Product/:id" element={<Product />} />
+          <Route path="/Orders" element={<Orders />} />
+
           <Route path="/profile" element={<Profile />} />
           <Route path="/auth/signup" element={<SignUp />} />
           <Route path="/auth/signin" element={<SignIn />} />

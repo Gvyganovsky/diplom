@@ -49,7 +49,7 @@ const HeaderDropDownUser = [
     text: "Профиль"
   },
   {
-    link: "/",
+    link: "/orders",
     image: "/IconOrders-outlined.svg",
     text: "Мои заказы"
   },
