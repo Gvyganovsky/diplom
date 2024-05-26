@@ -45,7 +45,7 @@ const Catalog = () => {
               <Product
                   key={product.id}
                   img={product.img}
-                  title={product.title}
+                  name={product.name}
                   brand={product.brand}
                   model={product.model}
                   price={product.price}
