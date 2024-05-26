@@ -6,17 +6,17 @@ import Hero from "../components/Hero/index.tsx";
 import React from "react";
 
 const Catalog = () => {
-    const [product, setProduct] = React.useState([]);
+  const [product, setProduct] = React.useState([]);
 
-    React.useEffect(() => {
-        fetch("https://dp-viganovsky.xn--80ahdri7a.site/api/products")
-            .then((res) => {
-                return res.json();
-            })
-            .then((json) => {
-                setProduct(json);
-            });
-    }, []);
+  React.useEffect(() => {
+    fetch("https://dp-viganovsky.xn--80ahdri7a.site/api/products")
+      .then((res) => {
+        return res.json();
+      })
+      .then((json) => {
+        setProduct(json);
+      });
+  }, []);
 
   return (
     <>
@@ -43,13 +43,13 @@ const Catalog = () => {
           <div className={styles.catalog}>
             {product.map((product) => (
               <Product
-                  key={product.id}
-                  img={product.img}
-                  name={product.name}
-                  brand={product.brand}
-                  model={product.model}
-                  price={product.price}
-                  id={product.id}
+                key={product.id}
+                image={product.image}
+                name={product.name}
+                brand={product.brand}
+                model={product.model}
+                price={product.price}
+                id={product.id}
               />
             ))}
           </div>

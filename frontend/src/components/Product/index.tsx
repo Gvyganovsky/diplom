@@ -12,15 +12,21 @@ interface productProps {
 }
 
 const index: React.FC<productProps> = ({ id, image, name, brand, model, price }) => {
+  // Преобразование строки JSON в массив
+  const imagesArray = JSON.parse(image) as string[];
+  // Берем первое изображение в качестве основного
+  const mainImage = imagesArray[0];
+
   return (
     <li className={styles.product}>
       <img
-        src={`/Product/${name}/${image}`}
+        src={`/Product/${name}/${mainImage}`}
         alt="product"
         width={260}
         height={160}
         className={styles.img}
       />
+      {/* Остальной код компонента остается без изменений */}
       <div className={styles.product__info}>
         <h5 className={styles.product__title}>{name}</h5>
         <div className={styles.product__block}>
@@ -33,5 +39,6 @@ const index: React.FC<productProps> = ({ id, image, name, brand, model, price })
     </li>
   );
 };
+
 
 export default index;
