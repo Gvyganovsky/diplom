@@ -62,8 +62,11 @@ $config = [
 
                 'POST signup' => 'user/signup',
                 'POST signin' => 'user/signin',
-
+                'GET user/<id:\d+>' => 'user/user',
                 'GET users' => 'user/users',
+                'DELETE user/delete/<id:\d+>' => 'user/delete',
+                'PUT user/edit/<id:\d+>' => 'user/edit',
+
                 'DELETE order/delete/<orderId:\d+>' => 'order/delete',
             ],
         ],

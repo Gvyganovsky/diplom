@@ -127,4 +127,102 @@ class UserController extends Controller
             return ['message' => 'Пользователи не найдены'];
         }
     }
+
+    public function actionDelete($id)
+    {
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+        $authHeader = Yii::$app->request->getHeaders()->get('Authorization');
+        if (!$authHeader) {
+            Yii::$app->response->statusCode = 401;
+            return ['message' => 'Ошибка авторизации', 'errors' => 'Токен отсутствует'];
+        }
+
+        $token = str_replace('Bearer ', '', $authHeader);
+        $currentUser = $this->getUserFromToken($token);
+
+        if (!$currentUser || $currentUser->admin != 1) {
+            Yii::$app->response->statusCode = 403;
+            return ['message' => 'Доступ запрещен', 'errors' => 'Недостаточно прав'];
+        }
+
+        $user = User::findOne($id);
+
+        if ($user) {
+            if ($user->delete()) {
+                return ['message' => 'Пользователь успешно удален'];
+            } else {
+                Yii::$app->response->statusCode = 500;
+                return ['message' => 'Ошибка удаления пользователя'];
+            }
+        } else {
+            Yii::$app->response->statusCode = 404;
+            return ['message' => 'Пользователь не найден'];
+        }
+    }
+
+    public function actionEdit($id)
+    {
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+    
+        $authHeader = Yii::$app->request->getHeaders()->get('Authorization');
+        if (!$authHeader) {
+            Yii::$app->response->statusCode = 401;
+            return ['message' => 'Ошибка авторизации', 'errors' => 'Токен отсутствует'];
+        }
+    
+        $token = str_replace('Bearer ', '', $authHeader);
+        $currentUser = $this->getUserFromToken($token);
+    
+        if (!$currentUser || $currentUser->admin != 1) {
+            Yii::$app->response->statusCode = 403;
+            return ['message' => 'Доступ запрещен', 'errors' => 'Недостаточно прав'];
+        }
+    
+        $user = User::findOne($id);
+    
+        if ($user) {
+            $jsonData = json_decode(Yii::$app->request->getRawBody(), true);
+            $user->load($jsonData, '');
+    
+            if ($user->save()) {
+                return ['message' => 'Пользователь успешно отредактирован', 'user' => $user];
+            } else {
+                Yii::$app->response->statusCode = 422;
+                return ['message' => 'Ошибка валидации', 'errors' => $user->getErrors()];
+            }
+        } else {
+            Yii::$app->response->statusCode = 404;
+            return ['message' => 'Пользователь не найден'];
+        }
+    }
+    
+    public function actionUser($id)
+    {
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+    
+        $authHeader = Yii::$app->request->getHeaders()->get('Authorization');
+        if (!$authHeader) {
+            Yii::$app->response->statusCode = 401;
+            return ['message' => 'Ошибка авторизации', 'errors' => 'Токен отсутствует'];
+        }
+    
+        $token = str_replace('Bearer ', '', $authHeader);
+        $currentUser = $this->getUserFromToken($token);
+    
+        if (!$currentUser || $currentUser->admin != 1) {
+            Yii::$app->response->statusCode = 403;
+            return ['message' => 'Доступ запрещен', 'errors' => 'Недостаточно прав'];
+        }
+    
+        $user = User::findOne($id);
+    
+        if ($user) {
+            return ['message' => 'Пользователь найден', 'user' => $user];
+        } else {
+            Yii::$app->response->statusCode = 404;
+            return ['message' => 'Пользователь не найден'];
+        }
+    }
+    
 }

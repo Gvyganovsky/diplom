@@ -1,9 +1,12 @@
+// Admin.js
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from './Admin.module.scss';
 
 const Admin = () => {
     const [users, setUsers] = useState([]);
     const [products, setProducts] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchUsers = async () => {
@@ -61,13 +64,39 @@ const Admin = () => {
     }, []);
 
     const handleDeleteUser = async (id) => {
-        // Implement delete user functionality
-        console.log(`Deleting user with id: ${id}`);
+        try {
+            console.log(`Deleting user with id: ${id}`);
+            
+            const token = localStorage.getItem('token');
+            const response = await fetch(`https://dp-viganovsky.xn--80ahdri7a.site/api/user/delete/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+    
+            if (response.ok) {
+                console.log(`User with id ${id} deleted successfully.`);
+                // Удалить пользователя из состояния users
+                setUsers(prevUsers => prevUsers.filter(user => user.id !== id));
+                
+                // Удалить информацию о пользователе из локального хранилища
+                localStorage.removeItem('token');
+                localStorage.removeItem('user');
+            } else {
+                console.error('Failed to delete user:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Error deleting user:', error);
+        }
     };
 
-    const handleDeleteProduct = async (id) => {
-        // Implement delete product functionality
-        console.log(`Deleting product with id: ${id}`);
+    const handleEditUser = (id) => {
+        navigate(`/admin/users/edit/${id}`);
+    };
+
+    const handleEditProduct = (id) => {
+        navigate(`/admin/products/edit/${id}`);
     };
 
     return (
@@ -98,8 +127,10 @@ const Admin = () => {
                                     <td>{user.address}</td>
                                     <td>{user.admin === 1 ? 'Да' : 'Нет'}</td>
                                     <td>
-                                        <button onClick={() => handleDeleteUser(user.id)} className={styles.deleteButton}>Удалить</button>
-                                        <button className={styles.editButton}>Редактировать</button>
+                                        <>
+                                            <button onClick={() => handleDeleteUser(user.id)} className={styles.deleteButton}>Удалить</button>
+                                            <button onClick={() => handleEditUser(user.id)} className={styles.editButton}>Редактировать</button>
+                                        </>
                                     </td>
                                 </tr>
                             ))
@@ -137,7 +168,7 @@ const Admin = () => {
                                     <td><img src={`Product/${product.name}/${product.firstImage}`} alt={product.name} width={200} height={140} /></td> {/* отображаем первое изображение */}
                                     <td>
                                         <button onClick={() => handleDeleteProduct(product.id)} className={styles.deleteButton}>Удалить</button>
-                                        <button className={styles.editButton}>Редактировать</button>
+                                        <button onClick={() => handleEditProduct(product.id)} className={styles.editButton}>Редактировать</button>
                                     </td>
                                 </tr>
                             ))

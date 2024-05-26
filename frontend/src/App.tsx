@@ -20,6 +20,8 @@ import BasketContext from "./contexts/BasketContext";
 import Orders from "./pages/Orders/Orders";
 import Admin from "./pages/Admin";
 import ProtectedRoute from "./components/ProtectedRoute";
+import EditUser from "./pages/Admin/EditUser";
+import EditProduct from "./pages/Admin/EditProduct";
 
 function App() {
   const [basketOpened, setBasketOpened] = React.useState(false);
@@ -45,6 +47,21 @@ function App() {
           <Route path="/admin" element={
             <ProtectedRoute>
               <Admin />
+            </ProtectedRoute>
+          } />
+          <Route path="/admin" element={
+            <ProtectedRoute>
+              <Admin />
+            </ProtectedRoute>
+          } />
+          <Route path="/admin/users/edit/:id" element={
+            <ProtectedRoute>
+              <EditUser />
+            </ProtectedRoute>
+          } />
+          <Route path="/admin/products/edit/:id" element={
+            <ProtectedRoute>
+              <EditProduct />
             </ProtectedRoute>
           } />
 
