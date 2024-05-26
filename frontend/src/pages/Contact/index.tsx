@@ -11,8 +11,8 @@ const index = () => {
 
         <Title text="Как с нами связаться" />
 
-        <div className={styles.content}>
           <p className={styles.text__vert}>КОНТАКТЫ</p>
+        <div className={styles.content}>
           <div className={styles.info}>
             <h2 className={styles.title}>AgroScout</h2>
             <p className={styles.text__small}>Наш адрес</p>
