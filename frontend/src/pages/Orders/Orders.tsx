@@ -32,6 +32,21 @@ const Orders = ({ userId }) => {
     fetchOrderDetails();
   }, []);
 
+  const handleCancelOrder = async (orderId) => {
+    try {
+      const response = await axios.delete(`https://dp-viganovsky.xn--80ahdri7a.site/api/order/delete/${orderId}`);
+      if (response.data.success) {
+        // Обновляем список заказов после успешной отмены заказа
+        const updatedOrders = orders.filter(order => order.orderId !== orderId);
+        setOrders(updatedOrders);
+      } else {
+        console.error("Ошибка при отмене заказа:", response.data.message);
+      }
+    } catch (error) {
+      console.error("Ошибка при отмене заказа:", error);
+    }
+  };
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -51,6 +66,13 @@ const Orders = ({ userId }) => {
               </div>
             ))}
           </div>
+          {/* Добавляем кнопку "Отмена заказа" */}
+          <img
+            src="path_to_cancel_button_image"
+            alt="Cancel Order"
+            className={styles.cancelOrderButton}
+            onClick={() => handleCancelOrder(order.orderId)}
+          />
         </div>
       ))}
     </div>

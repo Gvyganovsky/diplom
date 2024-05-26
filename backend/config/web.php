@@ -57,13 +57,14 @@ $config = [
 
                 'POST basket/add' => 'basket/add',
                 'GET basket/get/<userId:\d+>' => 'basket/get',
-                'POST basket/update' => 'basket/update', 
-                'POST basket/delete' => 'basket/delete', 
+                'POST basket/update' => 'basket/update',
+                'POST basket/delete' => 'basket/delete',
 
                 'POST signup' => 'user/signup',
                 'POST signin' => 'user/signin',
 
                 'GET users' => 'user/users',
+                'DELETE order/delete/<orderId:\d+>' => 'order/delete',
             ],
         ],
 

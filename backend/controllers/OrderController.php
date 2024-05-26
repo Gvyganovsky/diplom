@@ -34,10 +34,13 @@ class OrderController extends Controller
                     'quantity' => $orderProduct->quantity,
                 ];
             }
+            // Добавляем кнопку "Отмена заказа" в виде изображения
+            $cancelButton = '<img src="path_to_cancel_button_image" alt="Cancel Order" class="cancel-order-button" data-order-id="' . $order->id . '">';
             $orderDetails[] = [
                 'orderId' => $order->id,
                 'createdAt' => date('Y-m-d H:i:s', $order->createdAt),
                 'products' => $products,
+                'cancelButton' => $cancelButton,
             ];
         }
 
@@ -46,4 +49,27 @@ class OrderController extends Controller
             'orders' => $orderDetails,
         ];
     }
+
+    // Метод для отмены заказа
+    public function actionDelete($orderId)
+{
+    Yii::$app->response->format = Response::FORMAT_JSON;
+
+    // Находим заказ по его ID
+    $order = Order::findOne($orderId);
+
+    if ($order !== null) {
+        // Находим связанные с заказом записи в таблице order_product и удаляем их перед удалением заказа
+        OrderProduct::deleteAll(['order_id' => $orderId]);
+
+        // Отменяем заказ
+        if ($order->delete()) {
+            return ['success' => true, 'message' => 'Заказ успешно отменен.'];
+        } else {
+            return ['success' => false, 'message' => 'Произошла ошибка при отмене заказа.'];
+        }
+    } else {
+        return ['success' => false, 'message' => 'Заказ не найден.'];
+    }
+}
 }
