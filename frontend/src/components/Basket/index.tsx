@@ -1,19 +1,18 @@
 import React, { useContext, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import style from "./Basket.module.scss";
 import Button from "../Button";
 import BasketContext from "../../contexts/BasketContext";
 
 const Basket = () => {
   const { setBasketOpened } = useContext(BasketContext);
-  const [basketData, setBasketData] = useState([]);
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate(); // Используем useNavigate для перенаправления
 
   useEffect(() => {
     const fetchBasketData = async () => {
       try {
-        // Получаем информацию о пользователе из локального хранилища
         const userData = localStorage.getItem("user");
         if (!userData) {
           console.error("Данные пользователя отсутствуют в локальном хранилище");
@@ -24,19 +23,16 @@ const Basket = () => {
         const response = await fetch(`https://dp-viganovsky.xn--80ahdri7a.site/api/basket/get/${userId}`);
         if (response.ok) {
           const data = await response.json();
-          setBasketData(data);
 
-          // Получаем данные о продуктах
           const productRequests = data.map(item =>
             fetch(`https://dp-viganovsky.xn--80ahdri7a.site/api/product/${item.product}`)
           );
           const productResponses = await Promise.all(productRequests);
           const productData = await Promise.all(productResponses.map(res => res.json()));
 
-          // Парсинг строки image в массив и объединение данных корзины и продуктов
           const combinedData = data.map((item, index) => {
             const productDetails = productData[index];
-            productDetails.image = JSON.parse(productDetails.image); // Парсинг image
+            productDetails.image = JSON.parse(productDetails.image);
             return {
               ...item,
               productDetails
@@ -57,9 +53,73 @@ const Basket = () => {
     fetchBasketData();
   }, []);
 
+  const updateProductCount = async (productId, newCount) => {
+    try {
+      const userData = localStorage.getItem("user");
+      if (!userData) {
+        console.error("Данные пользователя отсутствуют в локальном хранилище");
+        return;
+      }
+      const { id: userId } = JSON.parse(userData);
+
+      const response = await fetch(`https://dp-viganovsky.xn--80ahdri7a.site/api/basket/update`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          userId,
+          productId,
+          count: newCount
+        })
+      });
+
+      if (response.ok) {
+        setProducts(prevProducts =>
+          prevProducts.map(product =>
+            product.product === productId ? { ...product, count: newCount } : product
+          )
+        );
+      } else {
+        console.error("Ошибка обновления количества товара в корзине");
+      }
+    } catch (error) {
+      console.error("Ошибка обновления количества товара:", error);
+    }
+  };
+
+  const removeProductFromBasket = async productId => {
+    try {
+      const userData = localStorage.getItem("user");
+      if (!userData) {
+        console.error("Данные пользователя отсутствуют в локальном хранилище");
+        return;
+      }
+      const { id: userId } = JSON.parse(userData);
+
+      const response = await fetch(`https://dp-viganovsky.xn--80ahdri7a.site/api/basket/delete`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          userId,
+          productId
+        })
+      });
+
+      if (response.ok) {
+        setProducts(prevProducts => prevProducts.filter(product => product.product !== productId));
+      } else {
+        console.error("Ошибка удаления товара из корзины");
+      }
+    } catch (error) {
+      console.error("Ошибка удаления товара:", error);
+    }
+  };
+
   const handleCheckout = async () => {
     try {
-      // Получаем информацию о пользователе из локального хранилища
       const userData = localStorage.getItem("user");
       if (!userData) {
         console.error("Данные пользователя отсутствуют в локальном хранилище");
@@ -73,7 +133,8 @@ const Basket = () => {
       const data = await response.json();
       if (data.success) {
         console.log("Заказ успешно оформлен");
-        // Здесь можно добавить дополнительную логику, например, очистку корзины или переход на страницу с подтверждением заказа
+        setBasketOpened(false); // Закрываем корзину
+        navigate('/orders'); // Перенаправляем на страницу заказов
       } else {
         console.error("Ошибка при оформлении заказа:", data.message);
       }
@@ -105,7 +166,7 @@ const Basket = () => {
                 <li className={style.item} key={index}>
                   <div className={style.hero}>
                     <img
-                      src={`/Product/${item.productDetails.name}/${item.productDetails.image[0]}`} // Получение первого элемента из массива image
+                      src={`/Product/${item.productDetails.name}/${item.productDetails.image[0]}`}
                       alt={item.productDetails.name}
                       width={225}
                       height={150}
@@ -118,9 +179,9 @@ const Basket = () => {
                   </div>
                   <div className={style.priceBlock}>
                     <div className={style.countBlock}>
-                      <p className={style.countIcon}>-</p>
+                      <p className={style.countIcon} onClick={() => updateProductCount(item.product, item.count - 1)}>-</p>
                       <p className={style.count}>{item.count}</p>
-                      <p className={style.countIcon}>+</p>
+                      <p className={style.countIcon} onClick={() => updateProductCount(item.product, item.count + 1)}>+</p>
                     </div>
                     <p className={style.price}>${item.productDetails.price}</p>
                     <img
@@ -129,6 +190,7 @@ const Basket = () => {
                       width={17}
                       height={21}
                       className={style.Urn}
+                      onClick={() => removeProductFromBasket(item.product)}
                     />
                   </div>
                 </li>
@@ -143,16 +205,17 @@ const Basket = () => {
                   className={style.image}
                 />
                 <p className={style.text}>Корзина пуста</p>
-                <Link to="/Catalog" className={style.cont}>Продолжить покупки</Link>
               </>
             )}
-           {products.length > 0 && (
+            {products.length > 0 && (
               <div className={style.footer}>
                 <Link to="./Catalog" className={style.link}>
                   Продолжить покупки
                 </Link>
                 <p className={style.allPrice}>
-                  Всего: <span className={style.number}>23</span>
+                  Всего: <span className={style.number}>{
+                    products.reduce((total, item) => total + item.productDetails.price * item.count, 0)
+                  }</span>
                 </p>
                 <Button title="Оформить заказ" className="ButtonGreen" onClick={handleCheckout} />
               </div>

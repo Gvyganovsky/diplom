@@ -57,6 +57,8 @@ $config = [
 
                 'POST basket/add' => 'basket/add',
                 'GET basket/get/<userId:\d+>' => 'basket/get',
+                'POST basket/update' => 'basket/update', 
+                'POST basket/delete' => 'basket/delete', 
 
                 'POST signup' => 'user/signup',
                 'POST signin' => 'user/signin',
@@ -64,6 +66,7 @@ $config = [
                 'GET users' => 'user/users',
             ],
         ],
+
     ],
     'params' => $params,
 ];

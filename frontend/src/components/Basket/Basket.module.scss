@@ -182,7 +182,7 @@
 
 @media (max-width: 650px) {
   .basket {
-    max-width: 320px;
+    max-width: 520px;
   }
 
   .hero {
@@ -233,5 +233,16 @@
 
   .name {
     margin-top: 20px;
+  }
+}
+
+@media (max-width: 650px) {
+  .basket {
+    max-width: 100%;
+  }
+
+  .image {
+    width: 300px;
+    height: 210px;
   }
 }
