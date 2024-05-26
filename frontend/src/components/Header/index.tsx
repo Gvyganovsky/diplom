@@ -3,6 +3,7 @@ import IconsNav from "../iconsNav";
 import LogoBlock from "../LogoBlock";
 import React from "react";
 import BasketContext from "../../contexts/BasketContext";
+import { useAuth } from "../../contexts/AuthContext"; // Импортируем контекст AuthContext
 
 const HeaderDropDownNav = [
   {
@@ -42,31 +43,40 @@ const HeaderDropDownNav = [
   },
 ];
 
-const HeaderDropDownUser = [
-  {
-    link: "/profile",
-    image: "/IconUser-outlined.svg",
-    text: "Профиль"
-  },
-  {
-    link: "/orders",
-    image: "/IconOrders-outlined.svg",
-    text: "Мои заказы"
-  },
-  {
-    link: "/auth/signin",
-    image: "/IconSignIn-outlined.svg",
-    text: "Авторизация"
-  },
-  {
-    link: "/auth/signup",
-    image: "/IconSignUp-outlined.svg",
-    text: "Регистрация"
-  },
-];
-
-const index = () => {
+const Index = () => {
   const { setBasketOpened } = React.useContext(BasketContext);
+  const { user } = useAuth();
+
+  const HeaderDropDownUser = [
+    {
+      link: "/profile",
+      image: "/IconUser-outlined.svg",
+      text: "Профиль"
+    },
+    {
+      link: "/orders",
+      image: "/IconOrders-outlined.svg",
+      text: "Мои заказы"
+    },
+    {
+      link: "/auth/signin",
+      image: "/IconSignIn-outlined.svg",
+      text: "Авторизация"
+    },
+    {
+      link: "/auth/signup",
+      image: "/IconSignUp-outlined.svg",
+      text: "Регистрация"
+    },
+  ];
+
+  if (user && user.admin === 1) {
+    HeaderDropDownUser.push({
+      link: "/admin",
+      image: "/IconAdmin-outlined.svg",
+      text: "Админ панель"
+    });
+  }
 
   const iconsNavData = [
     {
@@ -96,4 +106,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;

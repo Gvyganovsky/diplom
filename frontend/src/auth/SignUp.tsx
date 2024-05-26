@@ -14,6 +14,7 @@ const SignUp = () => {
     phone: '',
     address: '',
     password: '',
+    admin: 0,
     confirmPassword: ''
   });
 

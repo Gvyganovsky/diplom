@@ -18,6 +18,8 @@ import { AuthProvider } from './contexts/AuthContext';
 import React from "react";
 import BasketContext from "./contexts/BasketContext";
 import Orders from "./pages/Orders/Orders";
+import Admin from "./pages/Admin";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   const [basketOpened, setBasketOpened] = React.useState(false);
@@ -39,6 +41,12 @@ function App() {
           <Route path="/Catalog" element={<Catalog />} />
           <Route path="/Product/:id" element={<Product />} />
           <Route path="/Orders" element={<Orders />} />
+
+          <Route path="/admin" element={
+            <ProtectedRoute>
+              <Admin />
+            </ProtectedRoute>
+          } />
 
           <Route path="/profile" element={<Profile />} />
           <Route path="/auth/signup" element={<SignUp />} />

@@ -60,6 +60,8 @@ $config = [
 
                 'POST signup' => 'user/signup',
                 'POST signin' => 'user/signin',
+
+                'GET users' => 'user/users',
             ],
         ],
     ],

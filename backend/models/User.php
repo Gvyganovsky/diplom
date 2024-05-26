@@ -13,7 +13,8 @@ use Yii;
  * @property string $phone
  * @property string $address
  * @property string $password
- *
+ * @property int $admin
+
  * @property Basket[] $baskets
  * @property Order[] $orders
  */
@@ -35,6 +36,7 @@ class User extends \yii\db\ActiveRecord
         return [
             [['login', 'email', 'phone', 'address', 'password'], 'required'],
             ['email', 'email'],
+            ['admin', 'boolean'],
             ['email', 'unique', 'targetClass' => self::class, 'message' => 'Этот адрес электронной почты уже используется'],
             ['password', 'string', 'min' => 6],
             ['password', 'match', 'pattern' => '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{6,}$/', 'message' => 'Пароль должен содержать минимум 6 символов, хотя бы одну заглавную букву, одну прописную букву и один специальный символ'],

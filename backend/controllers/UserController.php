@@ -6,6 +6,7 @@ use Yii;
 use yii\rest\Controller;
 use app\models\User;
 use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 
 class UserController extends Controller
 {
@@ -18,6 +19,17 @@ class UserController extends Controller
         ];
         $token = JWT::encode($payload, $secretKey, 'HS256');
         return $token;
+    }
+
+    protected function getUserFromToken($token)
+    {
+        $secretKey = 'c8qC@34V1zgM#T!k%Fp5vD@7^Rp6fKb!';
+        try {
+            $decoded = JWT::decode($token, new Key($secretKey, 'HS256'));
+            return User::findOne($decoded->user_id);
+        } catch (\Exception $e) {
+            return null;
+        }
     }
 
     public function actionSignup()
@@ -33,7 +45,7 @@ class UserController extends Controller
         $jsonData = json_decode(Yii::$app->request->getRawBody(), true);
 
         $model = new User();
-        $model->load($jsonData, ''); 
+        $model->load($jsonData, '');
 
         if ($model->save()) {
             $token = $this->generateToken($model->id);
@@ -63,7 +75,7 @@ class UserController extends Controller
             return ['message' => 'Ошибка запроса', 'errors' => 'Отсутствует CSRF токен'];
         }
 
-        $jsonData = json_decode(Yii::$app->request->getRawBody(), true);
+        $jsonData = json_decode($request->getRawBody(), true);
 
         if (!isset($jsonData['email']) || !isset($jsonData['password'])) {
             Yii::$app->response->statusCode = 400;
@@ -86,5 +98,33 @@ class UserController extends Controller
 
         Yii::$app->response->statusCode = 401;
         return ['message' => 'Ошибка авторизации', 'errors' => 'Неверный логин или пароль'];
+    }
+
+    public function actionUsers()
+    {
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+        $authHeader = Yii::$app->request->getHeaders()->get('Authorization');
+        if (!$authHeader) {
+            Yii::$app->response->statusCode = 401;
+            return ['message' => 'Ошибка авторизации', 'errors' => 'Токен отсутствует'];
+        }
+
+        $token = str_replace('Bearer ', '', $authHeader);
+        $currentUser = $this->getUserFromToken($token);
+
+        if (!$currentUser || $currentUser->admin != 1) {
+            Yii::$app->response->statusCode = 403;
+            return ['message' => 'Доступ запрещен', 'errors' => 'Недостаточно прав'];
+        }
+
+        $users = User::find()->all();
+
+        if ($users) {
+            return ['message' => 'Список пользователей', 'users' => $users];
+        } else {
+            Yii::$app->response->statusCode = 404;
+            return ['message' => 'Пользователи не найдены'];
+        }
     }
 }
