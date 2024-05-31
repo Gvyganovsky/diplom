@@ -33,18 +33,6 @@ body {
   opacity: 0.2;
 }
 
-<<<<<<< HEAD
-.content {
-  display: flex;
-}
-
-.catalog {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-=======
 .contactForm {
   width: 100%;
   max-width: 600px;
@@ -97,7 +85,6 @@ body {
 }
 
 /* Responsive styles */
->>>>>>> master
 @media (max-width: 1260px) {
   .title {
     text-align: center;
@@ -112,13 +99,6 @@ body {
   .content {
     display: block;
   }
-<<<<<<< HEAD
-
-  .catalog {
-    justify-content: space-between;
-  }
-=======
->>>>>>> master
 }
 
 @media (max-width: 900px) {
@@ -128,10 +108,6 @@ body {
 }
 
 @media (max-width: 710px) {
-<<<<<<< HEAD
-  .catalog {
-    justify-content: center;
-=======
   .title {
     font-size: 64px;
   }
@@ -142,7 +118,6 @@ body {
 
   .input {
     padding: 10px; /* Adjust input padding */
->>>>>>> master
   }
 }
 
@@ -150,12 +125,8 @@ body {
   .title {
     font-size: 48px;
   }
-<<<<<<< HEAD
-}
-=======
 
   .text {
     font-size: 14px;
   }
 }
->>>>>>> master

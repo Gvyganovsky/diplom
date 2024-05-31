@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import styles from './Orders.module.scss';
-<<<<<<< HEAD
-
-const Orders = ({ userId }) => {
-  const [orders, setOrders] = useState([]);
-=======
 import Button from '../../components/Button';
 
 // Определение типов для продуктов и заказов
@@ -24,7 +19,6 @@ interface Order {
 
 const Orders: React.FC = () => {
   const [orders, setOrders] = useState<Order[]>([]);
->>>>>>> master
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -53,18 +47,10 @@ const Orders: React.FC = () => {
     fetchOrderDetails();
   }, []);
 
-<<<<<<< HEAD
-  const handleCancelOrder = async (orderId) => {
-    try {
-      const response = await axios.delete(`https://dp-viganovsky.xn--80ahdri7a.site/api/order/delete/${orderId}`);
-      if (response.data.success) {
-        // Обновляем список заказов после успешной отмены заказа
-=======
   const handleCancelOrder = async (orderId: string) => {
     try {
       const response = await axios.delete(`https://dp-viganovsky.xn--80ahdri7a.site/api/order/delete/${orderId}`);
       if (response.data.success) {
->>>>>>> master
         const updatedOrders = orders.filter(order => order.orderId !== orderId);
         setOrders(updatedOrders);
       } else {
@@ -81,30 +67,6 @@ const Orders: React.FC = () => {
 
   return (
     <div className={styles.ordersContainer}>
-<<<<<<< HEAD
-      {orders.map(order => (
-        <div key={order.orderId} className={styles.orderCard}>
-          <h2>Номер заказа: {order.orderId}</h2>
-          <p>Дата создания: {order.createdAt}</p>
-          <div className={styles.products}>
-            {order.products.map(product => (
-              <div key={product.productId} className={styles.productCard}>
-                <img src={`Product/${product.productName}/${product.productImage[1]}`} alt={product.productName} />
-                <h3>{product.productName}</h3>
-                <p>Quantity: {product.quantity}</p>
-              </div>
-            ))}
-          </div>
-          {/* Добавляем кнопку "Отмена заказа" */}
-          <img
-            src="path_to_cancel_button_image"
-            alt="Cancel Order"
-            className={styles.cancelOrderButton}
-            onClick={() => handleCancelOrder(order.orderId)}
-          />
-        </div>
-      ))}
-=======
       {orders.length > 0 ? (
         orders.map(order => (
           <div key={order.orderId} className={styles.orderCard}>
@@ -140,7 +102,6 @@ const Orders: React.FC = () => {
           <Button title="Перейти в каталог" className={styles.buttonGreen} link="/Catalog" />
         </>
       )}
->>>>>>> master
     </div>
   );
 };

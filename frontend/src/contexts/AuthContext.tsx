@@ -1,17 +1,3 @@
-<<<<<<< HEAD
-// В контексте AuthContext:
-
-import React, { createContext, useContext, useState, useEffect } from 'react';
-
-const AuthContext = createContext();
-
-export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const [token, setToken] = useState(null);
-
-  useEffect(() => {
-    // При загрузке страницы восстанавливаем данные о пользователе из localStorage
-=======
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 interface AuthContextType {
@@ -29,7 +15,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [token, setToken] = useState<string | null>(null);
 
   useEffect(() => {
->>>>>>> master
     const storedToken = localStorage.getItem('token');
     const storedUser = localStorage.getItem('user');
 
@@ -39,16 +24,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   }, []);
 
-<<<<<<< HEAD
-  const login = (userData, authToken) => {
-    setUser(userData);
-    setToken(authToken);
-    // Сохраняем данные пользователя и токен в localStorage
-=======
   const login = (userData: any, authToken: string) => {
     setUser(userData);
     setToken(authToken);
->>>>>>> master
     localStorage.setItem('user', JSON.stringify(userData));
     localStorage.setItem('token', authToken);
   };
@@ -56,10 +34,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const logout = () => {
     setUser(null);
     setToken(null);
-<<<<<<< HEAD
-    // Удаляем данные пользователя и токен из localStorage
-=======
->>>>>>> master
     localStorage.removeItem('user');
     localStorage.removeItem('token');
   };
@@ -71,9 +45,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
-<<<<<<< HEAD
-export const useAuth = () => useContext(AuthContext);
-=======
 export const useAuth = (): AuthContextType => {
   const context = useContext(AuthContext);
   if (context === undefined) {
@@ -81,4 +52,3 @@ export const useAuth = (): AuthContextType => {
   }
   return context;
 };
->>>>>>> master

@@ -1,13 +1,5 @@
-<<<<<<< HEAD
-// В компоненте Profile:
-
-import React from 'react';
-import { useAuth } from '../../contexts/AuthContext';
-import Button from '../../components/Button';
-=======
 import Button from '../../components/Button';
 import { useAuth } from '../../contexts/AuthContext';
->>>>>>> master
 import styles from './Profile.module.scss';
 
 const Profile = () => {

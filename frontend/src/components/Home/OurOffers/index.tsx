@@ -1,11 +1,3 @@
-<<<<<<< HEAD
-import styles from "./OurOffers.module.scss";
-import Product from "../../Product/index.tsx";
-import OurOffersData from "./OurOffersData.tsx";
-import Title from "../../Title";
-
-const index = () => {
-=======
 import { useState, useEffect } from "react";
 import styles from "./OurOffers.module.scss";
 import Product from "../../Product/index.tsx";
@@ -41,17 +33,11 @@ const OurOffers = () => {
       });
   }, []);
 
->>>>>>> master
   return (
     <div className={styles.ourOffers}>
       <Title text="Наши предложения" />
       <div className={styles.content}>
         <p className={styles.favorite}>ТОП ПРОДАЖ</p>
-<<<<<<< HEAD
-        {OurOffersData.map((OurOffersData, index) => (
-          <Product key={index} {...OurOffersData} />
-        ))}
-=======
         {/* {error ? (
           <p className={styles.error}>Ошибка загрузки данных: {error}</p>
         ) : (
@@ -68,7 +54,6 @@ const OurOffers = () => {
           ))
         )} */}
         
->>>>>>> master
         <img
           src="./iconLine.svg"
           alt="Line"
@@ -81,8 +66,4 @@ const OurOffers = () => {
   );
 };
 
-<<<<<<< HEAD
-export default index;
-=======
 export default OurOffers;
->>>>>>> master

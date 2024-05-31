@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-import React from 'react'
-=======
-
->>>>>>> master
 
 const index = () => {
   return (

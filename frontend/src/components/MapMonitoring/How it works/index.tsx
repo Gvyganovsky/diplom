@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import styles from './How it works.module.scss'
-=======
 import styles from './HowItWorks.module.scss'
->>>>>>> master
 import Title from '../../Title'
 import { useState } from 'react';
 
@@ -22,11 +18,7 @@ const Index = () => {
                 <img src="./HowItWorks.png" alt="HowItWorks" width={620} height={370} className={styles.image} />
 
                 <ul className={styles.list}>
-<<<<<<< HEAD
-                    <li className={styles.item}>
-=======
                     <li className={`${styles.item} ${isFieldOpen ? styles.selected : ''}`}>
->>>>>>> master
                         <p className={styles.item__title} onClick={() => {
                             setIsFieldOpen(!isFieldOpen);
                             setIsKamerallyOpen(false); // Скрываем список "Камеральные работы" при открытии "Полевых работ"
@@ -38,24 +30,15 @@ const Index = () => {
                             </ul>
                         )}
                     </li>
-<<<<<<< HEAD
-                    <li>
-=======
                     <li className={`${styles.item} ${isKamerallyOpen ? styles.selected : ''}`}>
->>>>>>> master
                         <p className={styles.item__title} onClick={() => {
                             setIsKamerallyOpen(!isKamerallyOpen);
                             setIsFieldOpen(false); // Скрываем список "Полевые работы" при открытии "Камеральных работ"
                         }}>Камеральные работы</p>
                         {isKamerallyOpen && (
                             <ul className={styles.item__list}>
-<<<<<<< HEAD
-                                <li className={styles.item__text}>Получение разрешений на аэрофотосъемку</li>
-                                <li className={styles.item__text}>Выполнение аэрофотосъемки с использованием БПЛА</li>
-=======
                                 <li className={styles.item__text}>Обработка полученных данных</li>
                                 <li className={styles.item__text}>Создание картографических материалов</li>
->>>>>>> master
                             </ul>
                         )}
                     </li>
