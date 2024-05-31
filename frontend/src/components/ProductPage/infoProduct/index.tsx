@@ -9,17 +9,16 @@ const Index = (props: any) => {
 
   const addToBasket = async () => {
     try {
-      // Получаем идентификатор пользователя из локального хранилища
       const userId = localStorage.getItem('user');
       let parsedUserId = null;
       if (userId) {
         parsedUserId = JSON.parse(userId).id;
       } else {
         console.error('Нет данных о пользователе в localStorage');
-        return; // Прекращаем выполнение функции, так как нет данных о пользователе
+        return; 
       }
       const requestBody = JSON.stringify({
-        user: parsedUserId, // Используем идентификатор пользователя из локального хранилища
+        user: parsedUserId, 
         product: parseInt(product.id),
         count: 1
       });

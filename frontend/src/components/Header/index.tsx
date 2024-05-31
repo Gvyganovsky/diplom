@@ -3,7 +3,7 @@ import IconsNav from "../iconsNav";
 import LogoBlock from "../LogoBlock";
 import React from "react";
 import BasketContext from "../../contexts/BasketContext";
-import { useAuth } from "../../contexts/AuthContext"; // Импортируем контекст AuthContext
+import { useAuth } from "../../contexts/AuthContext";
 
 const HeaderDropDownNav = [
   {
