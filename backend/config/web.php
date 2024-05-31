@@ -48,26 +48,21 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                'GET product/<id:\d+>' => 'product/view',
+                'GET product/<id:\d+>' => 'product/product',
                 'GET products' => 'product/products',
-
                 'POST checkout/<userId:\d+>' => 'basket/checkout',
-
                 'GET orders/<userId:\d+>' => 'order/orders',
-
                 'POST basket/add' => 'basket/add',
                 'GET basket/get/<userId:\d+>' => 'basket/get',
                 'POST basket/update' => 'basket/update',
                 'POST basket/delete' => 'basket/delete',
-
                 'POST signup' => 'user/signup',
                 'POST signin' => 'user/signin',
                 'GET user/<id:\d+>' => 'user/user',
                 'GET users' => 'user/users',
-                'DELETE user/delete/<id:\d+>' => 'user/delete',
-                'PUT user/edit/<id:\d+>' => 'user/edit',
-
                 'DELETE order/delete/<orderId:\d+>' => 'order/delete',
+
+                'userWeb' => 'user-web/index',
             ],
         ],
 

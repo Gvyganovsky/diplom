@@ -3,14 +3,130 @@
 namespace app\controllers;
 
 use Yii;
-use yii\rest\Controller;
+use yii\web\Controller;
 use yii\web\Response;
 use app\models\Order;
 use app\models\OrderProduct;
-use app\models\Product;
+use app\models\OrderSearch;
+use yii\filters\VerbFilter;
+use yii\web\NotFoundHttpException;
 
 class OrderController extends Controller
 {
+    /**
+     * @inheritDoc
+     */
+    public function behaviors()
+    {
+        return array_merge(
+            parent::behaviors(),
+            [
+                'verbs' => [
+                    'class' => VerbFilter::className(),
+                    'actions' => [
+                        'delete' => ['POST'],
+                    ],
+                ],
+            ]
+        );
+    }
+
+    /**
+     * Lists all Orders models.
+     *
+     * @return string
+     */
+    public function actionIndex()
+    {
+        $searchModel = new OrderSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    /**
+     * Displays a single Order model.
+     * @param int $id ID
+     * @return string
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionView($id)
+    {
+        return $this->render('view', [
+            'model' => $this->findModel($id),
+        ]);
+    }
+
+    /**
+     * Creates a new Order model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return string|\yii\web\Response
+     */
+    public function actionCreate()
+    {
+        $model = new Order();
+
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+        } else {
+            $model->loadDefaultValues();
+        }
+
+        return $this->render('create', [
+            'model' => $model,
+        ]);
+    }
+
+    /**
+     * Updates an existing User model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param int $id ID
+     * @return string|\yii\web\Response
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionUpdate($id)
+    {
+        $model = $this->findModel($id);
+
+        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        }
+
+        return $this->render('update', [
+            'model' => $model,
+        ]);
+    }
+
+    /**
+     * Finds the User model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param int $id ID
+     * @return Order the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id)
+    {
+        if (($model = Order::findOne(['id' => $id])) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionOrder()
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
+        $orders = Order::find()->all();
+
+        return $orders;
+    }
+
     public function actionOrders($userId)
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
@@ -52,24 +168,24 @@ class OrderController extends Controller
 
     // Метод для отмены заказа
     public function actionDelete($orderId)
-{
-    Yii::$app->response->format = Response::FORMAT_JSON;
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
 
-    // Находим заказ по его ID
-    $order = Order::findOne($orderId);
+        // Находим заказ по его ID
+        $order = Order::findOne($orderId);
 
-    if ($order !== null) {
-        // Находим связанные с заказом записи в таблице order_product и удаляем их перед удалением заказа
-        OrderProduct::deleteAll(['order_id' => $orderId]);
+        if ($order !== null) {
+            // Находим связанные с заказом записи в таблице order_product и удаляем их перед удалением заказа
+            OrderProduct::deleteAll(['order_id' => $orderId]);
 
-        // Отменяем заказ
-        if ($order->delete()) {
-            return ['success' => true, 'message' => 'Заказ успешно отменен.'];
+            // Отменяем заказ
+            if ($order->delete()) {
+                return ['success' => true, 'message' => 'Заказ успешно отменен.'];
+            } else {
+                return ['success' => false, 'message' => 'Произошла ошибка при отмене заказа.'];
+            }
         } else {
-            return ['success' => false, 'message' => 'Произошла ошибка при отмене заказа.'];
+            return ['success' => false, 'message' => 'Заказ не найден.'];
         }
-    } else {
-        return ['success' => false, 'message' => 'Заказ не найден.'];
     }
-}
 }

@@ -7,9 +7,117 @@ use yii\rest\Controller;
 use app\models\User;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
+use app\models\UserSearch;
+use yii\filters\VerbFilter;
+use yii\web\NotFoundHttpException;
 
 class UserController extends Controller
 {
+    /**
+     * @inheritDoc
+     */
+    public function behaviors()
+    {
+        return array_merge(
+            parent::behaviors(),
+            [
+                'verbs' => [
+                    'class' => VerbFilter::className(),
+                    'actions' => [
+                        'delete' => ['POST'],
+                    ],
+                ],
+            ]
+        );
+    }
+
+    /**
+     * Lists all User models.
+     *
+     * @return string
+     */
+    public function actionIndex()
+    {
+        $searchModel = new UserSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    /**
+     * Displays a single User model.
+     * @param int $id ID
+     * @return string
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionView($id)
+    {
+        return $this->render('view', [
+            'model' => $this->findModel($id),
+        ]);
+    }
+
+    /**
+     * Creates a new User model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return string|\yii\web\Response
+     */
+    public function actionCreate()
+    {
+        $model = new User();
+
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+        } else {
+            $model->loadDefaultValues();
+        }
+
+        return $this->render('create', [
+            'model' => $model,
+        ]);
+    }
+
+    /**
+     * Updates an existing User model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param int $id ID
+     * @return string|\yii\web\Response
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionUpdate($id)
+    {
+        $model = $this->findModel($id);
+
+        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        }
+
+        return $this->render('update', [
+            'model' => $model,
+        ]);
+    }
+
+    /**
+     * Finds the User model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param int $id ID
+     * @return User the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id)
+    {
+        if (($model = User::findOne(['id' => $id])) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
     protected function generateToken($userId)
     {
         $secretKey = 'c8qC@34V1zgM#T!k%Fp5vD@7^Rp6fKb!';
@@ -128,95 +236,26 @@ class UserController extends Controller
         }
     }
 
-    public function actionDelete($id)
-    {
-        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-
-        $authHeader = Yii::$app->request->getHeaders()->get('Authorization');
-        if (!$authHeader) {
-            Yii::$app->response->statusCode = 401;
-            return ['message' => 'Ошибка авторизации', 'errors' => 'Токен отсутствует'];
-        }
-
-        $token = str_replace('Bearer ', '', $authHeader);
-        $currentUser = $this->getUserFromToken($token);
-
-        if (!$currentUser || $currentUser->admin != 1) {
-            Yii::$app->response->statusCode = 403;
-            return ['message' => 'Доступ запрещен', 'errors' => 'Недостаточно прав'];
-        }
-
-        $user = User::findOne($id);
-
-        if ($user) {
-            if ($user->delete()) {
-                return ['message' => 'Пользователь успешно удален'];
-            } else {
-                Yii::$app->response->statusCode = 500;
-                return ['message' => 'Ошибка удаления пользователя'];
-            }
-        } else {
-            Yii::$app->response->statusCode = 404;
-            return ['message' => 'Пользователь не найден'];
-        }
-    }
-
-    public function actionEdit($id)
-    {
-        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-    
-        $authHeader = Yii::$app->request->getHeaders()->get('Authorization');
-        if (!$authHeader) {
-            Yii::$app->response->statusCode = 401;
-            return ['message' => 'Ошибка авторизации', 'errors' => 'Токен отсутствует'];
-        }
-    
-        $token = str_replace('Bearer ', '', $authHeader);
-        $currentUser = $this->getUserFromToken($token);
-    
-        if (!$currentUser || $currentUser->admin != 1) {
-            Yii::$app->response->statusCode = 403;
-            return ['message' => 'Доступ запрещен', 'errors' => 'Недостаточно прав'];
-        }
-    
-        $user = User::findOne($id);
-    
-        if ($user) {
-            $jsonData = json_decode(Yii::$app->request->getRawBody(), true);
-            $user->load($jsonData, '');
-    
-            if ($user->save()) {
-                return ['message' => 'Пользователь успешно отредактирован', 'user' => $user];
-            } else {
-                Yii::$app->response->statusCode = 422;
-                return ['message' => 'Ошибка валидации', 'errors' => $user->getErrors()];
-            }
-        } else {
-            Yii::$app->response->statusCode = 404;
-            return ['message' => 'Пользователь не найден'];
-        }
-    }
-    
     public function actionUser($id)
     {
         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-    
+
         $authHeader = Yii::$app->request->getHeaders()->get('Authorization');
         if (!$authHeader) {
             Yii::$app->response->statusCode = 401;
             return ['message' => 'Ошибка авторизации', 'errors' => 'Токен отсутствует'];
         }
-    
+
         $token = str_replace('Bearer ', '', $authHeader);
         $currentUser = $this->getUserFromToken($token);
-    
+
         if (!$currentUser || $currentUser->admin != 1) {
             Yii::$app->response->statusCode = 403;
             return ['message' => 'Доступ запрещен', 'errors' => 'Недостаточно прав'];
         }
-    
+
         $user = User::findOne($id);
-    
+
         if ($user) {
             return ['message' => 'Пользователь найден', 'user' => $user];
         } else {
@@ -224,5 +263,4 @@ class UserController extends Controller
             return ['message' => 'Пользователь не найден'];
         }
     }
-    
 }

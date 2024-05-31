@@ -12,6 +12,7 @@ use Yii;
  * @property string|null $image
  * @property string|null $brand
  * @property string|null $model
+ * @property string|null $category
  * @property float|null $price
  * @property string|null $description
  * @property int|null $count
@@ -35,7 +36,7 @@ class Product extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['image', 'description'], 'string'],
+            [['image', 'description', 'category'], 'string'],
             [['price'], 'number'],
             [['count'], 'integer'],
             [['name', 'brand', 'model'], 'string', 'max' => 255],
