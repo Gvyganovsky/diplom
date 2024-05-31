@@ -1,14 +1,47 @@
+<<<<<<< HEAD
 import React, { useState } from 'react';
 import axios from 'axios';
 import Button from '../components/Button';
 import styles from './Auth.module.scss';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext'; 
+=======
+import { useState, ChangeEvent, FormEvent } from 'react';
+import axios, { AxiosError } from 'axios'; // Import AxiosError
+import Button from '../components/Button';
+import styles from './Auth.module.scss';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
+
+type FormData = {
+  login: string;
+  email: string;
+  phone: string;
+  address: string;
+  password: string;
+  admin: number;
+  confirmPassword: string;
+};
+
+type Errors = {
+  login: string;
+  email: string;
+  phone: string;
+  address: string;
+  password: string;
+  confirmPassword: string;
+  general?: string;
+};
+>>>>>>> master
 
 const SignUp = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
+<<<<<<< HEAD
   const [formData, setFormData] = useState({
+=======
+  const [formData, setFormData] = useState<FormData>({
+>>>>>>> master
     login: '',
     email: '',
     phone: '',
@@ -18,7 +51,11 @@ const SignUp = () => {
     confirmPassword: ''
   });
 
+<<<<<<< HEAD
   const [errors, setErrors] = useState({
+=======
+  const [errors, setErrors] = useState<Errors>({
+>>>>>>> master
     login: '',
     email: '',
     phone: '',
@@ -27,7 +64,11 @@ const SignUp = () => {
     confirmPassword: ''
   });
 
+<<<<<<< HEAD
   const handleChange = (e) => {
+=======
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+>>>>>>> master
     const { name, value } = e.target;
     setFormData(prevState => ({
       ...prevState,
@@ -35,10 +76,16 @@ const SignUp = () => {
     }));
   };
 
+<<<<<<< HEAD
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Очистка предыдущих ошибок перед новой валидацией
+=======
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+
+>>>>>>> master
     setErrors({
       login: '',
       email: '',
@@ -48,7 +95,10 @@ const SignUp = () => {
       confirmPassword: ''
     });
 
+<<<<<<< HEAD
     // Валидация логина
+=======
+>>>>>>> master
     if (!/^[a-zA-Z]{3,20}$/.test(formData.login)) {
       setErrors(prevState => ({
         ...prevState,
@@ -57,7 +107,10 @@ const SignUp = () => {
       return;
     }
 
+<<<<<<< HEAD
     // Валидация электронной почты
+=======
+>>>>>>> master
     if (!/\S+@\S+\.\S+/.test(formData.email)) {
       setErrors(prevState => ({
         ...prevState,
@@ -66,7 +119,10 @@ const SignUp = () => {
       return;
     }
 
+<<<<<<< HEAD
     // Валидация телефона
+=======
+>>>>>>> master
     if (!/^\+7\(\d{3}\)-\d{3}-\d{2}-\d{2}$/.test(formData.phone)) {
       setErrors(prevState => ({
         ...prevState,
@@ -75,7 +131,10 @@ const SignUp = () => {
       return;
     }
 
+<<<<<<< HEAD
     // Валидация адреса
+=======
+>>>>>>> master
     const keywords = ['г.', 'ул.', 'д.'];
     if (!keywords.every(keyword => formData.address.includes(keyword))) {
       setErrors(prevState => ({
@@ -85,7 +144,10 @@ const SignUp = () => {
       return;
     }
 
+<<<<<<< HEAD
     // Валидация пароля
+=======
+>>>>>>> master
     if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{6,}$/.test(formData.password)) {
       setErrors(prevState => ({
         ...prevState,
@@ -94,7 +156,10 @@ const SignUp = () => {
       return;
     }
 
+<<<<<<< HEAD
     // Проверка совпадения паролей
+=======
+>>>>>>> master
     if (formData.password !== formData.confirmPassword) {
       setErrors(prevState => ({
         ...prevState,
@@ -104,7 +169,10 @@ const SignUp = () => {
     }
 
     try {
+<<<<<<< HEAD
       // Исключаем confirmPassword из formData перед отправкой
+=======
+>>>>>>> master
       const { confirmPassword, ...dataToSend } = formData;
       const response = await axios.post('https://dp-viganovsky.xn--80ahdri7a.site/api/signup', dataToSend, {
         headers: {
@@ -116,6 +184,7 @@ const SignUp = () => {
       const { user, token } = response.data;
       login(user, token);
       navigate("/profile");
+<<<<<<< HEAD
       // Можно установить сообщение об успешной регистрации
     } catch (error) {
       if (error.response.status === 422) {
@@ -123,6 +192,22 @@ const SignUp = () => {
       } else {
         setErrors({ general: 'Произошла ошибка. Попробуйте еще раз.' });
       }
+=======
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error) && error.response && error.response.status === 422) {
+        const axiosError = error as AxiosError; // Narrow down the type of 'error' to AxiosError
+        setErrors(prevState => ({
+          ...prevState,
+          ...(axiosError.response?.data as any)?.errors || {} // Type assertion to 'any'
+        }));
+      } else {
+        setErrors(prevState => ({
+          ...prevState,
+          general: 'Произошла ошибка. Попробуйте еще раз.'
+        }));
+      }
+      
+>>>>>>> master
     }
   };
 
@@ -186,6 +271,10 @@ const SignUp = () => {
           />
           {errors.confirmPassword && <span className={styles.error}>{errors.confirmPassword}</span>}
           <Button title="Зарегистрироваться" className="buttonGreen" type="submit" />
+<<<<<<< HEAD
+=======
+          {errors.general && <span className={styles.error}>{errors.general}</span>}
+>>>>>>> master
         </form>
       </div>
     </div>

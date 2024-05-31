@@ -1,6 +1,9 @@
 import styles from './iconsNav.module.scss';
 import { Link } from 'react-router-dom';
+<<<<<<< HEAD
 import { useState } from 'react';
+=======
+>>>>>>> master
 
 interface icon {
     link?: string;

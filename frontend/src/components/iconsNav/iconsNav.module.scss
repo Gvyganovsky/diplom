@@ -3,12 +3,19 @@
   align-items: center;
   gap: 20px;
   margin-left: auto;
+<<<<<<< HEAD
   margin-right: 70px;
+=======
+>>>>>>> master
 }
 
 .iconsNav__icon {
   cursor: pointer;
+<<<<<<< HEAD
   position: relative; /* Добавлено для позиционирования выпадающего меню */
+=======
+  position: relative;
+>>>>>>> master
 }
 
 .menu {
@@ -21,7 +28,11 @@
   z-index: 10;
 }
 
+<<<<<<< HEAD
 .iconsNav__icon:hover .menu { /* Изменено для правильного применения hover */
+=======
+.iconsNav__icon:hover .menu {
+>>>>>>> master
   display: block;
 }
 
@@ -61,6 +72,7 @@
   display: inline-block;
 }
 
+<<<<<<< HEAD
 @media (max-width: 400px) {
   .menu__item {
       position: relative;
@@ -74,3 +86,26 @@
       font-size: 18px;
   }
 }
+=======
+
+@media (max-width: 500px) {
+  .iconsNav {
+    gap: 16px;
+  }
+}
+
+
+@media (max-width: 400px) {
+  .menu__item {
+    position: relative;
+    padding: 20px;
+    display: inline-block;
+    width: 200px;
+  }
+
+  .menu__text {
+    margin-left: 8px;
+    font-size: 18px;
+  }
+}
+>>>>>>> master

@@ -33,6 +33,7 @@ body {
   opacity: 0.2;
 }
 
+<<<<<<< HEAD
 .content {
   display: flex;
 }
@@ -43,6 +44,60 @@ body {
   gap: 10px;
 }
 
+=======
+.contactForm {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px; /* Added padding for better spacing */
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.text {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 16px; /* Ensure readable font size */
+}
+
+.form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Added gap between inputs */
+}
+
+.input {
+  width: 100%;
+  padding: 15px; /* Increased padding for better touch targets */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.buttonGreen {
+  background-color: green;
+  color: white;
+  padding: 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  text-align: center;
+}
+
+.img {
+  margin-top: 20px;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Responsive styles */
+>>>>>>> master
 @media (max-width: 1260px) {
   .title {
     text-align: center;
@@ -57,10 +112,13 @@ body {
   .content {
     display: block;
   }
+<<<<<<< HEAD
 
   .catalog {
     justify-content: space-between;
   }
+=======
+>>>>>>> master
 }
 
 @media (max-width: 900px) {
@@ -70,8 +128,21 @@ body {
 }
 
 @media (max-width: 710px) {
+<<<<<<< HEAD
   .catalog {
     justify-content: center;
+=======
+  .title {
+    font-size: 64px;
+  }
+
+  .contactForm {
+    padding: 10px; /* Reduced padding for smaller screens */
+  }
+
+  .input {
+    padding: 10px; /* Adjust input padding */
+>>>>>>> master
   }
 }
 
@@ -79,4 +150,12 @@ body {
   .title {
     font-size: 48px;
   }
+<<<<<<< HEAD
 }
+=======
+
+  .text {
+    font-size: 14px;
+  }
+}
+>>>>>>> master

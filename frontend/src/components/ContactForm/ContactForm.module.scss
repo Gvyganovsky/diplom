@@ -52,3 +52,38 @@
   right: 10px;
   top: -110px;
 }
+<<<<<<< HEAD
+=======
+
+@media (max-width: 1260px) {
+  .text {
+    text-align: center;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .form {
+    display: grid;
+  }
+
+  .form button {
+    width: 200px;
+    height: 60px;
+    margin: 0 auto
+  }
+
+  .img {
+    display: none;
+  }
+}
+
+@media (max-width: 1240px) {
+  .text {
+    font-size: 18px;
+  }
+
+  .contactForm {
+    margin: 0 24px;
+  }
+}
+>>>>>>> master

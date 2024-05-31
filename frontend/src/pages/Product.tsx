@@ -2,9 +2,15 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from 'axios';
 import InfoProduct from '../components/ProductPage/infoProduct';
+<<<<<<< HEAD
 import Info from "../components/Info";
 import DescriptionProduct from "../components/ProductPage/DescriptionProduct";
 import Trust from "../components/Trust";
+=======
+import DescriptionProduct from "../components/ProductPage/DescriptionProduct";
+import Trust from "../components/Trust";
+import DropDownList from "../components/ProductPage/DropDownList";
+>>>>>>> master
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -13,7 +19,11 @@ const ProductDetail = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
+<<<<<<< HEAD
         const response = await axios.get(`https://6630f40fc92f351c03dbb255.mockapi.io/product/${id}`);
+=======
+        const response = await axios.get(`https://dp-viganovsky.xn--80ahdri7a.site/api/product/${id}`);
+>>>>>>> master
         setProduct(response.data);
       } catch (error) {
         console.error('Ошибка при получении продукта:', error);
@@ -27,8 +37,11 @@ const ProductDetail = () => {
     return <div>Загрузка...</div>;
   }
 
+<<<<<<< HEAD
   const { description } = product;
 
+=======
+>>>>>>> master
   const bonusData = [
     {
       img: "../iconDelivery.svg",
@@ -53,6 +66,7 @@ const ProductDetail = () => {
 
       <Trust data={bonusData} />
 
+<<<<<<< HEAD
       {/* {description.map((desc, index) => (
         <DescriptionProduct
           key={index}
@@ -61,6 +75,11 @@ const ProductDetail = () => {
           image={desc.image}
         />
       ))} */}
+=======
+      <DescriptionProduct product={product} />
+
+      <DropDownList  />
+>>>>>>> master
     </>
   );
 }

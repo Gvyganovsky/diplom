@@ -41,4 +41,19 @@
     align-items: center;
     justify-content: center;
     max-width: 90px;
+<<<<<<< HEAD
+=======
+}
+
+@media (max-width: 1210px) {
+  .infoBlock {
+    display: grid;
+    justify-content: center;
+  }
+
+  .title {
+    margin-top: 50px;
+  }
+
+>>>>>>> master
 }

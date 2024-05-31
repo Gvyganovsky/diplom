@@ -1,4 +1,5 @@
 .ordersContainer {
+<<<<<<< HEAD
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -54,3 +55,73 @@
     margin: 5px 0;
   }
   
+=======
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  background-color: #1E1D1D;
+  padding: 20px;
+  height: 80vh;
+  color: #fff; /* Цвет текста */
+}
+
+.orderCard {
+  background-color: #222; /* Цвет карточки заказа */
+  border: 2px solid #02E502;
+  border-radius: 10px;
+  padding: 20px;
+  margin: 10px 0;
+  width: 80%;
+}
+
+.orderCard h2, .orderCard p {
+  margin: 5px 0;
+}
+
+.products {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.productCard {
+  background-color: #222; /* Цвет карточки продукта */
+  border: 1px solid #02E502;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px;
+  text-align: center;
+  width: 150px;
+}
+
+.productCard:first-of-type {
+  margin: 10px 10px 10px 0;
+}
+
+.productCard img {
+  max-width: 100%;
+  border-radius: 5px;
+}
+
+.productCard h3 {
+  margin: 10px 0 5px 0;
+  font-size: 16px;
+}
+
+.productCard p {
+  margin: 5px 0;
+}
+
+.nullTitile {
+  font-size: 24px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.nullText {
+  font-size: 16px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+>>>>>>> master

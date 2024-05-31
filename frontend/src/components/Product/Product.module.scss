@@ -39,9 +39,23 @@
   display: block;
 }
 
+<<<<<<< HEAD
 @media (max-width: 350px) {
   .product {
     width: 300px;
+=======
+@media (max-width: 360px) {
+  .product {
+    width: 320px;
+    height: 550px;
+  }
+}
+
+
+@media (max-width: 350px) {
+  .product {
+    width: 290px;
+>>>>>>> master
     height: 550px;
   }
 }

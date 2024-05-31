@@ -6,6 +6,7 @@ import HorizNews from '../../components/HorizNews';
 
 const index = () => {
   return (
+<<<<<<< HEAD
     <section>
       <div className={styleApp.container}>
         <Breadcrumbs title="Новости" />
@@ -17,6 +18,17 @@ const index = () => {
         </ul>
       </div>
     </section>
+=======
+    <div className={styleApp.container}>
+      <Breadcrumbs title="Новости" />
+      <h1 className={styleApp.title}>Что у нас нового?</h1>
+      <ul className={styleNews.content}>
+        {newsData.map((newsData, index) => (
+          <HorizNews key={index} {...newsData} />
+        ))}
+      </ul>
+    </div>
+>>>>>>> master
   );
 };
 

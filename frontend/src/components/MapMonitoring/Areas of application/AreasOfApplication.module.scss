@@ -5,8 +5,13 @@
 }
 
 .content {
+<<<<<<< HEAD
   max-width: 1200px;
   display: flex;
+=======
+  display: flex;
+  flex-direction: column;
+>>>>>>> master
   align-items: center;
   justify-content: space-between;
   margin: 60px 0 0 auto;
@@ -43,10 +48,20 @@
   font-weight: 400;
   font-size: 24px;
   padding-bottom: 8px;
+<<<<<<< HEAD
   border-bottom: 2px solid #02e502;
   width: 200px;
 }
 
+=======
+  width: 200px;
+}
+
+.selected {
+  border-bottom: 2px solid #02e502;
+}
+
+>>>>>>> master
 .text {
   font-weight: 400;
   font-size: 18px;
@@ -57,3 +72,60 @@
 .img {
   margin-top: 60px;
 }
+<<<<<<< HEAD
+=======
+
+@media (max-width: 1050px) {
+  .content {
+    display: grid;
+    justify-content: center;
+  }
+
+  .list {
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 24px;
+  }
+}
+
+@media (min-width: 768px) {
+  .content {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .text {
+    font-size: 18px;
+    max-width: 760px;
+  }
+}
+
+@media (max-width: 1100px) {
+  .background {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .AreasOfApplication {
+    padding: 0 15px;
+  }
+
+  .list {
+    margin-bottom: 30px;
+  }
+
+  .title {
+    font-size: 20px;
+  }
+
+  .text {
+    font-size: 16px;
+  }
+
+  .img {
+    width: 100%;
+    height: auto;
+  }
+}
+>>>>>>> master

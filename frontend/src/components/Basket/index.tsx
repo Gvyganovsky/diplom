@@ -1,13 +1,35 @@
+<<<<<<< HEAD
 import React, { useContext, useState, useEffect } from "react";
+=======
+import { useContext, useState, useEffect } from "react";
+>>>>>>> master
 import { Link, useNavigate } from "react-router-dom";
 import style from "./Basket.module.scss";
 import Button from "../Button";
 import BasketContext from "../../contexts/BasketContext";
 
+<<<<<<< HEAD
 const Basket = () => {
   const { setBasketOpened } = useContext(BasketContext);
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+=======
+interface Product {
+  product: number;
+  count: number;
+  productDetails: {
+    name: string;
+    id: number;
+    price: number;
+    image: string[];
+  };
+}
+
+const Basket = () => {
+  const { setBasketOpened } = useContext(BasketContext);
+  const [products, setProducts] = useState<Product[]>([]); // Указываем явно тип для useState
+  const [isLoading, setIsLoading] = useState<boolean>(true); // Указываем явно тип для useState
+>>>>>>> master
   const navigate = useNavigate(); // Используем useNavigate для перенаправления
 
   useEffect(() => {
@@ -24,6 +46,7 @@ const Basket = () => {
         if (response.ok) {
           const data = await response.json();
 
+<<<<<<< HEAD
           const productRequests = data.map(item =>
             fetch(`https://dp-viganovsky.xn--80ahdri7a.site/api/product/${item.product}`)
           );
@@ -31,6 +54,15 @@ const Basket = () => {
           const productData = await Promise.all(productResponses.map(res => res.json()));
 
           const combinedData = data.map((item, index) => {
+=======
+          const productRequests: Promise<Response>[] = data.map((item: any) =>
+            fetch(`https://dp-viganovsky.xn--80ahdri7a.site/api/product/${item.product}`)
+          );
+          const productResponses: Response[] = await Promise.all(productRequests);
+          const productData: any[] = await Promise.all(productResponses.map((res: Response) => res.json()));
+
+          const combinedData: any[] = data.map((item: any, index: number) => {
+>>>>>>> master
             const productDetails = productData[index];
             productDetails.image = JSON.parse(productDetails.image);
             return {
@@ -53,7 +85,11 @@ const Basket = () => {
     fetchBasketData();
   }, []);
 
+<<<<<<< HEAD
   const updateProductCount = async (productId, newCount) => {
+=======
+  const updateProductCount = async (productId: number, newCount: number) => {
+>>>>>>> master
     try {
       const userData = localStorage.getItem("user");
       if (!userData) {
@@ -88,7 +124,11 @@ const Basket = () => {
     }
   };
 
+<<<<<<< HEAD
   const removeProductFromBasket = async productId => {
+=======
+  const removeProductFromBasket = async (productId: number) => {
+>>>>>>> master
     try {
       const userData = localStorage.getItem("user");
       if (!userData) {
@@ -153,7 +193,11 @@ const Basket = () => {
         <div className={style.container}>
           <h3 className={style.title}>Корзина</h3>
           <img
+<<<<<<< HEAD
             src="./Basket/IconClose.svg"
+=======
+            src="/Basket/IconClose.svg"
+>>>>>>> master
             alt="IconClose"
             width={38}
             height={38}
@@ -162,7 +206,11 @@ const Basket = () => {
           />
           <ul className={style.list}>
             {products.length > 0 ? (
+<<<<<<< HEAD
               products.map((item, index) => (
+=======
+              products.map((item: Product, index: number) => ( // Указываем явно типы для параметров item и index
+>>>>>>> master
                 <li className={style.item} key={index}>
                   <div className={style.hero}>
                     <img
@@ -185,7 +233,11 @@ const Basket = () => {
                     </div>
                     <p className={style.price}>${item.productDetails.price}</p>
                     <img
+<<<<<<< HEAD
                       src="./iconUrn.svg"
+=======
+                      src="/iconUrn.svg"
+>>>>>>> master
                       alt="iconUrn"
                       width={17}
                       height={21}
