@@ -1,0 +1,116 @@
+.AreasOfApplication {
+  max-width: 1360px;
+  padding: 0 30px;
+  margin: 0 auto;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  margin: 60px 0 0 auto;
+}
+
+.list {
+  position: relative;
+}
+
+.background {
+  position: absolute;
+  top: -120px;
+  left: -360px;
+  transform: rotate(260deg);
+  z-index: -4;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 40px;
+  cursor: pointer;
+}
+
+.item:last-of-type {
+  margin: 0;
+}
+
+.icon {
+  margin-right: 20px;
+}
+
+.title {
+  font-weight: 400;
+  font-size: 24px;
+  padding-bottom: 8px;
+  width: 200px;
+}
+
+.selected {
+  border-bottom: 2px solid #02e502;
+}
+
+.text {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 172%;
+  max-width: 760px;
+}
+
+.img {
+  margin-top: 60px;
+}
+
+@media (max-width: 1050px) {
+  .content {
+    display: grid;
+    justify-content: center;
+  }
+
+  .list {
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 24px;
+  }
+}
+
+@media (min-width: 768px) {
+  .content {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .text {
+    font-size: 18px;
+    max-width: 760px;
+  }
+}
+
+@media (max-width: 1100px) {
+  .background {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .AreasOfApplication {
+    padding: 0 15px;
+  }
+
+  .list {
+    margin-bottom: 30px;
+  }
+
+  .title {
+    font-size: 20px;
+  }
+
+  .text {
+    font-size: 16px;
+  }
+
+  .img {
+    width: 100%;
+    height: auto;
+  }
+}

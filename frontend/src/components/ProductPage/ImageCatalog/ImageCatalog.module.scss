@@ -1,0 +1,22 @@
+.imageCatalog {
+    max-width: 660px;
+}
+
+.heroImage {
+    margin: 0 auto;
+    border: 1px solid #464646;
+}
+
+.images {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    margin-top: 20px;
+}
+
+.image {
+    cursor: pointer;
+    border: 1px solid #464646;
+}

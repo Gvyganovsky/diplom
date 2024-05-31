@@ -1,0 +1,19 @@
+.news {
+    margin: 60px auto 110px;
+    max-width: 1360px;
+    padding: 0 30px;
+}
+
+.content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-top: 60px;
+}
+
+@media (max-width: 1240px) {
+    .news {
+      overflow-x: auto;
+    }
+  }

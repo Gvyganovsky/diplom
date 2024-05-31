@@ -1,0 +1,66 @@
+$primary-color: #1e1d1d;
+$secondary-color: #1f1f1f;
+$border-color: #151515;
+
+.accordion {
+  width: 100%;
+  max-width: 1300px;
+  padding: 20px;
+  border: 1px solid $border-color;
+  border-radius: 8px;
+  background-color: $primary-color;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin: 110px auto;
+}
+
+.accordion-item {
+  margin-bottom: 20px;
+}
+
+.accordion-title {
+  cursor: pointer;
+  padding: 15px;
+  background-color: $secondary-color;
+  border: 1px solid $border-color;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.accordion-title:hover {
+  background-color: darken($secondary-color, 10%);
+}
+
+.accordion-title.active {
+  color: #fff;
+}
+
+.accordion-content {
+  padding: 15px;
+  border: 1px solid $border-color;
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  background-color: $primary-color;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table td, table th {
+  padding: 10px;
+  border: 1px solid $border-color;
+  color: #fff; // Цвет текста в ячейках таблицы
+}
+
+table th {
+  font-weight: bold;
+}
+
+table tbody tr:nth-child(even) {
+  background-color: darken($primary-color, 5%);
+}
+
+table tbody tr:hover {
+  background-color: darken($primary-color, 10%);
+}

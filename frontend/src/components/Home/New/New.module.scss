@@ -1,0 +1,40 @@
+.new {
+  width: 420px;
+  margin: 0 auto;
+  text-align: justify;
+  display: grid;
+}
+
+.img {
+  margin: 0 auto;
+  display: block;
+}
+
+.title {
+  font-size: 22px;
+  font-weight: 400;
+  margin-top: 24px;
+}
+
+.text {
+  font-weight: 300;
+  font-size: 18px;
+  line-height: 172%;
+  margin: 30px 0;
+  height: 180px;
+}
+
+.link {
+  color: #02e502;
+  font-weight: 300;
+  font-size: 16px;
+
+  border-bottom: 1px solid #02e502;
+  padding-bottom: 12px;
+}
+
+
+.block {
+  max-width: 375px;
+  margin: 0 auto;
+}

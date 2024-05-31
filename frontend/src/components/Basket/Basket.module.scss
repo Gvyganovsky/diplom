@@ -1,0 +1,248 @@
+.shadow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+.basket {
+  width: 900px;
+  padding: 24px 0;
+  background-color: #1e1d1d;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
+
+.container {
+  max-width: 740px;
+  padding: 0 10px;
+  margin: 0 auto;
+}
+
+.title {
+  font-weight: 400;
+  font-size: 48px;
+  letter-spacing: 0.02em;
+  display: inline-block;
+}
+
+.list {
+  margin-top: 40px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+.iconClose {
+  margin-top: 16px;
+  float: right;
+  cursor: pointer;
+}
+
+.hero {
+  display: flex;
+  align-items: center;
+}
+
+.img {
+  margin-right: 40px;
+}
+
+.textBlock {}
+
+.name {
+  font-weight: 400;
+  font-size: 24px;
+}
+
+.article {
+  font-weight: 300;
+  font-size: 18px;
+  margin-top: 20px;
+}
+
+.priceBlock {
+  display: flex;
+  align-items: center;
+}
+
+.countBlock {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border: 1px solid #464646;
+  padding: 4px 12px;
+}
+
+.countIcon {
+  font-weight: 400;
+  font-size: 34px;
+  line-height: 76%;
+  cursor: pointer;
+}
+
+.count {
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 108%;
+}
+
+.price {
+  margin-left: 30px;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 117%;
+}
+
+.Urn {
+  position: absolute;
+  top: 20%;
+  left: 97%;
+  cursor: pointer;
+}
+
+.image {
+  display: block;
+  margin: 0 auto;
+}
+
+.text {
+  font-size: 34px;
+  text-align: center;
+  margin: 30px auto;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #02E502;
+  max-width: 180px;
+}
+
+.cont {
+  font-size: 18px;
+  text-align: center;
+  display: block;
+}
+
+.footer {
+  margin-top: 45px;
+  padding-top: 60px;
+  border-top: 1px solid #464646;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.link {
+  font-weight: 400;
+  font-size: 18px;
+
+  padding-bottom: 10px;
+  border-bottom: 1px solid #02e502;
+}
+
+.allPrice {
+  font-weight: 400;
+  font-size: 24px;
+}
+
+.number {
+  font-weight: 400;
+  font-size: 34px;
+  margin-left: 20px;
+}
+
+.footer button {
+  width: 200px;
+  height: 60px;
+}
+
+@media (max-width: 950px) {
+  .basket {
+    width: 700px;
+    padding: 12px;
+  }
+}
+
+@media (max-width: 750px) {
+  .basket {
+    width: 600px;
+    padding: 12px;
+  }
+}
+
+@media (max-width: 650px) {
+  .basket {
+    max-width: 520px;
+  }
+
+  .hero {
+    display: grid;
+  }
+
+  .img {
+    margin-right: 0;
+  }
+
+  .item {
+    display: grid;
+    justify-content: center;
+  }
+
+  .Urn {
+    position: absolute;
+    top: 0;
+    left: 90%;
+    cursor: pointer;
+  }
+
+  .countBlock {
+    order: 2;
+  }
+
+  .price {
+    order: 1;
+    margin: 20px 24px 0 0;
+  }
+
+  .priceBlock {
+    align-items: baseline;
+  }
+
+  .footer {
+    display: grid;
+    justify-content: center;
+  }
+
+  .allPrice {
+    margin-top: 30px;
+  }
+
+  .footer button {
+    margin-top: 40px;
+  }
+
+  .name {
+    margin-top: 20px;
+  }
+}
+
+@media (max-width: 650px) {
+  .basket {
+    max-width: 100%;
+  }
+
+  .image {
+    width: 300px;
+    height: 210px;
+  }
+}

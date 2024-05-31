@@ -1,0 +1,56 @@
+.infoBlock {
+    max-width: 1360px;
+    padding: 0 30px;
+    margin: 0 auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.title {
+    font-size: 34px;
+    font-weight: 400;
+}
+
+.text {
+    font-weight: 400;
+    font-size: 18px;
+    margin-top: 16px;
+}
+
+.info {
+    max-width: 540px;
+}
+
+.link {
+    font-size: 18px;
+    cursor: pointer;
+    max-width: 120px;
+    text-align: center;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #464646;
+}
+
+.price {
+    font-size: 30px;
+}
+
+.countBlock {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 90px;
+}
+
+@media (max-width: 1210px) {
+  .infoBlock {
+    display: grid;
+    justify-content: center;
+  }
+
+  .title {
+    margin-top: 50px;
+  }
+
+}

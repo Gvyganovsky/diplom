@@ -1,0 +1,29 @@
+.button {
+  width: 280px;
+  height: 60px;
+  color: #02e502;
+  border: 1px solid #02e502;
+  background: none;
+  font-size: 24px;
+  font-family: inherit;
+  cursor: pointer;
+  padding: 14px;
+  text-align: center;
+}
+
+.buttonAlt {
+  background-color: #02e502;
+  color: black;
+}
+
+.buttonWhite {
+  color: white;
+  border: 1px solid white;
+}
+
+@media (max-width: 460px) {
+  .button {
+    width: 200px;
+    height: 60px;
+  }
+}

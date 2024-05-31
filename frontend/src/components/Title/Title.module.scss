@@ -1,0 +1,29 @@
+.title {
+  font-size: 120px;
+  font-weight: bold;
+  opacity: 0.2;
+}
+
+@media (max-width: 1260px) {
+  .title {
+    text-align: center;
+  }
+}
+
+@media (max-width: 1010px) {
+  .title {
+    font-size: 110px;
+  }
+}
+
+@media (max-width: 900px) {
+  .title {
+    font-size: 84px;
+  }
+}
+
+@media (max-width: 500px) {
+  .title {
+    font-size: 48px;
+  }
+}
