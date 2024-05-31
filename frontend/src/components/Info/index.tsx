@@ -1,18 +1,18 @@
-import styles from "./Info.module.scss";
+import style from "./Info.module.scss";
 
 const index = (props: any) => {
   return (
-    <div className={styles.block}>
+    <div className={style.block}>
       <img
         src={props.img}
         alt="info"
         width={40}
         height={40}
-        className={styles.info__img}
+        className={style.info__img}
       />
 
-      <h5 className={styles.info__title}>{props.title}</h5>
-      <p className={styles.info__text}>{props.text}</p>
+      <h5 className={style.info__title}>{props.title}</h5>
+      <p className={style.info__text}>{props.text}</p>
     </div>
   );
 };

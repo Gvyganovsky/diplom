@@ -1,4 +1,4 @@
-import styles from "./Product.module.scss";
+import style from "./Product.module.scss";
 import Button from "../Button";
 
 interface ProductProps {
@@ -16,21 +16,21 @@ const index: React.FC<ProductProps> = ({ id, image, name, brand, model, price })
   const mainImage = imagesArray[0];
 
   return (
-    <li className={styles.product}>
+    <li className={style.product}>
       <img
         src={`/Product/${name}/${mainImage}`}
         alt="product"
         width={260}
         height={160}
-        className={styles.img}
+        className={style.img}
       />
-      <div className={styles.product__info}>
-        <h5 className={styles.product__title}>{name}</h5>
-        <div className={styles.product__block}>
-          <p className={styles.product__text}>Брэнд: {brand}</p>
-          <p className={styles.product__text}>Модель: {model}</p>
+      <div className={style.product__info}>
+        <h5 className={style.product__title}>{name}</h5>
+        <div className={style.product__block}>
+          <p className={style.product__text}>Брэнд: {brand}</p>
+          <p className={style.product__text}>Модель: {model}</p>
         </div>
-        <p className={styles.price}>{price}</p>
+        <p className={style.price}>{price}</p>
         <Button id={id} title="Добавить в корзину" link="/Product" className="ButtonGreen" />
       </div>
     </li>

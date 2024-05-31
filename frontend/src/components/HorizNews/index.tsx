@@ -1,20 +1,20 @@
+import style from "./HorizNews.module.scss";
 import { Link } from "react-router-dom";
-import styles from "./HorizNews.module.scss";
 
 const index = (props: any) => {
   return (
-    <li className={styles.news}>
+    <li className={style.news}>
       <img
         src={props.img}
         alt="News"
         width={500}
         height={320}
-        className={styles.img}
+        className={style.img}
       />
       <div>
-        <h2 className={styles.title}>{props.title}</h2>
-        <p className={styles.text}>{props.text}</p>
-        <Link to="/" className={styles.link}>
+        <h2 className={style.title}>{props.title}</h2>
+        <p className={style.text}>{props.text}</p>
+        <Link to="/" className={style.link}>
           Читать полностью
         </Link>
       </div>

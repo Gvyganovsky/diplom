@@ -1,18 +1,19 @@
-import React from "react";
-import Title from "../Title";
 import styles from "./Text.module.scss";
+import { useState } from "react";
+import Title from "../Title";
 
 const index = (props: any) => {
-  const [textVisible, setTextVisible] = React.useState(false);
+  const [textVisible, setTextVisible] = useState(false);
 
   const showSecondText = () => {
     setTextVisible((prevTextVisible) => !prevTextVisible);
-  }
+  };
 
   return (
     <div className={styles.textBlock}>
       <Title text={props.title} />
-      <p className={styles.text}>{props.textFirst}
+      <p className={styles.text}>
+        {props.textFirst}
         {textVisible && <span>{props.textSecond}</span>}
       </p>
       <div className={styles.lineBlock}>

@@ -2,10 +2,16 @@
   background-color: #151515;
   border-top: 1px solid #02e502;
   padding: 10px 0;
-  height: 10vh
+  height: 10vh;
 }
 
-.footer div {
+.container {
+  max-width: 1360px;
+  padding: 0 30px;
+  margin: 0 auto;
+  font-weight: 400;
+  position: relative;
+
   display: flex;
   flex-wrap: wrap;
   align-items: center;
