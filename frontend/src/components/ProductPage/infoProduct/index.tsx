@@ -5,22 +5,40 @@ import ImageCatalog from "../ImageCatalog";
 import Breadcrumbs from "../../Breadcrumbs";
 import { FeatureListData } from "../../../Data";
 
-const Index = (props: any) => {
+interface Product {
+  id: string;
+  name: string;
+  brand: string;
+  price: string;
+  image: string;
+}
+
+interface Props {
+  product: Product;
+}
+
+const Index = (props: Props) => {
   const { product } = props;
 
   const addToBasket = async () => {
     try {
       const userId = localStorage.getItem("user");
-      let parsedUserId = null;
-      if (userId) {
-        parsedUserId = JSON.parse(userId).id;
-      } else {
+      if (!userId) {
         console.error("Нет данных о пользователе в localStorage");
         return;
       }
+
+      let parsedUserId: { id: string };
+      try {
+        parsedUserId = JSON.parse(userId);
+      } catch (error) {
+        console.error("Ошибка при парсинге данных пользователя из localStorage:", error);
+        return;
+      }
+
       const requestBody = JSON.stringify({
-        user: parsedUserId,
-        product: parseInt(product.id),
+        user: parsedUserId.id,
+        product: parseInt(product.id, 10),
         count: 1,
       });
 
@@ -38,6 +56,12 @@ const Index = (props: any) => {
         }
       );
 
+      if (!response.ok) {
+        console.error("Ошибка HTTP:", response.status, response.statusText);
+        alert("Ошибка при добавлении товара в корзину.");
+        return;
+      }
+
       const data = await response.json();
       console.log(data);
 
@@ -52,40 +76,35 @@ const Index = (props: any) => {
   };
 
   if (!product) {
-    return <div>ЫЫы</div>;
+    return <div>Продукт не найден</div>;
   }
 
   const imagesArray = JSON.parse(product.image) as string[];
 
   return (
-    <div className={style.infoBlock}>
+    <section className={style.container}>
       <Breadcrumbs title={product.name} />
+      <div className={style.infoBlock}>
 
-      <ImageCatalog name={product.name} images={imagesArray} />
+        <ImageCatalog name={product.name} images={imagesArray} />
 
-      <div className={style.info}>
-        <h1 className={style.title}>{product.name}</h1>
-        <p className={style.text}>Модель: {product.brand}</p>
-        <FeatureList features={FeatureListData} />
-        <p className={style.link}>Все характеристики</p>
-        <div>
-          <p className={style.price}>{product.price}</p>
-          <div className={style.countBlock}>
-            <button>-</button>
-            <p>1</p>
-            <button>+</button>
-          </div>
+        <div className={style.info}>
+          <h1 className={style.title}>{product.name}</h1>
+          <p className={style.text}>Модель: {product.brand}</p>
+          <FeatureList features={FeatureListData} />
           <div>
-            <Button
-              title="Добавить в корзину"
-              onClick={addToBasket}
-              className={style.buttonAlt}
-            />
-            {/* Добавьте кнопку для "Купить в 1 клик", если необходимо */}
+            <p className={style.price}>{product.price} рублей</p>
+            <div className={style.button}>
+              <Button
+                title="Добавить в корзину"
+                onClick={addToBasket}
+                className={style.buttonAlt}
+              />
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

@@ -7,23 +7,29 @@ interface ImageCatalogProps {
 }
 
 const ImageCatalog: React.FC<ImageCatalogProps> = ({ name, images }) => {
-    const [selectedImage, setSelectedImage] = useState<string>(images[0]);
+    const [selectedImage, setSelectedImage] = useState<string>(images[0] || '');
 
     const handleImageClick = (imageUrl: string) => {
         setSelectedImage(imageUrl);
     };
 
+    if (images.length === 0) {
+        return <div className={styles.noImages}>Нет доступных изображений</div>;
+    }
+
     const displayedImages = images.slice(0, 3);
 
     return (
         <div className={styles.imageCatalog}>
-            <img
-                src={`/Product/${name}/${selectedImage}`}
-                alt="Product"
-                width={630}
-                height={370}
-                className={styles.heroImage}
-            />
+            {selectedImage && (
+                <img
+                    src={`/Product/${name}/${selectedImage}`}
+                    alt="Product"
+                    width={630}
+                    height={370}
+                    className={styles.heroImage}
+                />
+            )}
             <ul className={styles.images}>
                 {displayedImages.map((imageUrl, index) => (
                     <li key={index} onClick={() => handleImageClick(imageUrl)}>

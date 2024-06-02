@@ -20,7 +20,7 @@ const Filter: React.FC<FilterProps> = ({
   onMaxPriceChange,
   onCategoryChange
 }) => {
-  const [categoriesVisible, setCategoriesVisible] = useState(false);
+  const [categoriesVisible, setCategoriesVisible] = useState(true);
 
   const handleCategoryChange = (category: string) => {
     onCategoryChange(category);

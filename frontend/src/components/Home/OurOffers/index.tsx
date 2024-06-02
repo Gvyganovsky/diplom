@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import style from "./OurOffers.module.scss";
 import Product from "../../Product/index.tsx";
 import Title from "../../Title";
-import { OurOffersData } from "../../../Data";
+import { OurOffersData } from "../../../Data.tsx";
 
 interface ProductData {
   id: number;

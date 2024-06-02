@@ -21,3 +21,21 @@
   font-size: 18px;
   line-height: 222%;
 }
+
+@media (max-width: 1210px) {
+  .list {
+    margin-top: 20px;
+  }
+}
+
+@media (max-width: 560px) {
+  .list {
+    display: block;
+    margin: 0 auto;
+  }
+
+  .item {
+    width: 100%;
+    margin: 24px 0;
+  }
+}

@@ -5,6 +5,7 @@ import InfoProduct from '../components/ProductPage/infoProduct';
 import DescriptionProduct from "../components/ProductPage/DescriptionProduct";
 import Trust from "../components/Trust";
 import DropDownList from "../components/ProductPage/DropDownList";
+import { bonusData } from '../Data';
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -27,24 +28,6 @@ const ProductDetail = () => {
     return <div>Загрузка...</div>;
   }
 
-  const bonusData = [
-    {
-      img: "../iconDelivery.svg",
-      title: "Бесплатная доставка",
-      text: "Купить квадракоптер - получить бесплатную доставку. Участвуйте в нашей акции и получите скидку на следующую покупку. Обращайтесь к нашим консультантам для выбора подходящей модели.",
-    },
-    {
-      img: "../IconWallet.svg",
-      title: "Гарантия лучшей цены",
-      text: "Лучшая цена от официального производителя. Получите гарантированную скидку на следующую покупку.",
-    },
-    {
-      img: "../iconSecurity.svg",
-      title: "Официальная гарантия",
-      text: "На всю продукцию представленную в магазине, действует гарантия качества на срок до двух лет. Мы также предлагаем бесплатную доставку по всей стране для заказов свыше 100 долларов.",
-    }
-  ];
-
   return (
     <>
       <InfoProduct product={product} />
@@ -53,7 +36,7 @@ const ProductDetail = () => {
 
       <DescriptionProduct product={product} />
 
-      <DropDownList  />
+      <DropDownList />
     </>
   );
 }

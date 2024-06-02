@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ChangeEvent } from "react";
+import { useState, useEffect, ChangeEvent } from "react";
 import Breadcrumbs from "../../components/Breadcrumbs/index.tsx";
 import styles from "./Catalog.module.scss";
 import Filter from "../../components/Catalog/Filter/index.tsx";
