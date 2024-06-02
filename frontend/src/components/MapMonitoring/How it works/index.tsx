@@ -21,7 +21,7 @@ const Index = () => {
                     <li className={`${styles.item} ${isFieldOpen ? styles.selected : ''}`}>
                         <p className={styles.item__title} onClick={() => {
                             setIsFieldOpen(!isFieldOpen);
-                            setIsKamerallyOpen(false); // Скрываем список "Камеральные работы" при открытии "Полевых работ"
+                            setIsKamerallyOpen(false);
                         }}>Полевые работы</p>
                         {isFieldOpen && (
                             <ul className={styles.item__list}>
@@ -33,7 +33,7 @@ const Index = () => {
                     <li className={`${styles.item} ${isKamerallyOpen ? styles.selected : ''}`}>
                         <p className={styles.item__title} onClick={() => {
                             setIsKamerallyOpen(!isKamerallyOpen);
-                            setIsFieldOpen(false); // Скрываем список "Полевые работы" при открытии "Камеральных работ"
+                            setIsFieldOpen(false);
                         }}>Камеральные работы</p>
                         {isKamerallyOpen && (
                             <ul className={styles.item__list}>

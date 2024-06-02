@@ -1,18 +1,18 @@
-import styles from './LogoBlock.module.scss';
+import style from './LogoBlock.module.scss';
 
 const index = () => {
     return (
-        <ul className={styles.logoBlock}>
-            <li className={styles.logo_item}>
+        <ul className={style.logoBlock}>
+            <li className={style.logo_item}>
                 <img
                     src="/logo.svg"
                     alt="logo"
                     width={70}
                     height={70}
-                    className={styles.logo}
+                    className={style.logo}
                 />
             </li>
-            <li className={styles.phone}>+7(861)-217-91-18</li>
+            <li className={style.phone}>+7(861)-217-91-18</li>
         </ul>
     )
 }

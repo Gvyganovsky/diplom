@@ -1,7 +1,7 @@
-import styles from "./Title.module.scss";
+import style from "./Title.module.scss";
 
 const index = (props: any) => {
-  return <h2 className={styles.title}>{props.text}</h2>;
+  return <h2 className={style.title}>{props.text}</h2>;
 };
 
 export default index;

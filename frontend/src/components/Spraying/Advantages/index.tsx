@@ -1,5 +1,4 @@
-import React from 'react';
-import styles from './Advantages.module.scss';
+import style from './Advantages.module.scss';
 
 interface AdvantagesProps {
     image: string;
@@ -9,14 +8,14 @@ interface AdvantagesProps {
 
 const Advantages: React.FC<AdvantagesProps> = (props) => {
     return (
-        <div className={styles.block}>
-            <div className={styles.header}>
-                <img src={props.image} alt={props.title} width={40} height={40} className={styles.image} />
-                <p className={styles.title}>{props.title}</p>
+        <div className={style.block}>
+            <div className={style.header}>
+                <img src={props.image} alt={props.title} width={40} height={40} className={style.image} />
+                <p className={style.title}>{props.title}</p>
             </div>
-            <ul className={styles.list}>
+            <ul className={style.list}>
                 {props.data.map((item: string, index: number) => (
-                    <li key={index} className={styles.item}>{item}</li>
+                    <li key={index} className={style.item}>{item}</li>
                 ))}
             </ul>
         </div>

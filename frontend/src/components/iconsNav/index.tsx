@@ -1,4 +1,4 @@
-import styles from './iconsNav.module.scss';
+import style from './iconsNav.module.scss';
 import { Link } from 'react-router-dom';
 
 interface icon {
@@ -21,9 +21,9 @@ interface iconsNavProps {
 
 const Index: React.FC<iconsNavProps> = ({ icons }) => {
     return (
-        <ul className={styles.iconsNav}>
+        <ul className={style.iconsNav}>
             {icons.map((icon, index) => (
-                <li className={styles.iconsNav__icon} key={index}>
+                <li className={style.iconsNav__icon} key={index}>
                     {icon.link ? (
                         <Link to={icon.link}>
                             <img
@@ -31,7 +31,7 @@ const Index: React.FC<iconsNavProps> = ({ icons }) => {
                                 alt={icon.alt}
                                 width={33}
                                 height={33}
-                                className={styles.iconsNav__img}
+                                className={style.iconsNav__img}
                             />
                         </Link>
                     ) : (
@@ -40,45 +40,45 @@ const Index: React.FC<iconsNavProps> = ({ icons }) => {
                             alt={icon.alt}
                             width={33}
                             height={33}
-                            className={styles.iconsNav__img}
+                            className={style.iconsNav__img}
                             onClick={icon.onClick}
                         />
                     )}
                     {icon.dropDown && (
-                        <ul className={styles.menu}>
+                        <ul className={style.menu}>
                             {icon.dropDown.map((headerDropdown, index) => (
-                                <li className={styles.menu__item} key={index}>
-                                    <Link to={headerDropdown.link} className={styles.menu__link}>
+                                <li className={style.menu__item} key={index}>
+                                    <Link to={headerDropdown.link} className={style.menu__link}>
                                         <img
                                             src={headerDropdown.image}
                                             alt="link"
                                             width={40}
                                             height={40}
-                                            className={styles.menu__img}
+                                            className={style.menu__img}
                                         />
-                                        <p className={styles.menu__text}>{headerDropdown.text}</p>
+                                        <p className={style.menu__text}>{headerDropdown.text}</p>
                                     </Link>
                                 </li>
                             ))}
-                            <li className={styles.menu__item}>
+                            <li className={style.menu__item}>
                                 <img
                                     src="/iconWhatsapp.svg"
                                     alt="Whatsapp"
-                                    className={styles.menu__icon}
+                                    className={style.menu__icon}
                                     width={30}
                                     height={30}
                                 />
                                 <img
                                     src="/iconTelegram.svg"
                                     alt="Telegram"
-                                    className={styles.menu__icon}
+                                    className={style.menu__icon}
                                     width={30}
                                     height={30}
                                 />
                                 <img
                                     src="/iconWechat.svg"
                                     alt="Wechat"
-                                    className={styles.menu__icon}
+                                    className={style.menu__icon}
                                     width={30}
                                     height={30}
                                 />

@@ -6,7 +6,7 @@ import Clients from "../components/Home/Clients";
 import News from "../components/Home/News";
 import WhereWeWork from "../components/Where We Work";
 import Text from "../components/Text";
-import trustData from "../components/Trust/trustData";
+import {trustData} from "../Data";
 
 const Home = () => {
   return (

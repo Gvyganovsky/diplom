@@ -2,6 +2,14 @@
   margin-top: 110px;
 }
 
+.container {
+  max-width: 1360px;
+  padding: 0 30px;
+  margin: 0 auto;
+  font-weight: 400;
+  position: relative;
+}
+
 .content {
   gap: 100px;
   display: flex;

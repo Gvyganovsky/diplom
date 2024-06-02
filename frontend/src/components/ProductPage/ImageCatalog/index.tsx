@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styles from './ImageCatalog.module.scss';
 
 interface ImageCatalogProps {
@@ -13,7 +13,6 @@ const ImageCatalog: React.FC<ImageCatalogProps> = ({ name, images }) => {
         setSelectedImage(imageUrl);
     };
 
-    // Ограничиваем количество отображаемых изображений до максимум 3
     const displayedImages = images.slice(0, 3);
 
     return (

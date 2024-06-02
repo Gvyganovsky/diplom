@@ -1,4 +1,4 @@
-import styles from "./Button.module.scss";
+import style from "./Button.module.scss";
 
 interface ButtonProps {
   id?: number;
@@ -14,13 +14,13 @@ const Button: React.FC<ButtonProps> = ({ id, title, link, className, type = "but
 
   if (link) {
     return (
-      <a href={finalLink} className={`${styles.button} ${className}`}>
+      <a href={finalLink} className={`${style.button} ${className}`}>
         {title}
       </a>
     );
   } else {
     return (
-      <button type={type} className={`${styles.button} ${className}`} onClick={onClick}>
+      <button type={type} className={`${style.button} ${className}`} onClick={onClick}>
         {title}
       </button>
     );

@@ -1,23 +1,23 @@
-import styles from "./ContactForm.module.scss";
+import style from "./ContactForm.module.scss";
 import Button from "../Button";
 import Title from "../Title";
 
 const ContactForm = () => {
   return (
-    <div className={styles.contactForm}>
-      <div className={styles.content}>
+    <div className={style.contactForm}>
+      <div className={style.content}>
         <Title text="Напишите нам" />
-        <p className={styles.text}>
+        <p className={style.text}>
           Заполните форму и мы за 5 минут подскажем вам лучшие способы защиты
           вашего урожая
         </p>
-        <form action="/submit" method="post" className={styles.form}>
+        <form action="/submit" method="post" className={style.form}>
           <input
             type="text"
             id="name"
             name="name"
             placeholder="Ваше имя"
-            className={styles.input}
+            className={style.input}
             required
           />
           <input
@@ -25,7 +25,7 @@ const ContactForm = () => {
             id="phone"
             name="phone"
             placeholder="Ваш телефон"
-            className={styles.input}
+            className={style.input}
             required
           />
           <input
@@ -33,17 +33,17 @@ const ContactForm = () => {
             id="email"
             name="email"
             placeholder="Ваш Email"
-            className={styles.input}
+            className={style.input}
             required
           />
-          <Button title="Отправить" className={styles.buttonGreen} />
+          <Button title="Отправить" className={style.buttonGreen} />
         </form>
         <img
           src="./image_Drone.png"
           alt="Drone"
           width={525}
           height={350}
-          className={styles.img}
+          className={style.img}
         />
       </div>
     </div>

@@ -1,5 +1,5 @@
 import { useState, ChangeEvent, FormEvent } from 'react';
-import axios, { AxiosError } from 'axios'; // Import AxiosError
+import axios, { AxiosError } from 'axios';
 import Button from '../components/Button';
 import styles from './Auth.module.scss';
 import { useNavigate } from 'react-router-dom';
@@ -130,10 +130,10 @@ const SignUp = () => {
       navigate("/profile");
     } catch (error: unknown) {
       if (axios.isAxiosError(error) && error.response && error.response.status === 422) {
-        const axiosError = error as AxiosError; // Narrow down the type of 'error' to AxiosError
+        const axiosError = error as AxiosError;
         setErrors(prevState => ({
           ...prevState,
-          ...(axiosError.response?.data as any)?.errors || {} // Type assertion to 'any'
+          ...(axiosError.response?.data as any)?.errors || {}
         }));
       } else {
         setErrors(prevState => ({

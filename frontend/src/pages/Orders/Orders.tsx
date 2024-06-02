@@ -3,7 +3,6 @@ import axios from 'axios';
 import styles from './Orders.module.scss';
 import Button from '../../components/Button';
 
-// Определение типов для продуктов и заказов
 interface Product {
   productId: string;
   productName: string;

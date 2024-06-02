@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import styles from './DropDownList.module.scss';
+import { useState } from 'react';
+import style from './DropDownList.module.scss';
 
 interface AccordionItemProps {
     title: string;
@@ -79,7 +79,7 @@ const DropDownList = () => {
     ];
 
     return (
-        <section className={styles.accordion}>
+        <section className={style.accordion}>
             {accordionItems.map((item, index) => (
                 <AccordionItem
                     key={index}
@@ -95,12 +95,12 @@ const DropDownList = () => {
 
 const AccordionItem: React.FC<AccordionItemProps> = ({ title, content, isActive, onToggle }) => {
     return (
-        <div className={styles["accordion-item"]}>
-            <div className={`${styles["accordion-title"]} ${isActive ? styles.active : ''}`} onClick={onToggle}>
+        <div className={style["accordion-item"]}>
+            <div className={`${style["accordion-title"]} ${isActive ? style.active : ''}`} onClick={onToggle}>
                 {title}
             </div>
             {isActive && (
-                <div className={styles["accordion-content"]}>
+                <div className={style["accordion-content"]}>
                     {content}
                 </div>
             )}

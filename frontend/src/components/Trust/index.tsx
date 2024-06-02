@@ -1,12 +1,12 @@
-import styles from "./Trust.module.scss";
+import style from "./Trust.module.scss";
 import Info from "../Info/index.tsx";
 import Title from "../Title";
 
 const index = (props:any) => {
   return (
-    <div className={styles.trust}>
+    <div className={style.trust}>
       <Title text={props.title} />
-      <div className={styles.content}>
+      <div className={style.content}>
         {props.data.map((data: any, index: any) => (
           <Info key={index} {...data} />
         ))}
@@ -15,7 +15,7 @@ const index = (props:any) => {
           alt=""
           width={265}
           height={265}
-          className={styles.img}
+          className={style.img}
         />
       </div>
     </div>
