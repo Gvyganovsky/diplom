@@ -17,25 +17,28 @@ interface Product {
 
 const Basket = () => {
   const { setBasketOpened } = useContext(BasketContext);
-  const [products, setProducts] = useState<Product[]>([]); 
-  const [isLoading, setIsLoading] = useState<boolean>(true); 
+  const [products, setProducts] = useState<Product[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchBasketData = async () => {
       try {
-        const userData = localStorage.getItem("user");
-        if (!userData) {
-          console.error(
-            "Данные пользователя отсутствуют в локальном хранилище"
-          );
+        const token = localStorage.getItem("token");
+        if (!token) {
+          console.error("Токен пользователя отсутствует в локальном хранилище");
           return;
         }
-        const { id: userId } = JSON.parse(userData);
 
         const response = await fetch(
-          `https://dp-viganovsky.xn--80ahdri7a.site/api/basket/get/${userId}`
+          `https://dp-viganovsky.xn--80ahdri7a.site/api/basket/get`,
+          {
+            headers: {
+              "Authorization": `Bearer ${token}`
+            }
+          }
         );
+
         if (response.ok) {
           const data = await response.json();
 
@@ -76,12 +79,11 @@ const Basket = () => {
 
   const updateProductCount = async (productId: number, newCount: number) => {
     try {
-      const userData = localStorage.getItem("user");
-      if (!userData) {
-        console.error("Данные пользователя отсутствуют в локальном хранилище");
+      const token = localStorage.getItem("token");
+      if (!token) {
+        console.error("Токен пользователя отсутствует в локальном хранилище");
         return;
       }
-      const { id: userId } = JSON.parse(userData);
 
       const response = await fetch(
         `https://dp-viganovsky.xn--80ahdri7a.site/api/basket/update`,
@@ -89,9 +91,9 @@ const Basket = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
           },
           body: JSON.stringify({
-            userId,
             productId,
             count: newCount,
           }),
@@ -116,12 +118,11 @@ const Basket = () => {
 
   const removeProductFromBasket = async (productId: number) => {
     try {
-      const userData = localStorage.getItem("user");
-      if (!userData) {
-        console.error("Данные пользователя отсутствуют в локальном хранилище");
+      const token = localStorage.getItem("token");
+      if (!token) {
+        console.error("Токен пользователя отсутствует в локальном хранилище");
         return;
       }
-      const { id: userId } = JSON.parse(userData);
 
       const response = await fetch(
         `https://dp-viganovsky.xn--80ahdri7a.site/api/basket/delete`,
@@ -129,9 +130,9 @@ const Basket = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
           },
           body: JSON.stringify({
-            userId,
             productId,
           }),
         }
@@ -151,23 +152,25 @@ const Basket = () => {
 
   const handleCheckout = async () => {
     try {
-      const userData = localStorage.getItem("user");
-      if (!userData) {
-        console.error("Данные пользователя отсутствуют в локальном хранилище");
+      const token = localStorage.getItem("token");
+      if (!token) {
+        console.error("Токен пользователя отсутствует в локальном хранилище");
         return;
       }
-      const { id: userId } = JSON.parse(userData);
 
       const response = await fetch(
-        `https://dp-viganovsky.xn--80ahdri7a.site/api/checkout/${userId}`,
+        `https://dp-viganovsky.xn--80ahdri7a.site/api/checkout`,
         {
           method: "POST",
+          headers: {
+            "Authorization": `Bearer ${token}`
+          },
         }
       );
       const data = await response.json();
       if (data.success) {
         console.log("Заказ успешно оформлен");
-        setBasketOpened(false); 
+        setBasketOpened(false);
         navigate("/orders");
       } else {
         console.error("Ошибка при оформлении заказа:", data.message);
@@ -196,64 +199,59 @@ const Basket = () => {
           />
           <ul className={style.list}>
             {products.length > 0 ? (
-              products.map(
-                (
-                  item: Product,
-                  index: number 
-                ) => (
-                  <li className={style.item} key={index}>
-                    <div className={style.hero}>
-                      <img
-                        src={`/Product/${item.productDetails.name}/${item.productDetails.image[0]}`}
-                        alt={item.productDetails.name}
-                        width={225}
-                        height={150}
-                        className={style.img}
-                      />
-                      <div className={style.textBlock}>
-                        <h5 className={style.name}>
-                          {item.productDetails.name}
-                        </h5>
-                        <p className={style.article}>
-                          Артикул: {item.productDetails.id}
-                        </p>
-                      </div>
-                    </div>
-                    <div className={style.priceBlock}>
-                      <div className={style.countBlock}>
-                        <p
-                          className={style.countIcon}
-                          onClick={() =>
-                            updateProductCount(item.product, item.count - 1)
-                          }
-                        >
-                          -
-                        </p>
-                        <p className={style.count}>{item.count}</p>
-                        <p
-                          className={style.countIcon}
-                          onClick={() =>
-                            updateProductCount(item.product, item.count + 1)
-                          }
-                        >
-                          +
-                        </p>
-                      </div>
-                      <p className={style.price}>
-                        ${item.productDetails.price}
+              products.map((item: Product, index: number) => (
+                <li className={style.item} key={index}>
+                  <div className={style.hero}>
+                    <img
+                      src={`/Product/${item.productDetails.name}/${item.productDetails.image[0]}`}
+                      alt={item.productDetails.name}
+                      width={225}
+                      height={150}
+                      className={style.img}
+                    />
+                    <div className={style.textBlock}>
+                      <h5 className={style.name}>
+                        {item.productDetails.name}
+                      </h5>
+                      <p className={style.article}>
+                        Артикул: {item.productDetails.id}
                       </p>
-                      <img
-                        src="/iconUrn.svg"
-                        alt="iconUrn"
-                        width={17}
-                        height={21}
-                        className={style.Urn}
-                        onClick={() => removeProductFromBasket(item.product)}
-                      />
                     </div>
-                  </li>
-                )
-              )
+                  </div>
+                  <div className={style.priceBlock}>
+                    <div className={style.countBlock}>
+                      <p
+                        className={style.countIcon}
+                        onClick={() =>
+                          updateProductCount(item.product, item.count - 1)
+                        }
+                      >
+                        -
+                      </p>
+                      <p className={style.count}>{item.count}</p>
+                      <p
+                        className={style.countIcon}
+                        onClick={() =>
+                          updateProductCount(item.product, item.count + 1)
+                        }
+                      >
+                        +
+                      </p>
+                    </div>
+                    <p className={style.price}>
+                      ${item.productDetails.price}
+                    </p>
+                    <img
+                      src="/iconUrn.svg"
+                      alt="iconUrn"
+                      width={17}
+                      height={21}
+                      className={style.Urn}
+                      onClick={() => removeProductFromBasket(item.product)}
+                    />
+                  </div>
+                </li>
+              ))
             ) : (
               <>
                 <img

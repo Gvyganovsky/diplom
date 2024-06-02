@@ -57,8 +57,8 @@ const SignIn = () => {
         }
       });
 
-      const { user, token } = response.data;
-      login(user, token);
+      const {token } = response.data;
+      login(token);
       localStorage.setItem('token', token);
       navigate("/profile");
     } catch (error) {

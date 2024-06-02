@@ -10,6 +10,7 @@ use app\models\BasketSearch;
 use app\models\Order;
 use app\models\Product;
 use app\models\OrderProduct;
+use app\controllers\UserController;
 use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
 
@@ -17,37 +18,51 @@ class BasketController extends Controller
 {
     public $enableCsrfValidation = false;
 
-    public function actionCheckout($userId)
+    public function actionCheckout()
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
-    
+
+        $authHeader = Yii::$app->request->headers->get('Authorization');
+        if (!$authHeader || !preg_match('/Bearer\s(\S+)/', $authHeader, $matches)) {
+            return ['success' => false, 'message' => 'Токен пользователя отсутствует в заголовках запроса.'];
+        }
+
+        $token = $matches[1];
+        $user = UserController::getUserFromToken($token);
+        if (!$user) {
+            Yii::$app->response->statusCode = 401;
+            return ['success' => false, 'message' => 'Пользователь не авторизован.'];
+        }
+
+        $userId = $user->id;
+
         $order = new Order();
         $order->user = $userId;
-        $order->createdAt = time(); 
+        $order->createdAt = time();
         if (!$order->save()) {
             return ['success' => false, 'message' => 'Произошла ошибка при создании заказа.'];
         }
-    
+
         $basketItems = Basket::find()
             ->where(['user' => $userId])
             ->all();
-    
+
         $transaction = Yii::$app->db->beginTransaction();
         try {
             foreach ($basketItems as $basketItem) {
                 $productItem = Product::findOne($basketItem->product);
-    
+
                 if ($productItem === null || $productItem->count < $basketItem->count) {
                     $transaction->rollBack();
                     return ['success' => false, 'message' => 'Недостаточно товара на складе.'];
                 }
-    
+
                 $productItem->count -= $basketItem->count;
                 if (!$productItem->save()) {
                     $transaction->rollBack();
                     return ['success' => false, 'message' => 'Произошла ошибка при обновлении количества товара на складе.'];
                 }
-    
+
                 $orderProduct = new OrderProduct();
                 $orderProduct->order_id = $order->id;
                 $orderProduct->product_id = $basketItem->product;
@@ -57,9 +72,8 @@ class BasketController extends Controller
                     return ['success' => false, 'message' => 'Произошла ошибка при добавлении товаров в заказ.'];
                 }
             }
-    
             Basket::deleteAll(['user' => $userId]);
-    
+
             $transaction->commit();
 
             return ['success' => true, 'message' => 'Заказ успешно оформлен.'];
@@ -75,18 +89,27 @@ class BasketController extends Controller
 
         $jsonData = json_decode(Yii::$app->request->getRawBody(), true);
 
-        if (isset($jsonData['user'], $jsonData['product'], $jsonData['count'])) {
-            $user = $jsonData['user'];
+        if (isset($jsonData['token'], $jsonData['product'], $jsonData['count'])) {
+            $token = $jsonData['token'];
             $product = $jsonData['product'];
             $count = $jsonData['count'];
 
-            $basketItem = Basket::findOne(['user' => $user, 'product' => $product]);
+            $user = UserController::getUserFromToken($token);
+
+            if (!$user) {
+                Yii::$app->response->statusCode = 401;
+                return ['success' => false, 'message' => 'Пользователь не авторизован.'];
+            }
+
+            $userId = $user->id;
+
+            $basketItem = Basket::findOne(['user' => $userId, 'product' => $product]);
 
             if ($basketItem !== null) {
                 $basketItem->count += $count;
             } else {
                 $basketItem = new Basket();
-                $basketItem->user = $user;
+                $basketItem->user = $userId;
                 $basketItem->product = $product;
                 $basketItem->count = $count;
             }
@@ -101,9 +124,27 @@ class BasketController extends Controller
         }
     }
 
-    public function actionGet($userId)
+    public function actionGet()
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
+
+        $authHeader = Yii::$app->request->headers->get('Authorization');
+        if (!$authHeader) {
+            return ['success' => false, 'message' => 'Токен пользователя отсутствует в заголовках запроса.'];
+        }
+
+        list($type, $token) = explode(' ', $authHeader, 2);
+        if (strcasecmp($type, 'Bearer') != 0) {
+            return ['success' => false, 'message' => 'Неверный тип токена.'];
+        }
+
+        $user = UserController::getUserFromToken($token);
+        if (!$user) {
+            Yii::$app->response->statusCode = 401;
+            return ['success' => false, 'message' => 'Пользователь не авторизован.'];
+        }
+
+        $userId = $user->id;
 
         $basketItems = Basket::find()
             ->where(['user' => $userId])
@@ -118,10 +159,19 @@ class BasketController extends Controller
 
         $jsonData = json_decode(Yii::$app->request->getRawBody(), true);
 
-        if (isset($jsonData['userId'], $jsonData['productId'], $jsonData['count'])) {
-            $userId = $jsonData['userId'];
+        if (isset($jsonData['token'], $jsonData['productId'], $jsonData['count'])) {
+            $token = $jsonData['token'];
             $productId = $jsonData['productId'];
             $count = $jsonData['count'];
+
+            $user = UserController::getUserFromToken($token);
+
+            if (!$user) {
+                Yii::$app->response->statusCode = 401;
+                return ['success' => false, 'message' => 'Пользователь не авторизован.'];
+            }
+
+            $userId = $user->id;
 
             $basketItem = Basket::findOne(['user' => $userId, 'product' => $productId]);
 
@@ -147,9 +197,18 @@ class BasketController extends Controller
 
         $jsonData = json_decode(Yii::$app->request->getRawBody(), true);
 
-        if (isset($jsonData['userId'], $jsonData['productId'])) {
-            $userId = $jsonData['userId'];
+        if (isset($jsonData['token'], $jsonData['productId'])) {
+            $token = $jsonData['token'];
             $productId = $jsonData['productId'];
+
+            $user = UserController::getUserFromToken($token);
+
+            if (!$user) {
+                Yii::$app->response->statusCode = 401;
+                return ['success' => false, 'message' => 'Пользователь не авторизован.'];
+            }
+
+            $userId = $user->id;
 
             $basketItem = Basket::findOne(['user' => $userId, 'product' => $productId]);
 

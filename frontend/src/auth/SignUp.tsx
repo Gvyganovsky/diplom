@@ -11,7 +11,6 @@ type FormData = {
   phone: string;
   address: string;
   password: string;
-  admin: number;
   confirmPassword: string;
 };
 
@@ -34,7 +33,6 @@ const SignUp = () => {
     phone: '',
     address: '',
     password: '',
-    admin: 0,
     confirmPassword: ''
   });
 
@@ -132,8 +130,9 @@ const SignUp = () => {
         }
       });
       console.log(response.data.message);
-      const { user, token } = response.data;
-      login(user, token);
+      const { token } = response.data;
+      login(token);
+      await localStorage.setItem('token', token);
       navigate("/profile");
     } catch (error: unknown) {
       if (axios.isAxiosError(error) && error.response && error.response.status === 422) {
@@ -148,7 +147,6 @@ const SignUp = () => {
           general: 'Произошла ошибка. Попробуйте еще раз.'
         }));
       }
-      
     }
   };
 

@@ -31,7 +31,7 @@ const index: React.FC<ProductProps> = ({ id, image, name, brand, model, price })
           <p className={style.product__text}>Модель: {model}</p>
         </div>
         <p className={style.price}>{price}</p>
-        <Button id={id} title="Добавить в корзину" link="/Product" className="ButtonGreen" c />
+        <Button id={id} title="Добавить в корзину" link="/Product" className="ButtonGreen" />
       </div>
     </li>
   );

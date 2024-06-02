@@ -5,8 +5,17 @@ import Product from "../components/Product/index.tsx";
 import Hero from "../components/Hero/index.tsx";
 import React from "react";
 
-const Catalog = () => {
-  const [product, setProduct] = React.useState([]);
+interface ProductType {
+  id: number;
+  image: string;
+  name: string;
+  brand: string;
+  model: string;
+  price: number;
+}
+
+const Catalog: React.FC = () => {
+  const [product, setProduct] = React.useState<ProductType[]>([]);
 
   React.useEffect(() => {
     fetch("https://dp-viganovsky.xn--80ahdri7a.site/api/products")

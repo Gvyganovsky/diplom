@@ -118,7 +118,7 @@ class UserController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
-    protected function generateToken($userId)
+    public function generateToken($userId)
     {
         $secretKey = 'c8qC@34V1zgM#T!k%Fp5vD@7^Rp6fKb!';
         $payload = [
@@ -129,7 +129,7 @@ class UserController extends Controller
         return $token;
     }
 
-    protected function getUserFromToken($token)
+    public static function getUserFromToken($token)
     {
         $secretKey = 'c8qC@34V1zgM#T!k%Fp5vD@7^Rp6fKb!';
         try {
@@ -158,7 +158,7 @@ class UserController extends Controller
         if ($model->save()) {
             $token = $this->generateToken($model->id);
             Yii::$app->response->statusCode = 201;
-            return ['message' => 'Успешная регистрация!', 'user' => $model, 'token' => $token];
+            return ['message' => 'Успешная регистрация!', 'token' => $token];
         } else {
             if ($model->hasErrors()) {
                 Yii::$app->response->statusCode = 422;
@@ -201,7 +201,7 @@ class UserController extends Controller
         $user = User::findOne(['email' => $email]);
         if ($user && $user->validatePassword($password)) {
             $token = $this->generateToken($user->id);
-            return ['message' => 'Успешная авторизация!', 'user' => $user, 'token' => $token];
+            return ['message' => 'Успешная авторизация!', 'token' => $token];
         }
 
         Yii::$app->response->statusCode = 401;
@@ -261,6 +261,31 @@ class UserController extends Controller
         } else {
             Yii::$app->response->statusCode = 404;
             return ['message' => 'Пользователь не найден'];
+        }
+    }
+
+    /**
+     * Returns user data based on token.
+     * @return \yii\web\Response
+     */
+    public function actionGetData()
+    {
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+        $authHeader = Yii::$app->request->getHeaders()->get('Authorization');
+        if (!$authHeader) {
+            Yii::$app->response->statusCode = 401;
+            return ['message' => 'Ошибка авторизации', 'errors' => 'Токен отсутствует'];
+        }
+
+        $token = str_replace('Bearer ', '', $authHeader);
+        $user = $this->getUserFromToken($token);
+
+        if ($user) {
+            return ['message' => 'Пользователь найден', 'user' => $user];
+        } else {
+            Yii::$app->response->statusCode = 401;
+            return ['message' => 'Ошибка авторизации', 'errors' => 'Неверный токен'];
         }
     }
 }

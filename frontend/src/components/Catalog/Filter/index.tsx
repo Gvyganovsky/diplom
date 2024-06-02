@@ -2,23 +2,21 @@ import style from "./Filter.module.scss";
 import { useState, ChangeEvent } from 'react';
 
 interface FilterProps {
-  selectedBrand: string;
-  minPrice: string;
-  maxPrice: string;
-  onBrandChange: (event: ChangeEvent<HTMLSelectElement>) => void;
-  onMinPriceChange: (event: ChangeEvent<HTMLInputElement>) => void;
-  onMaxPriceChange: (event: ChangeEvent<HTMLInputElement>) => void;
-  onCategoryChange: (category: string) => void;
+  selectedBrand?: string;
+  minPrice?: string;
+  maxPrice?: string;
+  onBrandChange?: (event: ChangeEvent<HTMLSelectElement>) => void;
+  onMinPriceChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+  onMaxPriceChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+  onCategoryChange?: (category: string) => void;
 }
 
 const Filter: React.FC<FilterProps> = ({
-  selectedBrand,
-  minPrice,
-  maxPrice,
-  onBrandChange,
-  onMinPriceChange,
-  onMaxPriceChange,
-  onCategoryChange
+  minPrice = "",
+  maxPrice = "",
+  onMinPriceChange = () => { },
+  onMaxPriceChange = () => { },
+  onCategoryChange = () => { }
 }) => {
   const [categoriesVisible, setCategoriesVisible] = useState(true);
 

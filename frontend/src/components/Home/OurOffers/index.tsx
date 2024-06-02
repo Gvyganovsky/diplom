@@ -6,6 +6,10 @@ import Title from "../../Title";
 interface ProductData {
   id: number;
   name: string;
+  image: string;
+  brand: string;
+  model: string;
+  price: number;
 }
 
 const OurOffers = () => {

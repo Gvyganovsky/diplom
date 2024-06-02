@@ -24,23 +24,15 @@ const Index = (props: Props) => {
 
   const addToBasket = async () => {
     try {
-      const userId = localStorage.getItem("user");
-      if (!userId) {
-        console.error("Нет данных о пользователе в localStorage");
+      const token = localStorage.getItem("token");
+      if (!token) {
+        console.error("Нет токена пользователя в localStorage");
         navigate("/auth/signin");
         return;
       }
 
-      let parsedUserId: { id: string };
-      try {
-        parsedUserId = JSON.parse(userId);
-      } catch (error) {
-        console.error("Ошибка при парсинге данных пользователя из localStorage:", error);
-        return;
-      }
-
       const requestBody = JSON.stringify({
-        user: parsedUserId.id,
+        token: token,
         product: parseInt(product.id, 10),
         count: 1,
       });

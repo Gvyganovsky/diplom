@@ -1,45 +1,65 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 interface AuthContextType {
-  user: any;
   token: string | null;
-  login: (userData: any, authToken: string) => void;
+  login: (authToken: string) => void;
   logout: () => void;
+  getUserData: () => Promise<any | null>;
 }
-
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<any>(null);
-  const [token, setToken] = useState<string | null>(null);
+  const [token, setToken] = useState<string | null>(() => {
+    const storedToken = localStorage.getItem('token');
+    return storedToken || null;
+  });
 
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
-    const storedUser = localStorage.getItem('user');
-
-    if (storedToken && storedUser) {
+    if (storedToken) {
       setToken(storedToken);
-      setUser(JSON.parse(storedUser));
+    } else {
+      setToken(null);
     }
   }, []);
 
-  const login = (userData: any, authToken: string) => {
-    setUser(userData);
+  const login = (authToken: string) => {
     setToken(authToken);
-    localStorage.setItem('user', JSON.stringify(userData));
     localStorage.setItem('token', authToken);
   };
 
   const logout = () => {
-    setUser(null);
     setToken(null);
-    localStorage.removeItem('user');
     localStorage.removeItem('token');
   };
 
+  const getUserData = async () => {
+    if (token) {
+      try {
+        const response = await fetch('https://dp-viganovsky.xn--80ahdri7a.site/api/user/get-data', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+
+        if (response.ok) {
+          const userData = await response.json();
+          return userData;
+        } else {
+          throw new Error('Failed to fetch user data');
+        }
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+        return null;
+      }
+    } else {
+      return null;
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ user, token, login, logout }}>
+    <AuthContext.Provider value={{ token, login, logout, getUserData }}>
       {children}
     </AuthContext.Provider>
   );

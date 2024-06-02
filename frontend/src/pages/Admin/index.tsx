@@ -1,7 +1,7 @@
 import style from './Admin.module.scss';
 
 const Admin = () => {
-    const handleClick = (url) => {
+    const handleClick = (url: string) => {
         const token = localStorage.getItem('token');
         const requestOptions = {
             method: 'GET',

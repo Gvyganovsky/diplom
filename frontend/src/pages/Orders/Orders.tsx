@@ -48,6 +48,8 @@ const Orders: React.FC = () => {
 
   const handleCancelOrder = async (orderId: string) => {
     try {
+      console.log('Отправляем запрос на удаление заказа с orderId:', orderId);
+
       const response = await axios.delete(`https://dp-viganovsky.xn--80ahdri7a.site/api/order/delete/${orderId}`);
       if (response.data.success) {
         const updatedOrders = orders.filter(order => order.orderId !== orderId);
@@ -78,7 +80,7 @@ const Orders: React.FC = () => {
 
                 return (
                   <div key={product.productId} className={style.productCard}>
-                    <img src={`/Product/${product.productName}/${firstImage}`} alt={product.productName} />
+                    <img src={`/Product/${product.productName}/${firstImage}`} alt={product.productName} width={128} />
                     <h3>{product.productName}</h3>
                     <p>Количество: {product.quantity}</p>
                   </div>

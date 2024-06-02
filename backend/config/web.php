@@ -50,10 +50,10 @@ $config = [
             'rules' => [
                 'GET product/<id:\d+>' => 'product/product',
                 'GET products' => 'product/products',
-                'POST checkout/<userId:\d+>' => 'basket/checkout',
+                'POST checkout' => 'basket/checkout',
                 'GET orders/<userId:\d+>' => 'order/orders',
                 'POST basket/add' => 'basket/add',
-                'GET basket/get/<userId:\d+>' => 'basket/get',
+                'GET basket/get' => 'basket/get',
                 'POST basket/update' => 'basket/update',
                 'POST basket/delete' => 'basket/delete',
                 'POST signup' => 'user/signup',
@@ -61,6 +61,8 @@ $config = [
                 'GET user/<id:\d+>' => 'user/user',
                 'GET users' => 'user/users',
                 'DELETE order/delete/<orderId:\d+>' => 'order/delete',
+
+                'GET user/get-data' => 'user/get-data',
 
                 'userWeb' => 'user-web/index',
             ],
