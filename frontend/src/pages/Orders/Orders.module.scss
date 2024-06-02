@@ -5,12 +5,12 @@
   align-items: center;
   background-color: #1E1D1D;
   padding: 20px;
-  height: 80vh;
-  color: #fff; /* Цвет текста */
+  min-height: 80vh;
+  color: #fff; 
 }
 
 .orderCard {
-  background-color: #222; /* Цвет карточки заказа */
+  background-color: #222; 
   border: 2px solid #02E502;
   border-radius: 10px;
   padding: 20px;
@@ -28,7 +28,7 @@
 }
 
 .productCard {
-  background-color: #222; /* Цвет карточки продукта */
+  background-color: #222;
   border: 1px solid #02E502;
   border-radius: 5px;
   padding: 10px;

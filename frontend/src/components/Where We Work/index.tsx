@@ -1,6 +1,6 @@
-import Title from "../Title";
 import style from "./Where We Work.module.scss";
 import { places } from "../../Data";
+import Title from "../Title";
 
 const index = () => {
   return (
@@ -10,7 +10,7 @@ const index = () => {
         alt="Where We Work"
         width={1000}
         height={1100}
-        className={style.img}
+        className={style.image}
       />
       <div className={style.container}>
         <Title text="Где мы работаем" />

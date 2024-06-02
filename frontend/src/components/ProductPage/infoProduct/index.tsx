@@ -4,6 +4,7 @@ import FeatureList from "../../FeatureList/FeatureList";
 import ImageCatalog from "../ImageCatalog";
 import Breadcrumbs from "../../Breadcrumbs";
 import { FeatureListData } from "../../../Data";
+import { useNavigate } from 'react-router-dom';
 
 interface Product {
   id: string;
@@ -19,12 +20,14 @@ interface Props {
 
 const Index = (props: Props) => {
   const { product } = props;
+  const navigate = useNavigate();
 
   const addToBasket = async () => {
     try {
       const userId = localStorage.getItem("user");
       if (!userId) {
         console.error("Нет данных о пользователе в localStorage");
+        navigate("/auth/signin");
         return;
       }
 

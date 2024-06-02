@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import style from './Orders.module.scss';
 import Button from '../../components/Button';
@@ -85,12 +85,7 @@ const Orders: React.FC = () => {
                 );
               })}
             </div>
-            <img
-              src="path_to_cancel_button_image"
-              alt="Отменить заказ"
-              className={style.cancelOrderButton}
-              onClick={() => handleCancelOrder(order.orderId)}
-            />
+            <Button title="Отменить заказ" onClick={() => handleCancelOrder(order.orderId)} className={style.cancelOrderButton} />
           </div>
         ))
       ) : (

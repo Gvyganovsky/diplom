@@ -167,16 +167,21 @@ class OrderController extends Controller
     public function actionDelete($orderId)
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
-
-    $order = Order::findOne($orderId);
-
-    if ($order !== null) {
-        OrderProduct::deleteAll(['order_id' => $orderId]);
-
-        if ($order->delete()) {
-            return ['success' => true, 'message' => 'Заказ успешно отменен.'];
+    
+        $order = Order::findOne($orderId);
+    
+        if ($order !== null) {
+            OrderProduct::deleteAll(['order_id' => $orderId]);
+    
+            if ($order->delete()) {
+                return ['success' => true, 'message' => 'Заказ успешно отменен.'];
+            } else {
+                return ['success' => false, 'message' => 'Ошибка при отмене заказа.'];
+            }
         } else {
+            Yii::$app->response->statusCode = 404;
             return ['success' => false, 'message' => 'Заказ не найден.'];
         }
     }
+    
 }
