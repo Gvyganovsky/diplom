@@ -14,7 +14,7 @@ class OrderController extends Controller
     public function actionOrders($userId)
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
-я
+
         $orders = Order::find()
             ->where(['user' => $userId])
             ->with(['orderProducts.product'])
