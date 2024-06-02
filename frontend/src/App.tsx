@@ -13,7 +13,7 @@ import AboutUs from "./pages/About Us";
 import Basket from "./components/Basket";
 import SignUp from "./auth/SignUp";
 import SignIn from "./auth/SignIn";
-import Profile from "./pages/Profile/Profile";
+import Profile from "./pages/Profile";
 import { AuthProvider } from './contexts/AuthContext';
 import React from "react";
 import BasketContext from "./contexts/BasketContext";
@@ -42,11 +42,6 @@ function App() {
           <Route path="/Product/:id" element={<Product />} />
           <Route path="/Orders" element={<Orders />} />
 
-          <Route path="/admin" element={
-            <ProtectedRoute>
-              <Admin />
-            </ProtectedRoute>
-          } />
           <Route path="/admin" element={
             <ProtectedRoute>
               <Admin />

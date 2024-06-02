@@ -22,7 +22,7 @@ const Home = () => {
         ]}
       />
       <Trust title="Почему нам доверяют?" data={trustData} />
-      {/* <OurOffers /> */}
+      <OurOffers />
       <Applications />
       <Clients />
       <Text

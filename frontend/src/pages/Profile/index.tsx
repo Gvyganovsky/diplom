@@ -4,7 +4,7 @@ import Button from '../../components/Button';
 import { useAuth } from '../../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
-const Profile = () => {
+const index = () => {
     const { user, logout } = useAuth();
     const navigate = useNavigate();
 
@@ -50,4 +50,4 @@ const Profile = () => {
     );
 }
 
-export default Profile;
+export default index;

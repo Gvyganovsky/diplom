@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import style from "./OurOffers.module.scss";
 import Product from "../../Product/index.tsx";
 import Title from "../../Title";
-import { OurOffersData } from "../../../Data.tsx";
 
 interface ProductData {
   id: number;
@@ -39,7 +38,7 @@ const OurOffers = () => {
       <Title text="Наши предложения" />
       <div className={style.content}>
         <p className={style.favorite}>ТОП ПРОДАЖ</p>
-        {/* {error ? (
+        {error ? (
           <p className={style.error}>Ошибка загрузки данных: {error}</p>
         ) : (
           products.map((product, index) => (
@@ -47,13 +46,13 @@ const OurOffers = () => {
               key={index}
               id={product.id}
               name={product.name}
-              image=""
-              brand=""
-              model=""
-              price={0}
+              image={product.image}
+              brand={product.brand}
+              model={product.model}
+              price={product.price}
             />
           ))
-        )} */}
+        )}
 
         <img
           src="./iconLine.svg"
