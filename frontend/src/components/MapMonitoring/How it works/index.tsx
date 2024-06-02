@@ -1,4 +1,4 @@
-import styles from './HowItWorks.module.scss'
+import style from './HowItWorks.module.scss'
 import Title from '../../Title'
 import { useState } from 'react';
 
@@ -7,38 +7,38 @@ const Index = () => {
     const [isFieldOpen, setIsFieldOpen] = useState(true);
 
     return (
-        <div className={styles.HowItWorks}>
+        <div className={style.HowItWorks}>
             <Title text="Как это работает" />
-            <p className={styles.text}>
+            <p className={style.text}>
                 Аэрофотосъемки разделяется на этапы полевых и камеральных работ, при этом набор данных,
                 получаемых по результатам камеральных работ, варьируется в зависимости от требований заказчика
             </p>
 
-            <div className={styles.content}>
-                <img src="./HowItWorks.png" alt="HowItWorks" width={620} height={370} className={styles.image} />
+            <div className={style.content}>
+                <img src="./HowItWorks.png" alt="HowItWorks" width={620} height={370} className={style.image} />
 
-                <ul className={styles.list}>
-                    <li className={`${styles.item} ${isFieldOpen ? styles.selected : ''}`}>
-                        <p className={styles.item__title} onClick={() => {
+                <ul className={style.list}>
+                    <li className={`${style.item} ${isFieldOpen ? style.selected : ''}`}>
+                        <p className={style.item__title} onClick={() => {
                             setIsFieldOpen(!isFieldOpen);
                             setIsKamerallyOpen(false);
                         }}>Полевые работы</p>
                         {isFieldOpen && (
-                            <ul className={styles.item__list}>
-                                <li className={styles.item__text}>Получение разрешений на аэрофотосъемку</li>
-                                <li className={styles.item__text}>Выполнение аэрофотосъемки с использованием БПЛА</li>
+                            <ul className={style.item__list}>
+                                <li className={style.item__text}>Получение разрешений на аэрофотосъемку</li>
+                                <li className={style.item__text}>Выполнение аэрофотосъемки с использованием БПЛА</li>
                             </ul>
                         )}
                     </li>
-                    <li className={`${styles.item} ${isKamerallyOpen ? styles.selected : ''}`}>
-                        <p className={styles.item__title} onClick={() => {
+                    <li className={`${style.item} ${isKamerallyOpen ? style.selected : ''}`}>
+                        <p className={style.item__title} onClick={() => {
                             setIsKamerallyOpen(!isKamerallyOpen);
                             setIsFieldOpen(false);
                         }}>Камеральные работы</p>
                         {isKamerallyOpen && (
-                            <ul className={styles.item__list}>
-                                <li className={styles.item__text}>Обработка полученных данных</li>
-                                <li className={styles.item__text}>Создание картографических материалов</li>
+                            <ul className={style.item__list}>
+                                <li className={style.item__text}>Обработка полученных данных</li>
+                                <li className={style.item__text}>Создание картографических материалов</li>
                             </ul>
                         )}
                     </li>

@@ -1,5 +1,5 @@
 import Breadcrumbs from "../components/Breadcrumbs";
-import styles from "../App.module.scss";
+import style from "../App.module.scss";
 import Filter from "../components/Catalog/Filter";
 import Product from "../components/Product/index.tsx";
 import Hero from "../components/Hero/index.tsx";
@@ -35,12 +35,12 @@ const Catalog = () => {
         ]}
       />
 
-      <div className={styles.container}>
+      <div className={style.container}>
         <Breadcrumbs title="Каталог" />
-        <h2 className={styles.title}>Наши предложения</h2>
-        <div className={styles.content}>
+        <h2 className={style.title}>Наши предложения</h2>
+        <div className={style.content}>
           <Filter />
-          <div className={styles.catalog}>
+          <div className={style.catalog}>
             {product.map((product) => (
               <Product
                 key={product.id}

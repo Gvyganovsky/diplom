@@ -41,18 +41,17 @@
     color: white;
 }
 
-.buttonBlue {
-    width: 100%;
-    padding: 10px;
-    border: none;
-    border-radius: 4px;
-    background-color: #1e90ff;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+.content button {
+    display: block;
+    margin: 20px auto;
+}
 
-    &:hover {
-        background-color: #007bff;
-    }
+.buttonBlue {
+    background-color: #007bff;
+    color: white;
+}
+
+.buttonRed {
+    background-color: #dc3545;
+    color: white;
 }

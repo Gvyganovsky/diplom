@@ -1,28 +1,49 @@
+import { useEffect } from 'react';
+import style from './Profile.module.scss';
 import Button from '../../components/Button';
 import { useAuth } from '../../contexts/AuthContext';
-import styles from './Profile.module.scss';
+import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
-    const { user } = useAuth();
+    const { user, logout } = useAuth();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            navigate('/auth/signin');
+        }
+    }, [navigate]);
+
+    const handleLogout = () => {
+        logout();
+        localStorage.removeItem('token');
+        navigate('/auth/signin');
+    };
 
     return (
-        <div className={styles.container}>
-            <div className={styles.content}>
-                <div className={styles.profile}>
+        <div className={style.container}>
+            <div className={style.content}>
+                <div className={style.profile}>
                     <h2>Личный кабинет</h2>
-                    <div className={styles.profileInfo}>
-                        <label className={styles.label}>Имя:</label>
-                        <p className={styles.profileText}>{user ? user.login : ''}</p>
+                    <div className={style.profileInfo}>
+                        <label className={style.label}>Имя:</label>
+                        <p className={style.profileText}>{user ? user.login : ''}</p>
                     </div>
-                    <div className={styles.profileInfo}>
-                        <label className={styles.label}>Email:</label>
-                        <p className={styles.profileText}>{user ? user.email : ''}</p>
+                    <div className={style.profileInfo}>
+                        <label className={style.label}>Email:</label>
+                        <p className={style.profileText}>{user ? user.email : ''}</p>
                     </div>
-                    <div className={styles.profileInfo}>
-                        <label className={styles.label}>Телефон:</label>
-                        <p className={styles.profileText}>{user ? user.phone : ''}</p>
+                    <div className={style.profileInfo}>
+                        <label className={style.label}>Телефон:</label>
+                        <p className={style.profileText}>{user ? user.phone : ''}</p>
+                    </div>
+                    <div className={style.profileInfo}>
+                        <label className={style.label}>Адрес:</label>
+                        <p className={style.profileText}>{user ? user.address : ''}</p>
                     </div>
                     <Button title="Редактировать профиль" className="buttonBlue" />
+                    <Button title="Выйти" className="buttonRed" onClick={handleLogout} />
                 </div>
             </div>
         </div>

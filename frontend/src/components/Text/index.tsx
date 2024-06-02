@@ -1,4 +1,4 @@
-import styles from "./Text.module.scss";
+import style from "./Text.module.scss";
 import { useState } from "react";
 import Title from "../Title";
 
@@ -10,23 +10,23 @@ const index = (props: any) => {
   };
 
   return (
-    <div className={styles.textBlock}>
+    <div className={style.textBlock}>
       <Title text={props.title} />
-      <p className={styles.text}>
+      <p className={style.text}>
         {props.textFirst}
         {textVisible && <span>{props.textSecond}</span>}
       </p>
-      <div className={styles.lineBlock}>
-        <div className={styles.line}></div>
+      <div className={style.lineBlock}>
+        <div className={style.line}></div>
         <img
           src="./bi_arrow-down-circle.svg"
           alt="bi_arrow-down-circle"
           width={50}
           height={50}
-          className={styles.img}
+          className={style.img}
           onClick={showSecondText}
         />
-        <div className={styles.line}></div>
+        <div className={style.line}></div>
       </div>
     </div>
   );

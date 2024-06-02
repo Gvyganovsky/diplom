@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import styles from './Orders.module.scss';
+import style from './Orders.module.scss';
 import Button from '../../components/Button';
 
 interface Product {
@@ -65,19 +65,19 @@ const Orders: React.FC = () => {
   }
 
   return (
-    <div className={styles.ordersContainer}>
+    <div className={style.ordersContainer}>
       {orders.length > 0 ? (
         orders.map(order => (
-          <div key={order.orderId} className={styles.orderCard}>
+          <div key={order.orderId} className={style.orderCard}>
             <h2>Номер заказа: {order.orderId}</h2>
             <p>Дата создания: {order.createdAt}</p>
-            <div className={styles.products}>
+            <div className={style.products}>
               {order.products.map(product => {
                 const productImages = JSON.parse(product.productImage) as string[];
                 const firstImage = productImages[0];
 
                 return (
-                  <div key={product.productId} className={styles.productCard}>
+                  <div key={product.productId} className={style.productCard}>
                     <img src={`/Product/${product.productName}/${firstImage}`} alt={product.productName} />
                     <h3>{product.productName}</h3>
                     <p>Количество: {product.quantity}</p>
@@ -88,7 +88,7 @@ const Orders: React.FC = () => {
             <img
               src="path_to_cancel_button_image"
               alt="Отменить заказ"
-              className={styles.cancelOrderButton}
+              className={style.cancelOrderButton}
               onClick={() => handleCancelOrder(order.orderId)}
             />
           </div>
@@ -96,9 +96,9 @@ const Orders: React.FC = () => {
       ) : (
         <>
           <img src="/nullOrders.svg" alt="Нет заказов" width={400} height={240} />
-          <h2 className={styles.nullTitile}>У вас пока нет заказов</h2>
-          <p className={styles.nullText}>Похоже, что вы еще ничего не заказали. Просмотрите наш каталог и найдите то, что вам нужно!</p>
-          <Button title="Перейти в каталог" className={styles.buttonGreen} link="/Catalog" />
+          <h2 className={style.nullTitile}>У вас пока нет заказов</h2>
+          <p className={style.nullText}>Похоже, что вы еще ничего не заказали. Просмотрите наш каталог и найдите то, что вам нужно!</p>
+          <Button title="Перейти в каталог" className={style.buttonGreen} link="/Catalog" />
         </>
       )}
     </div>

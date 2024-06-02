@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Button from '../components/Button';
-import styles from './Auth.module.scss';
+import style from './Auth.module.scss';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
@@ -18,6 +18,13 @@ const SignIn = () => {
     email: '',
     password: ''
   });
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      navigate("/profile");
+    }
+  }, [navigate]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -52,6 +59,7 @@ const SignIn = () => {
 
       const { user, token } = response.data;
       login(user, token);
+      localStorage.setItem('token', token);
       navigate("/profile");
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -84,28 +92,28 @@ const SignIn = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.content}>
-        <form className={styles.form} onSubmit={handleSubmit} noValidate>
+    <div className={style.container}>
+      <div className={style.content}>
+        <form className={style.form} onSubmit={handleSubmit} noValidate>
           <h2>Вход</h2>
           <input
             type="email"
             name="email"
             placeholder="Электронная почта"
-            className={styles.inputField}
+            className={style.inputField}
             value={formData.email}
             onChange={handleChange}
           />
-          {errors.email && <span className={styles.error}>{errors.email}</span>}
+          {errors.email && <span className={style.error}>{errors.email}</span>}
           <input
             type="password"
             name="password"
             placeholder="Пароль"
-            className={styles.inputField}
+            className={style.inputField}
             value={formData.password}
             onChange={handleChange}
           />
-          {errors.password && <span className={styles.error}>{errors.password}</span>}
+          {errors.password && <span className={style.error}>{errors.password}</span>}
           <Button title="Войти" className="buttonGreen" type="submit" />
         </form>
       </div>

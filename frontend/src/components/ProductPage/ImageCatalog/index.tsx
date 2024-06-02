@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import styles from './ImageCatalog.module.scss';
+import style from './ImageCatalog.module.scss';
 
 interface ImageCatalogProps {
     name: string;
@@ -14,23 +14,23 @@ const ImageCatalog: React.FC<ImageCatalogProps> = ({ name, images }) => {
     };
 
     if (images.length === 0) {
-        return <div className={styles.noImages}>Нет доступных изображений</div>;
+        return <div className={style.noImages}>Нет доступных изображений</div>;
     }
 
     const displayedImages = images.slice(0, 3);
 
     return (
-        <div className={styles.imageCatalog}>
+        <div className={style.imageCatalog}>
             {selectedImage && (
                 <img
                     src={`/Product/${name}/${selectedImage}`}
                     alt="Product"
                     width={630}
                     height={370}
-                    className={styles.heroImage}
+                    className={style.heroImage}
                 />
             )}
-            <ul className={styles.images}>
+            <ul className={style.images}>
                 {displayedImages.map((imageUrl, index) => (
                     <li key={index} onClick={() => handleImageClick(imageUrl)}>
                         <img
@@ -38,7 +38,7 @@ const ImageCatalog: React.FC<ImageCatalogProps> = ({ name, images }) => {
                             alt="Product"
                             width={200}
                             height={160}
-                            className={styles.image}
+                            className={style.image}
                         />
                     </li>
                 ))}

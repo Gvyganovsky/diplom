@@ -1,4 +1,4 @@
-import styles from './Admin.module.scss';
+import style from './Admin.module.scss';
 
 const Admin = () => {
     const handleClick = (url) => {
@@ -23,22 +23,22 @@ const Admin = () => {
     };
 
     return (
-        <div className={styles["admin-buttons"]}>
-            <button onClick={() => handleClick("https://dp-viganovsky.xn--80ahdri7a.site/backend/api/product")} className={styles["auth-link"]}>
+        <div className={style["admin-buttons"]}>
+            <button onClick={() => handleClick("https://dp-viganovsky.xn--80ahdri7a.site/backend/api/product")} className={style["auth-link"]}>
                 Управление товарами
             </button>
-            <button onClick={() => handleClick("https://dp-viganovsky.xn--80ahdri7a.site/backend/api/userWeb")} className={styles["auth-link"]}>
+            <button onClick={() => handleClick("https://dp-viganovsky.xn--80ahdri7a.site/backend/api/userWeb")} className={style["auth-link"]}>
                 Управление пользователями
             </button>
 
-            <button onClick={() => handleClick("https://dp-viganovsky.xn--80ahdri7a.site/backend/api/basket")} className={styles["auth-link"]}>
+            <button onClick={() => handleClick("https://dp-viganovsky.xn--80ahdri7a.site/backend/api/basket")} className={style["auth-link"]}>
                 Управление корзиной
             </button>
 
-            <button onClick={() => handleClick("https://dp-viganovsky.xn--80ahdri7a.site/backend/api/order")} className={styles["auth-link"]}>
+            <button onClick={() => handleClick("https://dp-viganovsky.xn--80ahdri7a.site/backend/api/order")} className={style["auth-link"]}>
                 Управление заказами
             </button>
-            <button onClick={() => handleClick("https://dp-viganovsky.xn--80ahdri7a.site/backend/api/OrderProduct")} className={styles["auth-link"]}>
+            <button onClick={() => handleClick("https://dp-viganovsky.xn--80ahdri7a.site/backend/api/OrderProduct")} className={style["auth-link"]}>
                 Управление заказами (товарами)
             </button>
         </div>

@@ -2,7 +2,7 @@ import Breadcrumbs from "../../components/Breadcrumbs";
 import Hero from "../../components/Hero";
 import Advantages from "../../components/Spraying/Advantages";
 import Text from "../../components/Text";
-import styles from "./Spraying.module.scss";
+import style from "./Spraying.module.scss";
 
 const advantagesData = [
   {
@@ -47,7 +47,7 @@ const Spraying = () => {
         imageAdapt="/Background/3.png"
         text="Внесение средств защиты при помощи БПЛА повышают урожай, экономят время и находят самые эффективные решения по обработке полей."
       />
-      <div className={styles.container}>
+      <div className={style.container}>
         <Breadcrumbs title="Опрыскивание" />
 
         <Text
@@ -56,7 +56,7 @@ const Spraying = () => {
           textSecond="Эффективность применения дронов в сельском хозяйстве не ограничивается лишь внесением средств защиты растений. Одним из перспективных направлений их использования является мониторинг посевов и почвенного состояния. Благодаря специализированным датчикам и алгоритмам обработки данных, дроны могут сканировать поля с высокой точностью, выявляя проблемные участки, степень засоренности сорняками, а также определять степень увлажненности почвы. Эта информация позволяет сельхозпроизводителям принимать более обоснованные решения при управлении угодьями, оптимизируя расход ресурсов и повышая урожайность. Таким образом, дроны становятся неотъемлемой частью современного сельского хозяйства, обеспечивая не только точное внесение средств защиты растений, но и улучшение всего процесса производства."
         />
 
-        <div className={styles.Advantages}>
+        <div className={style.Advantages}>
           {advantagesData.map((advantage, index) => (
             <Advantages
               key={index}

@@ -1,4 +1,4 @@
-import styles from "./Header.module.scss";
+import style from "./Header.module.scss";
 import IconsNav from "../iconsNav";
 import LogoBlock from "../LogoBlock";
 import { useContext } from "react";
@@ -9,9 +9,10 @@ import { HeaderDropDownNav, HeaderDropDownUser } from "../../Data";
 const Index = () => {
   const { setBasketOpened } = useContext(BasketContext);
   const { user } = useAuth();
+  let userDropDown = [...HeaderDropDownUser];
 
-  if (user && user.admin === 1) {
-    HeaderDropDownUser.push({
+  if (user && user.admin === 1 && !userDropDown.some(item => item.link === "/admin")) {
+    userDropDown.push({
       link: "/admin",
       image: "/IconAdmin-outlined.svg",
       text: "Админ панель",
@@ -27,7 +28,7 @@ const Index = () => {
     {
       image: "/iconUser.svg",
       alt: "User",
-      dropDown: HeaderDropDownUser,
+      dropDown: userDropDown,
     },
     {
       image: "/iconMenu.svg",
@@ -37,8 +38,8 @@ const Index = () => {
   ];
 
   return (
-    <header className={styles.header}>
-      <div className={styles.container}>
+    <header className={style.header}>
+      <div className={style.container}>
         <LogoBlock />
         <IconsNav icons={iconsNavData} />
       </div>

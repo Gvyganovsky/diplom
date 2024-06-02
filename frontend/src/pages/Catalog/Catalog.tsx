@@ -1,6 +1,6 @@
 import { useState, useEffect, ChangeEvent } from "react";
 import Breadcrumbs from "../../components/Breadcrumbs/index.tsx";
-import styles from "./Catalog.module.scss";
+import style from "./Catalog.module.scss";
 import Filter from "../../components/Catalog/Filter/index.tsx";
 import Product from "../../components/Product/index.tsx";
 import Hero from "../../components/Hero/index.tsx";
@@ -102,10 +102,10 @@ const Catalog: React.FC = () => {
         ]}
       />
 
-      <div className={styles.container}>
+      <div className={style.container}>
         <Breadcrumbs title="Каталог" />
         <Title text="Наши предложения" />
-        <div className={styles.content}>
+        <div className={style.content}>
           <Filter
             selectedBrand={selectedBrand}
             minPrice={minPrice}
@@ -115,7 +115,7 @@ const Catalog: React.FC = () => {
             onMinPriceChange={handleMinPriceChange}
             onMaxPriceChange={handleMaxPriceChange}
           />
-          <div className={styles.catalog}>
+          <div className={style.catalog}>
             {currentProducts.map((product) => (
               <Product
                 key={product.id}
@@ -129,9 +129,9 @@ const Catalog: React.FC = () => {
             ))}
           </div>
         </div>
-        <div className={styles.pagination}>
+        <div className={style.pagination}>
           {pageNumbers.map((number) => (
-            <button key={number} onClick={() => paginate(number)} className={styles.pageItem}>
+            <button key={number} onClick={() => paginate(number)} className={style.pageItem}>
               {number}
             </button>
           ))}

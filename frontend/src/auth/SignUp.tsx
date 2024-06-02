@@ -1,7 +1,7 @@
-import { useState, ChangeEvent, FormEvent } from 'react';
+import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import axios, { AxiosError } from 'axios';
 import Button from '../components/Button';
-import styles from './Auth.module.scss';
+import style from './Auth.module.scss';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
@@ -46,6 +46,13 @@ const SignUp = () => {
     password: '',
     confirmPassword: ''
   });
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      navigate("/profile");
+    }
+  }, [navigate]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -146,66 +153,66 @@ const SignUp = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.content}>
-        <form className={styles.form} onSubmit={handleSubmit}>
+    <div className={style.container}>
+      <div className={style.content}>
+        <form className={style.form} onSubmit={handleSubmit}>
           <h2>Регистрация</h2>
           <input
             type="text"
             name="login"
             placeholder="Логин"
-            className={styles.inputField}
+            className={style.inputField}
             value={formData.login}
             onChange={handleChange}
           />
-          {errors.login && <span className={styles.error}>{errors.login}</span>}
+          {errors.login && <span className={style.error}>{errors.login}</span>}
           <input
             type="email"
             name="email"
             placeholder="Электронная почта"
-            className={styles.inputField}
+            className={style.inputField}
             value={formData.email}
             onChange={handleChange}
           />
-          {errors.email && <span className={styles.error}>{errors.email}</span>}
+          {errors.email && <span className={style.error}>{errors.email}</span>}
           <input
             type="tel"
             name="phone"
             placeholder="Телефон"
-            className={styles.inputField}
+            className={style.inputField}
             value={formData.phone}
             onChange={handleChange}
           />
-          {errors.phone && <span className={styles.error}>{errors.phone}</span>}
+          {errors.phone && <span className={style.error}>{errors.phone}</span>}
           <input
             type="text"
             name="address"
             placeholder="Адрес"
-            className={styles.inputField}
+            className={style.inputField}
             value={formData.address}
             onChange={handleChange}
           />
-          {errors.address && <span className={styles.error}>{errors.address}</span>}
+          {errors.address && <span className={style.error}>{errors.address}</span>}
           <input
             type="password"
             name="password"
             placeholder="Пароль"
-            className={styles.inputField}
+            className={style.inputField}
             value={formData.password}
             onChange={handleChange}
           />
-          {errors.password && <span className={styles.error}>{errors.password}</span>}
+          {errors.password && <span className={style.error}>{errors.password}</span>}
           <input
             type="password"
             name="confirmPassword"
             placeholder="Повторите пароль"
-            className={styles.inputField}
+            className={style.inputField}
             value={formData.confirmPassword}
             onChange={handleChange}
           />
-          {errors.confirmPassword && <span className={styles.error}>{errors.confirmPassword}</span>}
+          {errors.confirmPassword && <span className={style.error}>{errors.confirmPassword}</span>}
           <Button title="Зарегистрироваться" className="buttonGreen" type="submit" />
-          {errors.general && <span className={styles.error}>{errors.general}</span>}
+          {errors.general && <span className={style.error}>{errors.general}</span>}
         </form>
       </div>
     </div>
