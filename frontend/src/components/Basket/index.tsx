@@ -94,6 +94,7 @@ const Basket = () => {
             "Authorization": `Bearer ${token}`
           },
           body: JSON.stringify({
+            token,  // Добавляем токен в тело запроса
             productId,
             count: newCount,
           }),
@@ -133,6 +134,7 @@ const Basket = () => {
             "Authorization": `Bearer ${token}`
           },
           body: JSON.stringify({
+            token,  // Добавляем токен в тело запроса
             productId,
           }),
         }
@@ -143,7 +145,7 @@ const Basket = () => {
           prevProducts.filter((product) => product.product !== productId)
         );
       } else {
-        console.error("Ошибка удаления товара из корзины");
+        console.error("Ошибка удаления товара из корзине");
       }
     } catch (error) {
       console.error("Ошибка удаления товара:", error);

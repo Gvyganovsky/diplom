@@ -127,9 +127,23 @@ class OrderController extends Controller
         return $orders;
     }
 
-    public function actionOrders($userId)
+    public function actionOrders()
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
+
+        $authHeader = Yii::$app->request->headers->get('Authorization');
+        if (!$authHeader || !preg_match('/Bearer\s(\S+)/', $authHeader, $matches)) {
+            return ['success' => false, 'message' => 'Токен пользователя отсутствует в заголовках запроса.'];
+        }
+
+        $token = $matches[1];
+        $user = UserController::getUserFromToken($token);
+        if (!$user) {
+            Yii::$app->response->statusCode = 401;
+            return ['success' => false, 'message' => 'Пользователь не авторизован.'];
+        }
+
+        $userId = $user->id;
 
         $orders = Order::find()
             ->where(['user' => $userId])
@@ -149,12 +163,10 @@ class OrderController extends Controller
                 ];
             }
 
-            $cancelButton = '<img src="path_to_cancel_button_image" alt="Cancel Order" class="cancel-order-button" data-order-id="' . $order->id . '">';
             $orderDetails[] = [
                 'orderId' => $order->id,
                 'createdAt' => date('Y-m-d H:i:s', $order->createdAt),
                 'products' => $products,
-                'cancelButton' => $cancelButton,
             ];
         }
 
@@ -167,21 +179,30 @@ class OrderController extends Controller
     public function actionDelete($orderId)
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
-    
-        $order = Order::findOne($orderId);
-    
-        if ($order !== null) {
-            OrderProduct::deleteAll(['order_id' => $orderId]);
-    
-            if ($order->delete()) {
-                return ['success' => true, 'message' => 'Заказ успешно отменен.'];
-            } else {
-                return ['success' => false, 'message' => 'Ошибка при отмене заказа.'];
-            }
-        } else {
+
+        $authHeader = Yii::$app->request->headers->get('Authorization');
+        if (!$authHeader || !preg_match('/Bearer\s(\S+)/', $authHeader, $matches)) {
+            return ['success' => false, 'message' => 'Токен пользователя отсутствует в заголовках запроса.'];
+        }
+
+        $token = $matches[1];
+        $user = UserController::getUserFromToken($token);
+        if (!$user) {
+            Yii::$app->response->statusCode = 401;
+            return ['success' => false, 'message' => 'Пользователь не авторизован.'];
+        }
+
+        $order = Order::findOne(['id' => $orderId, 'user' => $user->id]);
+        if ($order === null) {
             Yii::$app->response->statusCode = 404;
             return ['success' => false, 'message' => 'Заказ не найден.'];
         }
+
+        OrderProduct::deleteAll(['order_id' => $orderId]);
+        if ($order->delete()) {
+            return ['success' => true, 'message' => 'Заказ успешно отменен.'];
+        } else {
+            return ['success' => false, 'message' => 'Ошибка при отмене заказа.'];
+        }
     }
-    
 }

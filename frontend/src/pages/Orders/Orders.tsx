@@ -23,14 +23,17 @@ const Orders: React.FC = () => {
   useEffect(() => {
     const fetchOrderDetails = async () => {
       try {
-        const userData = localStorage.getItem("user");
-        if (!userData) {
-          console.error("Данные пользователя отсутствуют в локальном хранилище");
+        const token = localStorage.getItem("token");
+        if (!token) {
+          console.error("Токен пользователя отсутствует в локальном хранилище");
           return;
         }
-        const { id: userId } = JSON.parse(userData);
 
-        const response = await axios.get(`https://dp-viganovsky.xn--80ahdri7a.site/api/orders/${userId}`);
+        const response = await axios.get(`https://dp-viganovsky.xn--80ahdri7a.site/api/orders`, {
+          headers: {
+            "Authorization": `Bearer ${token}`
+          }
+        });
         if (response.data.success) {
           setOrders(response.data.orders);
         } else {
@@ -48,9 +51,17 @@ const Orders: React.FC = () => {
 
   const handleCancelOrder = async (orderId: string) => {
     try {
-      console.log('Отправляем запрос на удаление заказа с orderId:', orderId);
+      const token = localStorage.getItem("token");
+      if (!token) {
+        console.error("Токен пользователя отсутствует в локальном хранилище");
+        return;
+      }
 
-      const response = await axios.delete(`https://dp-viganovsky.xn--80ahdri7a.site/api/order/delete/${orderId}`);
+      const response = await axios.delete(`https://dp-viganovsky.xn--80ahdri7a.site/api/order/delete/${orderId}`, {
+        headers: {
+          "Authorization": `Bearer ${token}`
+        }
+      });
       if (response.data.success) {
         const updatedOrders = orders.filter(order => order.orderId !== orderId);
         setOrders(updatedOrders);
