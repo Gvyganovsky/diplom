@@ -6,11 +6,11 @@
   background-color: #1E1D1D;
   padding: 20px;
   min-height: 80vh;
-  color: #fff; 
+  color: #fff;
 }
 
 .orderCard {
-  background-color: #222; 
+  background-color: #222;
   border: 2px solid #02E502;
   border-radius: 10px;
   padding: 20px;
@@ -18,7 +18,8 @@
   width: 80%;
 }
 
-.orderCard h2, .orderCard p {
+.orderCard h2,
+.orderCard p {
   margin: 5px 0;
 }
 
@@ -66,4 +67,11 @@
   font-size: 16px;
   margin-bottom: 20px;
   text-align: center;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }

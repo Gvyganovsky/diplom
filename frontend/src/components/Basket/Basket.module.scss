@@ -166,6 +166,13 @@
   height: 60px;
 }
 
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
 @media (max-width: 950px) {
   .basket {
     width: 700px;

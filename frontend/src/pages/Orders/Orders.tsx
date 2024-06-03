@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import style from './Orders.module.scss';
 import Button from '../../components/Button';
+import { MoonLoader } from "react-spinners";
 
 interface Product {
   productId: string;
@@ -74,7 +75,11 @@ const Orders: React.FC = () => {
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className={style.loading}>
+        <MoonLoader color="#5A9CEC" size={100} />
+      </div>
+    );
   }
 
   return (

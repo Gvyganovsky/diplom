@@ -2,6 +2,7 @@ import { useContext, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import style from "./Basket.module.scss";
 import Button from "../Button";
+import { MoonLoader } from "react-spinners";
 import BasketContext from "../../contexts/BasketContext";
 
 interface Product {
@@ -183,7 +184,11 @@ const Basket = () => {
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className={style.loading}>
+        <MoonLoader color="#5A9CEC" size={100} />
+      </div>
+    );
   }
 
   return (

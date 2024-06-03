@@ -5,6 +5,7 @@ import Filter from "../../components/Catalog/Filter/index.tsx";
 import Product from "../../components/Product/index.tsx";
 import Hero from "../../components/Hero/index.tsx";
 import Title from "../../components/Title/index.tsx";
+import { MoonLoader } from "react-spinners";
 
 interface Product {
   id: number;
@@ -23,6 +24,7 @@ const Catalog: React.FC = () => {
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
   const productsPerPage = 6;
 
   useEffect(() => {
@@ -30,6 +32,11 @@ const Catalog: React.FC = () => {
       .then((res) => res.json())
       .then((json) => {
         setProducts(json);
+        setIsLoading(false); 
+      })
+      .catch((error) => {
+        console.error("Ошибка при загрузке данных:", error);
+        setIsLoading(false);
       });
   }, []);
 
@@ -87,56 +94,65 @@ const Catalog: React.FC = () => {
 
   return (
     <>
-      <Hero
-        title="Дрон опрыскиватель AGR A22"
-        Background="/Background/Catalog.jpg"
-        imageAdapt="/Background/5.png"
-        text="Высокое качество продукции и хороший урожай - результат точного планирования и быстрого реагирования на возникающие посевам угроз."
-        listAltItems={[
-          { img: "./Catalog/iconTime.svg", title: "Время полета 15 минут" },
-          { img: "./Catalog/icoFly.svg", title: "Скорость полета" },
-          { img: "./Catalog/iconRTK.svg", title: "Автономная работа" },
-          { img: "./Catalog/iconWidth.svg", title: "Ширина захвата 8 м" },
-          { img: "./Catalog/iconFuel.svg", title: "Емкость бака" },
-          { img: "./Catalog/iconIP67.svg", title: "Водонепроницаемость" },
-        ]}
-      />
-
-      <div className={style.container}>
-        <Breadcrumbs title="Каталог" />
-        <Title text="Наши предложения" />
-        <div className={style.content}>
-          <Filter
-            selectedBrand={selectedBrand}
-            minPrice={minPrice}
-            maxPrice={maxPrice}
-            onBrandChange={handleBrandChange}
-            onCategoryChange={handleCategoryChange}
-            onMinPriceChange={handleMinPriceChange}
-            onMaxPriceChange={handleMaxPriceChange}
+      {isLoading && (
+        <div className={style.loading}>
+          <MoonLoader color="#5A9CEC" size={100} />
+        </div>
+      )}
+      {!isLoading && (
+        <>
+          <Hero
+            title="Дрон опрыскиватель AGR A22"
+            Background="/Background/Catalog.jpg"
+            imageAdapt="/Background/5.png"
+            text="Высокое качество продукции и хороший урожай - результат точного планирования и быстрого реагирования на возникающие посевам угроз."
+            listAltItems={[
+              { img: "./Catalog/iconTime.svg", title: "Время полета 15 минут" },
+              { img: "./Catalog/icoFly.svg", title: "Скорость полета" },
+              { img: "./Catalog/iconRTK.svg", title: "Автономная работа" },
+              { img: "./Catalog/iconWidth.svg", title: "Ширина захвата 8 м" },
+              { img: "./Catalog/iconFuel.svg", title: "Емкость бака" },
+              { img: "./Catalog/iconIP67.svg", title: "Водонепроницаемость" },
+            ]}
           />
-          <div className={style.catalog}>
-            {currentProducts.map((product) => (
-              <Product
-                key={product.id}
-                image={product.image}
-                name={product.name}
-                brand={product.brand}
-                model={product.model}
-                price={parseFloat(product.price)}
-                id={product.id}
+
+          <div className={style.container}>
+            <Breadcrumbs title="Каталог" />
+            <Title text="Наши предложения" />
+            <div className={style.content}>
+              <Filter
+                selectedBrand={selectedBrand}
+                minPrice={minPrice}
+                maxPrice={maxPrice}
+                onBrandChange={handleBrandChange}
+                onCategoryChange={handleCategoryChange}
+                onMinPriceChange={handleMinPriceChange}
+                onMaxPriceChange={handleMaxPriceChange}
               />
-            ))}
+              <div className={style.catalog}>
+                {currentProducts.map((product) => (
+                  <Product
+                    key={product.id}
+                    image={product.image}
+                    name={product.name}
+                    brand={product.brand}
+                    model={product.model}
+                    price={parseFloat(product.price)}
+                    id={product.id}
+                  />
+                ))}
+              </div>
+            </div>
+            <div className={style.pagination}>
+              {pageNumbers.map((number) => (
+                <button key={number} onClick={() => paginate(number)} className={style.pageItem}>
+                  {number}
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
-        <div className={style.pagination}>
-          {pageNumbers.map((number) => (
-            <button key={number} onClick={() => paginate(number)} className={style.pageItem}>
-              {number}
-            </button>
-          ))}
-        </div>
-      </div>
+        </>
+      )}
     </>
   );
 };

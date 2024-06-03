@@ -52,6 +52,13 @@
     }
 }
 
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
 @media (max-width: 1340px) {
     .catalog {
         display: flex;
