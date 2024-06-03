@@ -1,23 +1,39 @@
+import React, { useState, useContext, useEffect } from "react";
 import style from "./Header.module.scss";
 import IconsNav from "../iconsNav";
 import LogoBlock from "../LogoBlock";
-import { useContext } from "react";
 import BasketContext from "../../contexts/BasketContext";
 import { useAuth } from "../../contexts/AuthContext";
-import { HeaderDropDownNav, HeaderDropDownUser } from "../../Data";
+import { HeaderDropDownUser, HeaderDropDownNav } from "../../Data";
 
 const Index = () => {
   const { setBasketOpened } = useContext(BasketContext);
-  const { user } = useAuth();
-  let userDropDown = [...HeaderDropDownUser];
+  const { getUserData } = useAuth();
+  const [userDropDown, setUserDropDown] = useState([...HeaderDropDownUser]);
 
-  if (user && user.admin === 1 && !userDropDown.some(item => item.link === "/admin")) {
-    userDropDown.push({
-      link: "/admin",
-      image: "/IconAdmin-outlined.svg",
-      text: "Админ панель",
-    });
-  }
+  useEffect(() => {
+    const fetchData = async () => {
+      const userData = await getUserData();
+      if (userData && userData.user.admin === 1) {
+        setUserDropDown(prevState => {
+          const adminPanelExists = prevState.some(item => item.link === "/admin");
+          if (!adminPanelExists) {
+            return [
+              ...prevState,
+              {
+                link: "/admin",
+                image: "/IconAdmin-outlined.svg",
+                text: "Админ панель",
+              }
+            ];
+          }
+          return prevState;
+        });
+      }
+    };
+
+    fetchData();
+  }, [getUserData]);
 
   const iconsNavData = [
     {
