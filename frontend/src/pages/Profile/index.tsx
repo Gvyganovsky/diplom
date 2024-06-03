@@ -5,6 +5,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
 interface UserData {
+    id: number;
     login: string;
     email: string;
     phone: string;
@@ -59,10 +60,10 @@ const Profile: React.FC = () => {
                                 <label className={style.label}>Адрес:</label>
                                 <p className={style.profileText}>{userData.address}</p>
                             </div>
+                            <a href={`https://dp-viganovsky.xn--80ahdri7a.site/backend/api/user-web/update?id=${userData.id}`} className={style.profileLink}>Редактировать профиль</a>
+                            <Button title="Выйти" className="buttonRed" onClick={handleLogout} />
                         </>
                     )}
-                    <Button title="Редактировать профиль" className="buttonBlue" />
-                    <Button title="Выйти" className="buttonRed" onClick={handleLogout} />
                 </div>
             </div>
         </div>

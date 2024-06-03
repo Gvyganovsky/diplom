@@ -55,3 +55,21 @@
     background-color: #dc3545;
     color: white;
 }
+
+.profileLink {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #308a30;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    margin: 24px auto 0;
+    display: block;
+    width: 240px;
+    text-align: center;
+}
+
+.profileLink:hover {
+    background-color: #02b802;
+}
