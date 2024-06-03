@@ -30,36 +30,36 @@ class UserWebController extends Controller
     /**
      * @inheritDoc
      */
-    public function beforeAction($action)
-    {
-        $authHeader = Yii::$app->request->getHeaders()->get('Authorization');
-        if (parent::beforeAction($action)) {
-            // Проверяем наличие заголовка авторизации
-            $authHeader = Yii::$app->request->getHeaders()->get('Authorization');
-            Yii::info('Authorization header: ' . $authHeader); // Добавим логи
-            if (!$authHeader) {
-                Yii::$app->response->statusCode = 401;
-                echo json_encode(['message' => 'Ошибка авторизации', 'errors' => 'Токен отсутствует']);
-                exit;
-            }
-            // Извлекаем токен из заголовка
-            $token = str_replace('Bearer ', '', $authHeader);
-            Yii::info('Extracted token: ' . $token); // Добавим логи
+    // public function beforeAction($action)
+    // {
+    //     $authHeader = Yii::$app->request->getHeaders()->get('Authorization');
+    //     if (parent::beforeAction($action)) {
+    //         // Проверяем наличие заголовка авторизации
+    //         $authHeader = Yii::$app->request->getHeaders()->get('Authorization');
+    //         Yii::info('Authorization header: ' . $authHeader); // Добавим логи
+    //         if (!$authHeader) {
+    //             Yii::$app->response->statusCode = 401;
+    //             echo json_encode(['message' => 'Ошибка авторизации', 'errors' => 'Токен отсутствует']);
+    //             exit;
+    //         }
+    //         // Извлекаем токен из заголовка
+    //         $token = str_replace('Bearer ', '', $authHeader);
+    //         Yii::info('Extracted token: ' . $token); // Добавим логи
     
-            // Получаем текущего пользователя по токену
-            $currentUser = $this->getUserFromToken($token);
+    //         // Получаем текущего пользователя по токену
+    //         $currentUser = $this->getUserFromToken($token);
     
-            if (!$currentUser || $currentUser->admin != 1) {
-                Yii::$app->response->statusCode = 403;
-                echo json_encode(['message' => 'Доступ запрещен', 'errors' => 'Недостаточно прав']);
-                exit;
-            }
+    //         if (!$currentUser || $currentUser->admin != 1) {
+    //             Yii::$app->response->statusCode = 403;
+    //             echo json_encode(['message' => 'Доступ запрещен', 'errors' => 'Недостаточно прав']);
+    //             exit;
+    //         }
     
-            return true;
-        } else {
-            return false;
-        }
-    }
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+    // }
     
     /**
      * Lists all User models.

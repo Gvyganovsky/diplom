@@ -86,7 +86,7 @@ const Basket = () => {
       }
 
       const response = await fetch(
-        `https://dp-viganovsky.xn--80ahdri7a.site/api/basket/update`,
+        `https://dp-viganovsky.xn--80ahdri7a.site/api/basket/count`,
         {
           method: "POST",
           headers: {

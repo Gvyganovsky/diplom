@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use Yii;
 use app\models\OrderProduct;
 use app\models\OrderProductSearch;
 use yii\web\Controller;
@@ -18,28 +19,21 @@ class OrderProductController extends Controller
      */
     public function behaviors()
     {
-        return array_merge(
-            parent::behaviors(),
-            [
-                'verbs' => [
-                    'class' => VerbFilter::className(),
-                    'actions' => [
-                        'delete' => ['POST'],
-                    ],
+        return [
+            'verbs' => [
+                'class' => \yii\filters\VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['POST'],
                 ],
-            ]
-        );
+            ],
+        ];
     }
 
-    /**
-     * Lists all OrderProduct models.
-     *
-     * @return string
-     */
+
     public function actionIndex()
     {
         $searchModel = new OrderProductSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -48,7 +42,7 @@ class OrderProductController extends Controller
     }
 
     /**
-     * Displays a single OrderProduct model.
+     * Displays a single User model.
      * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
@@ -61,7 +55,7 @@ class OrderProductController extends Controller
     }
 
     /**
-     * Creates a new OrderProduct model.
+     * Creates a new User model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
@@ -69,12 +63,8 @@ class OrderProductController extends Controller
     {
         $model = new OrderProduct();
 
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
-            }
-        } else {
-            $model->loadDefaultValues();
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('create', [
@@ -83,7 +73,7 @@ class OrderProductController extends Controller
     }
 
     /**
-     * Updates an existing OrderProduct model.
+     * Updates an existing User model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
@@ -93,7 +83,7 @@ class OrderProductController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -103,21 +93,7 @@ class OrderProductController extends Controller
     }
 
     /**
-     * Deletes an existing OrderProduct model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $id ID
-     * @return \yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
-    }
-
-    /**
-     * Finds the OrderProduct model based on its primary key value.
+     * Finds the User model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
      * @return OrderProduct the loaded model
@@ -125,7 +101,7 @@ class OrderProductController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = OrderProduct::findOne(['id' => $id])) !== null) {
+        if (($model = OrderProduct::findOne($id)) !== null) {
             return $model;
         }
 

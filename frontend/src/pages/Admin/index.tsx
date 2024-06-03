@@ -27,7 +27,7 @@ const Admin = () => {
             <button onClick={() => handleClick("https://dp-viganovsky.xn--80ahdri7a.site/backend/api/product")} className={style["auth-link"]}>
                 Управление товарами
             </button>
-            <button onClick={() => handleClick("https://dp-viganovsky.xn--80ahdri7a.site/backend/api/userWeb")} className={style["auth-link"]}>
+            <button onClick={() => handleClick("https://dp-viganovsky.xn--80ahdri7a.site/backend/api/user-web")} className={style["auth-link"]}>
                 Управление пользователями
             </button>
 
@@ -38,7 +38,7 @@ const Admin = () => {
             <button onClick={() => handleClick("https://dp-viganovsky.xn--80ahdri7a.site/backend/api/order")} className={style["auth-link"]}>
                 Управление заказами
             </button>
-            <button onClick={() => handleClick("https://dp-viganovsky.xn--80ahdri7a.site/backend/api/OrderProduct")} className={style["auth-link"]}>
+            <button onClick={() => handleClick("https://dp-viganovsky.xn--80ahdri7a.site/backend/api/order-product")} className={style["auth-link"]}>
                 Управление заказами (товарами)
             </button>
         </div>
