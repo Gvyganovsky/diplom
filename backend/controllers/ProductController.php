@@ -120,7 +120,7 @@ class ProductController extends Controller
     {
         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 
-        $products = Product::find()->all();
+        $products = Product::find()->where(['>', 'count', 0])->all();
 
         return $products;
     }

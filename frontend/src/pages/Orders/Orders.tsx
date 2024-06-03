@@ -96,7 +96,7 @@ const Orders: React.FC = () => {
 
                 return (
                   <div key={product.productId} className={style.productCard}>
-                    <img src={`/Product/${product.productName}/${firstImage}`} alt={product.productName} width={128} />
+                    <img src={`/Product/${product.productName}/${firstImage}`} alt={product.productName} height={100} />
                     <h3>{product.productName}</h3>
                     <p>Количество: {product.quantity}</p>
                   </div>

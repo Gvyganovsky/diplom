@@ -1,5 +1,6 @@
-import Header from "./components/Header";
+import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
+import Header from "./components/Header";
 import Contact from "./pages/Contact";
 import Footer from "./components/Footer";
 import News from "./pages/News";
@@ -15,7 +16,6 @@ import SignUp from "./auth/SignUp";
 import SignIn from "./auth/SignIn";
 import Profile from "./pages/Profile";
 import { AuthProvider } from './contexts/AuthContext';
-import React from "react";
 import BasketContext from "./contexts/BasketContext";
 import Orders from "./pages/Orders/Orders";
 import Admin from "./pages/Admin";
@@ -23,6 +23,19 @@ import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   const [basketOpened, setBasketOpened] = React.useState(false);
+
+  useEffect(() => {
+    if (basketOpened) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+
+    // Очистка эффекта при размонтировании компонента
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [basketOpened]);
 
   return (
     <AuthProvider>
