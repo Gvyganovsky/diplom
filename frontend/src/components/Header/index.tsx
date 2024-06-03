@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect } from "react";
 import style from "./Header.module.scss";
 import IconsNav from "../iconsNav";
 import LogoBlock from "../LogoBlock";

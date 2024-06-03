@@ -4,16 +4,23 @@ import Button from '../../components/Button';
 import { useAuth } from '../../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
-const Profile = () => {
+interface UserData {
+    login: string;
+    email: string;
+    phone: string;
+    address: string;
+}
+
+const Profile: React.FC = () => {
     const { getUserData, logout } = useAuth();
     const navigate = useNavigate();
-    const [userData, setUserData] = useState(null);
+    const [userData, setUserData] = useState<UserData | null>(null);
 
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const userData = await getUserData();
-                setUserData(userData.user);
+                const fetchedUserData = await getUserData();
+                setUserData(fetchedUserData.user);
             } catch (error) {
                 console.error('Error fetching user data:', error);
                 logout();
