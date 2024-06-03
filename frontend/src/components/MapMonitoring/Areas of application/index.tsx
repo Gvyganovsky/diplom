@@ -12,7 +12,7 @@ const Index = () => {
       <div className={style.content}>
         <ul className={style.list}>
           <img
-            src="./iconLine.svg"
+            src="/iconLine.svg"
             alt="background"
             width={1000}
             height={900}

@@ -59,7 +59,7 @@ const OurOffers = () => {
         )}
 
         <img
-          src="./iconLine.svg"
+          src="/iconLine.svg"
           alt="Line"
           width={660}
           height={540}
