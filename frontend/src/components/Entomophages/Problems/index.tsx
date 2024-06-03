@@ -9,7 +9,7 @@ const Index = () => {
       <ul className={style.list}>
         {problems.map((problem, index) => (
           <li key={index} className={style.item}>
-            <div className={style.number}>{index + 1}</div>
+            <span className={style.number}>{index + 1}</span>
             <p className={style.text}>{problem}</p>
           </li>
         ))}

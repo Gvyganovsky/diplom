@@ -26,7 +26,6 @@ const Index = (props: Props) => {
     try {
       const token = localStorage.getItem("token");
       if (!token) {
-        console.error("Нет токена пользователя в localStorage");
         navigate("/auth/signin");
         return;
       }

@@ -3,6 +3,7 @@ import axios from 'axios';
 import style from './Orders.module.scss';
 import Button from '../../components/Button';
 import { MoonLoader } from "react-spinners";
+import { useNavigate } from 'react-router-dom';
 
 interface Product {
   productId: string;
@@ -20,6 +21,7 @@ interface Order {
 const Orders: React.FC = () => {
   const [orders, setOrders] = useState<Order[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchOrderDetails = async () => {
@@ -27,6 +29,7 @@ const Orders: React.FC = () => {
         const token = localStorage.getItem("token");
         if (!token) {
           console.error("Токен пользователя отсутствует в локальном хранилище");
+          navigate("/profile");
           return;
         }
 
@@ -50,29 +53,29 @@ const Orders: React.FC = () => {
     fetchOrderDetails();
   }, []);
 
-  const handleCancelOrder = async (orderId: string) => {
-    try {
-      const token = localStorage.getItem("token");
-      if (!token) {
-        console.error("Токен пользователя отсутствует в локальном хранилище");
-        return;
-      }
+  // const handleCancelOrder = async (orderId: string) => {
+  //   try {
+  //     const token = localStorage.getItem("token");
+  //     if (!token) {
+  //       console.error("Токен пользователя отсутствует в локальном хранилище");
+  //       return;
+  //     }
 
-      const response = await axios.delete(`https://dp-viganovsky.xn--80ahdri7a.site/api/order/delete/${orderId}`, {
-        headers: {
-          "Authorization": `Bearer ${token}`
-        }
-      });
-      if (response.data.success) {
-        const updatedOrders = orders.filter(order => order.orderId !== orderId);
-        setOrders(updatedOrders);
-      } else {
-        console.error("Ошибка при отмене заказа:", response.data.message);
-      }
-    } catch (error) {
-      console.error("Ошибка при отмене заказа:", error);
-    }
-  };
+  //     const response = await axios.delete(`https://dp-viganovsky.xn--80ahdri7a.site/api/order/delete/${orderId}`, {
+  //       headers: {
+  //         "Authorization": `Bearer ${token}`
+  //       }
+  //     });
+  //     if (response.data.success) {
+  //       const updatedOrders = orders.filter(order => order.orderId !== orderId);
+  //       setOrders(updatedOrders);
+  //     } else {
+  //       console.error("Ошибка при отмене заказа:", response.data.message);
+  //     }
+  //   } catch (error) {
+  //     console.error("Ошибка при отмене заказа:", error);
+  //   }
+  // };
 
   if (isLoading) {
     return (
@@ -103,7 +106,7 @@ const Orders: React.FC = () => {
                 );
               })}
             </div>
-            <Button title="Отменить заказ" onClick={() => handleCancelOrder(order.orderId)} className={style.cancelOrderButton} />
+            {/* <Button title="Отменить заказ" onClick={() => handleCancelOrder(order.orderId)} className={style.cancelOrderButton} /> */}
           </div>
         ))
       ) : (

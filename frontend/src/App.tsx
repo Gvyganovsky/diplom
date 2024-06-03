@@ -31,7 +31,6 @@ function App() {
       document.body.style.overflow = 'auto';
     }
 
-    // Очистка эффекта при размонтировании компонента
     return () => {
       document.body.style.overflow = 'auto';
     };
@@ -40,6 +39,7 @@ function App() {
   return (
     <AuthProvider>
       <BasketContext.Provider value={{ setBasketOpened }}>
+        
         <Header />
         {basketOpened && <Basket />}
         <Routes>

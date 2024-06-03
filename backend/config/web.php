@@ -65,8 +65,6 @@ $config = [
                 'userWeb' => 'user-web/index',
             ],
         ],
-
-
     ],
     'params' => $params,
 ];
