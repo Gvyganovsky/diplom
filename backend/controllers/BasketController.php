@@ -18,6 +18,23 @@ use Firebase\JWT\Key;
 
 class BasketController extends Controller
 {
+public function beforeAction($action)
+{
+    $allowedActions = ['checkout', 'add', 'get', 'count', 'cancel'];
+
+    if (in_array($action->id, $allowedActions)) {
+        return true;
+    }
+
+    if (Yii::$app->user->isGuest || Yii::$app->user->identity->admin === 0) {
+        $this->redirect(['/site/login']);
+        return false;
+    }
+
+    return true;
+}
+
+
     /**
      * @inheritDoc
      */
@@ -322,11 +339,11 @@ class BasketController extends Controller
     }
 
     public function actionDelete($id)
-{
-    $model = $this->findModel($id);
+    {
+        $model = $this->findModel($id);
 
-    $model->delete();
+        $model->delete();
 
-    return $this->redirect(['index']);
-}
+        return $this->redirect(['index']);
+    }
 }

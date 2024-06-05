@@ -16,12 +16,12 @@ const Index = () => {
       const userData = await getUserData();
       if (userData && userData.user.admin === 1) {
         setUserDropDown(prevState => {
-          const adminPanelExists = prevState.some(item => item.link === "/admin");
+          const adminPanelExists = prevState.some(item => item.text === "Админ панель");
           if (!adminPanelExists) {
             return [
               ...prevState,
               {
-                link: "/admin",
+                link: "https://dp-viganovsky.xn--80ahdri7a.site/backend/api/site/login",
                 image: "/IconAdmin-outlined.svg",
                 text: "Админ панель",
               }

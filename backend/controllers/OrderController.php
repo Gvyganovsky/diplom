@@ -13,6 +13,23 @@ use yii\web\NotFoundHttpException;
 
 class OrderController extends Controller
 {
+    public function beforeAction($action)
+    {
+        $allowedActions = ['order', 'orders'];
+
+        if (in_array($action->id, $allowedActions)) {
+            return true;
+        }
+
+        if (Yii::$app->user->isGuest || Yii::$app->user->identity->admin === 0) {
+            $this->redirect(['/site/login']);
+            return false;
+        }
+
+        return true;
+    }
+
+
     /**
      * @inheritDoc
      */
