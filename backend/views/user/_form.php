@@ -22,7 +22,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'password')->passwordInput(['maxlength' => true]) ?>
 
-    <?php if ($model->admin === 1) : ?>
+    <?php if ($model->admin == 1) : ?>
         <?= $form->field($model, 'admin')->textInput() ?>
     <?php endif; ?>
 

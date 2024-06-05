@@ -20,6 +20,7 @@ import BasketContext from "./contexts/BasketContext";
 import Orders from "./pages/Orders/Orders";
 import Admin from "./pages/Admin";
 import ProtectedRoute from "./components/ProtectedRoute";
+import NotFound from "./pages/NotFound";
 
 function App() {
   const [basketOpened, setBasketOpened] = React.useState(false);
@@ -64,6 +65,8 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/auth/signup" element={<SignUp />} />
           <Route path="/auth/signin" element={<SignIn />} />
+
+          <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />
       </BasketContext.Provider>

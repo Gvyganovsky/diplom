@@ -137,4 +137,19 @@ class ProductController extends Controller
             throw new NotFoundHttpException("Продукт не найден!");
         }
     }
+
+    public function actionDelete($id)
+    {
+        $model = $this->findModel($id);
+        $relatedOrders = \app\models\OrderProduct::find()->where(['product_id' => $id])->exists();
+
+        if ($relatedOrders) {
+            Yii::$app->session->setFlash('error', 'Cannot delete the product as there are orders related to it.');
+            return $this->redirect(['index']);
+        }
+
+        $model->delete();
+
+        return $this->redirect(['index']);
+    }
 }

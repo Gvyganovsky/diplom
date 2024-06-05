@@ -127,7 +127,7 @@ const Basket = () => {
       }
 
       const response = await fetch(
-        `https://dp-viganovsky.xn--80ahdri7a.site/api/basket/delete`,
+        `https://dp-viganovsky.xn--80ahdri7a.site/api/basket/cancel`,
         {
           method: "POST",
           headers: {

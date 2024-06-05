@@ -286,7 +286,7 @@ class BasketController extends Controller
         }
     }
 
-    public function actionDelete()
+    public function actionСancel()
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
 
@@ -320,4 +320,13 @@ class BasketController extends Controller
             return ['success' => false, 'message' => 'Недостаточно данных для удаления товара из корзины.'];
         }
     }
+
+    public function actionDelete($id)
+{
+    $model = $this->findModel($id);
+
+    $model->delete();
+
+    return $this->redirect(['index']);
+}
 }

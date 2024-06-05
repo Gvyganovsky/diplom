@@ -45,22 +45,22 @@ class UserWebController extends Controller
     //         // Извлекаем токен из заголовка
     //         $token = str_replace('Bearer ', '', $authHeader);
     //         Yii::info('Extracted token: ' . $token); // Добавим логи
-    
+
     //         // Получаем текущего пользователя по токену
     //         $currentUser = $this->getUserFromToken($token);
-    
+
     //         if (!$currentUser || $currentUser->admin != 1) {
     //             Yii::$app->response->statusCode = 403;
     //             echo json_encode(['message' => 'Доступ запрещен', 'errors' => 'Недостаточно прав']);
     //             exit;
     //         }
-    
+
     //         return true;
     //     } else {
     //         return false;
     //     }
     // }
-    
+
     /**
      * Lists all User models.
      *
@@ -142,6 +142,51 @@ class UserWebController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    /**
+     * Deletes an existing User model along with related records.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param int $id ID
+     * @return \yii\web\Response
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    /**
+     * Deletes an existing User model along with related records.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param int $id ID
+     * @return \yii\web\Response
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionDelete($id)
+    {
+        $model = $this->findModel($id);
+
+        $transaction = Yii::$app->db->beginTransaction();
+        try {
+            // Find all orders related to the user
+            $orders = \app\models\Order::findAll(['user' => $id]);
+
+            // Delete related records in `order_product` table
+            foreach ($orders as $order) {
+                \app\models\OrderProduct::deleteAll(['order_id' => $order->id]);
+            }
+
+            // Delete related records in `order` table
+            \app\models\Order::deleteAll(['user' => $id]);
+
+            $model->delete();
+
+            $transaction->commit();
+
+            return $this->redirect(['index']);
+        } catch (\Exception $e) {
+            $transaction->rollBack();
+            throw $e;
+        } catch (\Throwable $e) {
+            $transaction->rollBack();
+            throw $e;
+        }
     }
 
     protected function getUserFromToken($token)

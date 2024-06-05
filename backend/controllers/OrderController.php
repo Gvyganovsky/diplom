@@ -176,33 +176,59 @@ class OrderController extends Controller
         ];
     }
 
-    public function actionDelete($orderId)
+    // public function actionDelete($id)
+    // {
+    //     Yii::$app->response->format = Response::FORMAT_JSON;
+
+    //     $authHeader = Yii::$app->request->headers->get('Authorization');
+    //     if (!$authHeader || !preg_match('/Bearer\s(\S+)/', $authHeader, $matches)) {
+    //         return ['success' => false, 'message' => 'Токен пользователя отсутствует в заголовках запроса.'];
+    //     }
+
+    //     $token = $matches[1];
+    //     $user = UserController::getUserFromToken($token);
+    //     if (!$user) {
+    //         Yii::$app->response->statusCode = 401;
+    //         return ['success' => false, 'message' => 'Пользователь не авторизован.'];
+    //     }
+
+    //     $order = Order::findOne(['id' => $id, 'user' => $user->id]);
+    //     if ($order === null) {
+    //         Yii::$app->response->statusCode = 404;
+    //         return ['success' => false, 'message' => 'Заказ не найден.'];
+    //     }
+
+    //     OrderProduct::deleteAll(['order_id' => $id]);
+    //     if ($order->delete()) {
+    //         return ['success' => true, 'message' => 'Заказ успешно отменен.'];
+    //     } else {
+    //         return ['success' => false, 'message' => 'Ошибка при отмене заказа.'];
+    //     }
+    // }
+
+    /**
+     * Deletes an existing Order model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param int $id the ID of the order to be deleted
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionDelete($id)
     {
-        Yii::$app->response->format = Response::FORMAT_JSON;
+        $transaction = Yii::$app->db->beginTransaction();
+        try {
+            // Удаляем все записи в таблице order_product, связанные с этим заказом
+            OrderProduct::deleteAll(['order_id' => $id]);
 
-        $authHeader = Yii::$app->request->headers->get('Authorization');
-        if (!$authHeader || !preg_match('/Bearer\s(\S+)/', $authHeader, $matches)) {
-            return ['success' => false, 'message' => 'Токен пользователя отсутствует в заголовках запроса.'];
-        }
+            // Удаляем сам заказ
+            $this->findModel($id)->delete();
 
-        $token = $matches[1];
-        $user = UserController::getUserFromToken($token);
-        if (!$user) {
-            Yii::$app->response->statusCode = 401;
-            return ['success' => false, 'message' => 'Пользователь не авторизован.'];
-        }
+            $transaction->commit();
 
-        $order = Order::findOne(['id' => $orderId, 'user' => $user->id]);
-        if ($order === null) {
-            Yii::$app->response->statusCode = 404;
-            return ['success' => false, 'message' => 'Заказ не найден.'];
-        }
-
-        OrderProduct::deleteAll(['order_id' => $orderId]);
-        if ($order->delete()) {
-            return ['success' => true, 'message' => 'Заказ успешно отменен.'];
-        } else {
-            return ['success' => false, 'message' => 'Ошибка при отмене заказа.'];
+            return $this->redirect(['index']);
+        } catch (\Exception $e) {
+            $transaction->rollBack();
+            throw $e;
         }
     }
 }
