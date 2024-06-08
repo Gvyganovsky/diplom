@@ -14,7 +14,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true])->label('Имя') ?>
 
-    <?= $form->field($model, 'image')->textarea(['rows' => 6])->label('Фотографии') ?>
+    <?= $form->field($model, 'imageFiles[]')->fileInput(['multiple' => true, 'accept' => 'image/*'])->label('Фотографии') ?>
 
     <?= $form->field($model, 'brand')->textInput(['maxlength' => true])->label('Брэнд') ?>
 

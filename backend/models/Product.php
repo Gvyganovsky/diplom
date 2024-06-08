@@ -3,25 +3,12 @@
 namespace app\models;
 
 use Yii;
+use yii\web\UploadedFile;
 
-/**
- * This is the model class for table "product".
- *
- * @property int $id
- * @property string|null $name
- * @property string|null $image
- * @property string|null $brand
- * @property string|null $model
- * @property string|null $category
- * @property float|null $price
- * @property string|null $description
- * @property int|null $count
- *
- * @property Basket[] $baskets
- * @property OrderProduct[] $orderProducts
- */
 class Product extends \yii\db\ActiveRecord
 {
+    public $imageFiles;
+
     /**
      * {@inheritdoc}
      */
@@ -37,6 +24,7 @@ class Product extends \yii\db\ActiveRecord
     {
         return [
             [['image', 'description', 'category'], 'string'],
+            [['imageFiles'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg', 'maxFiles' => 10],
             [['price'], 'number'],
             [['count'], 'integer'],
             [['name', 'brand', 'model'], 'string', 'max' => 255],
@@ -52,31 +40,47 @@ class Product extends \yii\db\ActiveRecord
             'id' => 'ID',
             'name' => 'Name',
             'image' => 'Image',
+            'imageFiles' => 'Upload Images',
             'brand' => 'Brand',
             'model' => 'Model',
+            'category' => 'Category',
             'price' => 'Price',
             'description' => 'Description',
             'count' => 'Count',
         ];
     }
 
-    /**
-     * Gets query for [[Baskets]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getBaskets()
+    public function beforeSave($insert)
     {
-        return $this->hasMany(Basket::class, ['product' => 'id']);
+        if (parent::beforeSave($insert)) {
+            if (is_array($this->imageFiles) && !empty($this->imageFiles)) {
+                $this->image = json_encode(array_map(function ($file) {
+                    return basename($file);
+                }, $this->imageFiles));
+            }
+            return true;
+        }
+        return false;
     }
 
-    /**
-     * Gets query for [[OrderProducts]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getOrderProducts()
+    public function upload()
     {
-        return $this->hasMany(OrderProduct::class, ['product_id' => 'id']);
+        if ($this->validate()) {
+            $uploadedFiles = [];
+            foreach ($this->imageFiles as $file) {
+                $dir = 'uploads/' . $file->baseName;
+                if (!is_dir($dir)) {
+                    mkdir($dir, 0777, true);
+                }
+                $filePath = $dir . '/' . $file->baseName . '.' . $file->extension;
+                if ($file->saveAs($filePath)) {
+                    $uploadedFiles[] = $file->baseName . '.' . $file->extension;
+                }
+            }
+            $this->imageFiles = $uploadedFiles;
+            return true;
+        } else {
+            return false;
+        }
     }
 }

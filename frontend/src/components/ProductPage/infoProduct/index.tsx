@@ -73,8 +73,7 @@ const Index = (props: Props) => {
     return <div>Продукт не найден</div>;
   }
 
-  const imagesArray = JSON.parse(product.image) as { fullPath: string }[];
-  const imageUrls = imagesArray.map(imageObj => imageObj.fullPath);
+  const imageUrls = JSON.parse(product.image);
 
   return (
     <section className={style.container}>

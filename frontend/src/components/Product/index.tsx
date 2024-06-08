@@ -2,7 +2,7 @@ import style from "./Product.module.scss";
 import Button from "../Button";
 
 interface ProductProps {
-  image: string;
+  image: string; 
   name: string;
   brand: string;
   model: string;
@@ -11,8 +11,7 @@ interface ProductProps {
 }
 
 const Index: React.FC<ProductProps> = ({ id, image, name, brand, model, price }) => {
-  const imagesArray = JSON.parse(image) as { fullPath: string }[];
-  const imageUrls = imagesArray.map(imageObj => imageObj.fullPath);
+  const imageUrls = JSON.parse(image) as string[]; 
   const mainImage = imageUrls[0];
 
   return (

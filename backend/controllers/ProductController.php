@@ -8,24 +8,25 @@ use app\models\Product;
 use yii\web\NotFoundHttpException;
 use app\models\ProductSearch;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 class ProductController extends Controller
 {
     public function beforeAction($action)
     {
         $allowedActions = ['products', 'product'];
-    
+
         if (in_array($action->id, $allowedActions)) {
             return true;
         }
-    
+
         if (Yii::$app->user->isGuest || Yii::$app->user->identity->admin === 0) {
             $this->redirect(['/site/login']);
             return false;
         }
-    
+
         return true;
-    }    
+    }
 
     /**
      * @inheritDoc
@@ -46,7 +47,7 @@ class ProductController extends Controller
     }
 
     /**
-     * Lists all User models.
+     * Lists all Product models.
      *
      * @return string
      */
@@ -62,7 +63,7 @@ class ProductController extends Controller
     }
 
     /**
-     * Displays a single User model.
+     * Displays a single Product model.
      * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
@@ -75,7 +76,7 @@ class ProductController extends Controller
     }
 
     /**
-     * Creates a new User model.
+     * Creates a new Product model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
@@ -84,7 +85,9 @@ class ProductController extends Controller
         $model = new Product();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
+            $model->load($this->request->post());
+            $model->imageFiles = UploadedFile::getInstances($model, 'imageFiles');
+            if ($model->upload() && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
@@ -97,7 +100,7 @@ class ProductController extends Controller
     }
 
     /**
-     * Updates an existing User model.
+     * Updates an existing Product model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
@@ -106,9 +109,17 @@ class ProductController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $model->imageFiles = json_decode($model->image, true);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($this->request->isPost) {
+            $model->load($this->request->post());
+            $newFiles = UploadedFile::getInstances($model, 'imageFiles');
+            if ($newFiles) {
+                $model->imageFiles = array_merge($model->imageFiles, $newFiles);
+            }
+            if ($model->upload() && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
 
         return $this->render('update', [
@@ -117,7 +128,7 @@ class ProductController extends Controller
     }
 
     /**
-     * Finds the User model based on its primary key value.
+     * Finds the Product model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
      * @return Product the loaded model
