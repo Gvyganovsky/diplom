@@ -12,24 +12,24 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'name')->textInput(['maxlength' => true])->label('Имя') ?>
 
-    <?= $form->field($model, 'image')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'image')->textarea(['rows' => 6])->label('Фотографии') ?>
 
-    <?= $form->field($model, 'brand')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'brand')->textInput(['maxlength' => true])->label('Брэнд') ?>
 
-    <?= $form->field($model, 'model')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'model')->textInput(['maxlength' => true])->label('Модель') ?>
 
-    <?= $form->field($model, 'category')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'category')->textInput(['maxlength' => true])->label('Категория') ?>
 
-    <?= $form->field($model, 'price')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'price')->textInput(['maxlength' => true])->label('Цена') ?>
 
-    <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'description')->textarea(['rows' => 6])->label('Описание') ?>
 
-    <?= $form->field($model, 'count')->textInput() ?>
+    <?= $form->field($model, 'count')->textInput()->label('Количество') ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /** @var yii\web\View $this */
 /** @var app\models\Basket $model */
 
-$this->title = 'Create Basket';
+$this->title = 'Создать корзину';
 $this->params['breadcrumbs'][] = ['label' => 'Baskets', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

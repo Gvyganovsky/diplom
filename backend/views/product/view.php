@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /** @var app\models\Product $model */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Products', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Продукты', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
@@ -16,11 +16,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+        <?= Html::a('Обновить', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => 'Вы уверены, что хотите удалить?',
                 'method' => 'post',
             ],
         ]) ?>
@@ -30,14 +30,38 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'name',
-            'image:ntext',
-            'brand',
-            'model',
-            'category',
-            'price',
-            'description:ntext',
-            'count',
+            [
+                'attribute' => 'name',
+                'label' => 'Имя',
+            ],
+            [
+                'attribute' => 'image',
+                'label' => 'Фотографии',
+            ],
+            [
+                'attribute' => 'brand',
+                'label' => 'Брэнд',
+            ],
+            [
+                'attribute' => 'model',
+                'label' => 'Модель',
+            ],
+            [
+                'attribute' => 'category',
+                'label' => 'Категория',
+            ],
+            [
+                'attribute' => 'price',
+                'label' => 'Цена',
+            ],
+            [
+                'attribute' => 'description',
+                'label' => 'Описание',
+            ],
+            [
+                'attribute' => 'count',
+                'label' => 'Количество',
+            ],
         ],
     ]) ?>
 

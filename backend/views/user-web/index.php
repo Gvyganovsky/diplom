@@ -18,7 +18,7 @@ $this->title = 'Пользователи';
         <h1><?= Html::encode($this->title) ?></h1>
 
         <p>
-            <?= Html::a('Create User', ['create'], ['class' => 'btn btn-success']) ?>
+            <?= Html::a('Создать пользователя', ['create'], ['class' => 'btn btn-success']) ?>
         </p>
 
         <?php // echo $this->render('_search', ['model' => $searchModel]); 
@@ -29,13 +29,26 @@ $this->title = 'Пользователи';
             'filterModel' => $searchModel,
             'columns' => [
                 ['class' => 'yii\grid\SerialColumn'],
-                'id',
-                'login',
-                'email:email',
-                'phone',
-                'address',
-                //'password',
-                //'admin',
+                [
+                    'attribute' => 'id',
+                    'label' => 'ID',
+                ],
+                [
+                    'attribute' => 'login',
+                    'label' => 'Логин',
+                ],
+                [
+                    'attribute' => 'email',
+                    'label' => 'Почта',
+                ],
+                [
+                    'attribute' => 'phone',
+                    'label' => 'Телефон',
+                ],
+                [
+                    'attribute' => 'address',
+                    'label' => 'Адрес',
+                ],
                 [
                     'class' => ActionColumn::className(),
                     'urlCreator' => function ($action, User $model, $key, $index, $column) {

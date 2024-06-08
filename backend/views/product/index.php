@@ -10,7 +10,7 @@ use yii\grid\GridView;
 /** @var app\models\ProductSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Products';
+$this->title = 'Продукты';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="product-index">
@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Product', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Создать продукт', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -28,16 +28,38 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'name',
-            'image:ntext',
-            'brand',
-            'model',
-            //'category',
-            //'price',
-            //'description:ntext',
-            //'count',
+            [
+                'attribute' => 'id',
+                'label' => 'ID',
+            ],
+            [
+                'attribute' => 'name',
+                'label' => 'Имя',
+            ],
+            [
+                'attribute' => 'image',
+                'label' => 'Фотографии',
+            ],
+            [
+                'attribute' => 'brand',
+                'label' => 'Брэнд',
+            ],
+            [
+                'attribute' => 'model',
+                'label' => 'Модель',
+            ],
+            [
+                'attribute' => 'category',
+                'label' => 'Категория',
+            ],
+            [
+                'attribute' => 'price',
+                'label' => 'Цена',
+            ],
+            [
+                'attribute' => 'count',
+                'label' => 'Количество',
+            ],
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Product $model, $key, $index, $column) {

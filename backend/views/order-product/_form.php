@@ -12,14 +12,14 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'order_id')->textInput() ?>
+    <?= $form->field($model, 'order_id')->textInput(['maxlength' => true])->label('ID заказа') ?>
 
-    <?= $form->field($model, 'product_id')->textInput() ?>
+    <?= $form->field($model, 'product_id')->textInput(['maxlength' => true])->label('ID продукта') ?>
 
-    <?= $form->field($model, 'quantity')->textInput() ?>
+    <?= $form->field($model, 'quantity')->textInput(['maxlength' => true])->label('Количество') ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

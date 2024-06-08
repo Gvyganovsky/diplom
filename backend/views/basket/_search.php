@@ -15,17 +15,17 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'id') ?>
+    <?= $form->field($model, 'id')->label('ID') ?>
 
-    <?= $form->field($model, 'user') ?>
+    <?= $form->field($model, 'user')->label('Пользователь') ?>
 
-    <?= $form->field($model, 'product') ?>
+    <?= $form->field($model, 'product')->label('Продукт') ?>
 
-    <?= $form->field($model, 'count') ?>
+    <?= $form->field($model, 'count')->label('Количество') ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-outline-secondary']) ?>
+        <?= Html::submitButton('Искать', ['class' => 'btn btn-primary']) ?>
+        <?= Html::resetButton('Сбросить', ['class' => 'btn btn-outline-secondary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

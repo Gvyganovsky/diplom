@@ -3,13 +3,14 @@ import axios from 'axios';
 import style from './Orders.module.scss';
 import Button from '../../components/Button';
 import { MoonLoader } from "react-spinners";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 interface Product {
   productId: string;
   productName: string;
   productImage: string;
   quantity: number;
+  price: number;
 }
 
 interface Order {
@@ -38,8 +39,28 @@ const Orders: React.FC = () => {
             "Authorization": `Bearer ${token}`
           }
         });
+        
         if (response.data.success) {
-          setOrders(response.data.orders);
+          const sortedOrders = response.data.orders.sort((a: Order, b: Order) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+          const ordersWithPrices = await Promise.all(sortedOrders.map(async (order: Order) => {
+            const productsWithPrices = await Promise.all(order.products.map(async (product: Product) => {
+              const productResponse = await axios.get(`https://dp-viganovsky.xn--80ahdri7a.site/api/product/${product.productId}`, {
+                headers: {
+                  "Authorization": `Bearer ${token}`
+                }
+              });
+              return {
+                ...product,
+                price: productResponse.data.price
+              };
+            }));
+            return {
+              ...order,
+              products: productsWithPrices
+            };
+          }));
+          
+          setOrders(ordersWithPrices);
         } else {
           console.error("Ошибка при получении данных о заказах");
         }
@@ -51,31 +72,11 @@ const Orders: React.FC = () => {
     };
 
     fetchOrderDetails();
-  }, []);
+  }, [navigate]);
 
-  // const handleCancelOrder = async (orderId: string) => {
-  //   try {
-  //     const token = localStorage.getItem("token");
-  //     if (!token) {
-  //       console.error("Токен пользователя отсутствует в локальном хранилище");
-  //       return;
-  //     }
-
-  //     const response = await axios.delete(`https://dp-viganovsky.xn--80ahdri7a.site/api/order/delete/${orderId}`, {
-  //       headers: {
-  //         "Authorization": `Bearer ${token}`
-  //       }
-  //     });
-  //     if (response.data.success) {
-  //       const updatedOrders = orders.filter(order => order.orderId !== orderId);
-  //       setOrders(updatedOrders);
-  //     } else {
-  //       console.error("Ошибка при отмене заказа:", response.data.message);
-  //     }
-  //   } catch (error) {
-  //     console.error("Ошибка при отмене заказа:", error);
-  //   }
-  // };`
+  const calculateTotalPrice = (products: Product[]) => {
+    return products.reduce((total, product) => total + product.price * product.quantity, 0);
+  };
 
   if (isLoading) {
     return (
@@ -98,15 +99,17 @@ const Orders: React.FC = () => {
                 const firstImage = productImages[0];
 
                 return (
-                  <div key={product.productId} className={style.productCard}>
+                  <Link key={product.productId} to={`/Product/${product.productId}`} className={style.productCard}>
                     <img src={`/Product/${product.productName}/${firstImage}`} alt={product.productName} height={100} />
                     <h3>{product.productName}</h3>
                     <p>Количество: {product.quantity}</p>
-                  </div>
+                    <p>Цена за единицу: ${product.price}</p>
+                    <p>Общая стоимость: ${product.price * product.quantity}</p>
+                  </Link>
                 );
               })}
             </div>
-            {/* <Button title="Отменить заказ" onClick={() => handleCancelOrder(order.orderId)} className={style.cancelOrderButton} /> */}
+            <h3 className={style.totalPrice}>Общая стоимость заказа: ${calculateTotalPrice(order.products)}</h3>
           </div>
         ))
       ) : (

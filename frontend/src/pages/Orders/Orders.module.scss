@@ -10,50 +10,74 @@
 }
 
 .orderCard {
-  background-color: #222;
+  background-color: #151515;
   border: 2px solid #02E502;
-  border-radius: 10px;
+  border-radius: 15px;
   padding: 20px;
-  margin: 10px 0;
+  margin: 20px 0;
   width: 80%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.orderCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .orderCard h2,
 .orderCard p {
-  margin: 5px 0;
+  margin: 10px 0;
 }
 
 .products {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .productCard {
-  background-color: #222;
+  background-color: #151515;
   border: 1px solid #02E502;
-  border-radius: 5px;
-  padding: 10px;
-  margin: 10px;
+  border-radius: 10px;
+  padding: 15px;
+  margin: 15px;
   text-align: center;
-  width: 150px;
+  width: 180px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.productCard:first-of-type {
-  margin: 10px 10px 10px 0;
+.productCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .productCard img {
   max-width: 100%;
-  border-radius: 5px;
+  border-radius: 10px;
+  transition: transform 0.3s ease;
+}
+
+.productCard:hover img {
+  transform: scale(1.05);
 }
 
 .productCard h3 {
   margin: 10px 0 5px 0;
-  font-size: 16px;
+  font-size: 18px;
+  color: #02E502;
 }
 
 .productCard p {
   margin: 5px 0;
+  font-size: 14px;
+}
+
+.totalPrice {
+  font-size: 20px;
+  margin-top: 20px;
+  color: #02E502;
 }
 
 .nullTitile {

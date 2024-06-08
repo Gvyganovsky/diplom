@@ -18,28 +18,36 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Order', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Создать заказ', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php // echo $this->render('_search', ['model' => $searchModel]); 
+    ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'createdAt',
-            'user',
+            [
+                'attribute' => 'id',
+                'label' => 'ID',
+            ],
+            [
+                'attribute' => 'createdAt',
+                'label' => 'Дата создания',
+            ],
+            [
+                'attribute' => 'user',
+                'label' => 'Пользователь',
+            ],
             [
                 'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, Order $model, $key, $index, $column) {
+                'urlCreator' => function ($action, Order $model, $key, $index) {
                     return Url::toRoute([$action, 'id' => $model->id]);
-                 }
+                }
             ],
         ],
     ]); ?>
-
 
 </div>

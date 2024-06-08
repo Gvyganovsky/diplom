@@ -303,7 +303,7 @@ public function beforeAction($action)
         }
     }
 
-    public function actionСancel()
+    public function actionCancel()
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
 

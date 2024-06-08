@@ -95,7 +95,7 @@ const Basket = () => {
             "Authorization": `Bearer ${token}`
           },
           body: JSON.stringify({
-            token,  // Добавляем токен в тело запроса
+            token,
             productId,
             count: newCount,
           }),
@@ -135,7 +135,7 @@ const Basket = () => {
             "Authorization": `Bearer ${token}`
           },
           body: JSON.stringify({
-            token,  // Добавляем токен в тело запроса
+            token,
             productId,
           }),
         }
@@ -230,7 +230,7 @@ const Basket = () => {
                       <p
                         className={style.countIcon}
                         onClick={() =>
-                          updateProductCount(item.product, item.count - 1)
+                          item.count > 1 && updateProductCount(item.product, item.count - 1)
                         }
                       >
                         -

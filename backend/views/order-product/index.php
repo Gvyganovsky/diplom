@@ -10,7 +10,7 @@ use yii\grid\GridView;
 /** @var app\models\OrderProductSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Order Products';
+$this->title = 'Товары заказов';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="order-product-index">
@@ -18,29 +18,40 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Order Product', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Создать товар в заказе', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php // echo $this->render('_search', ['model' => $searchModel]); 
+    ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'order_id',
-            'product_id',
-            'quantity',
+            [
+                'attribute' => 'id',
+                'label' => 'ID',
+            ],
+            [
+                'attribute' => 'order_id',
+                'label' => 'id заказа',
+            ],
+            [
+                'attribute' => 'product_id',
+                'label' => 'id продукта',
+            ],
+            [
+                'attribute' => 'quantity',
+                'label' => 'количество',
+            ],
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, OrderProduct $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
-                 }
+                }
             ],
         ],
     ]); ?>
-
 
 </div>
