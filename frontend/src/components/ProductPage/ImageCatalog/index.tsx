@@ -2,11 +2,11 @@ import { useState } from 'react';
 import style from './ImageCatalog.module.scss';
 
 interface ImageCatalogProps {
-    name: string;
+    id: string;
     images: string[];
 }
 
-const ImageCatalog: React.FC<ImageCatalogProps> = ({ name, images }) => {
+const ImageCatalog: React.FC<ImageCatalogProps> = ({ id, images }) => {
     const [selectedImage, setSelectedImage] = useState<string>(images[0] || '');
 
     const handleImageClick = (imageUrl: string) => {
@@ -23,7 +23,7 @@ const ImageCatalog: React.FC<ImageCatalogProps> = ({ name, images }) => {
         <div className={style.imageCatalog}>
             {selectedImage && (
                 <img
-                    src={`/Product/${name}/${selectedImage}`}
+                    src={`/backend/api/uploads/products/${id}/${selectedImage}`}
                     alt="Product"
                     width={630}
                     height={370}
@@ -34,7 +34,7 @@ const ImageCatalog: React.FC<ImageCatalogProps> = ({ name, images }) => {
                 {displayedImages.map((imageUrl, index) => (
                     <li key={index} onClick={() => handleImageClick(imageUrl)}>
                         <img
-                            src={`/Product/${name}/${imageUrl}`}
+                            src={`/backend/api/uploads/products/${id}/${imageUrl}`}
                             alt="Product"
                             width={200}
                             height={160}

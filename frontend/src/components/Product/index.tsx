@@ -10,15 +10,15 @@ interface ProductProps {
   id: number;
 }
 
-
-const index: React.FC<ProductProps> = ({ id, image, name, brand, model, price }) => {
-  const imagesArray = JSON.parse(image) as string[];
-  const mainImage = imagesArray[0];
+const Index: React.FC<ProductProps> = ({ id, image, name, brand, model, price }) => {
+  const imagesArray = JSON.parse(image) as { fullPath: string }[];
+  const imageUrls = imagesArray.map(imageObj => imageObj.fullPath);
+  const mainImage = imageUrls[0];
 
   return (
     <li className={style.product}>
       <img
-        src={`/Product/${name}/${mainImage}`}
+        src={`/backend/api/uploads/products/${id}/${mainImage}`}
         alt="product"
         width={200}
         height={160}
@@ -37,5 +37,4 @@ const index: React.FC<ProductProps> = ({ id, image, name, brand, model, price })
   );
 };
 
-
-export default index;
+export default Index;

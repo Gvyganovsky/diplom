@@ -73,14 +73,15 @@ const Index = (props: Props) => {
     return <div>Продукт не найден</div>;
   }
 
-  const imagesArray = JSON.parse(product.image) as string[];
+  const imagesArray = JSON.parse(product.image) as { fullPath: string }[];
+  const imageUrls = imagesArray.map(imageObj => imageObj.fullPath);
 
   return (
     <section className={style.container}>
       <Breadcrumbs title={product.name} />
       <div className={style.infoBlock}>
 
-        <ImageCatalog name={product.name} images={imagesArray} />
+        <ImageCatalog id={product.id} images={imageUrls} />
 
         <div className={style.info}>
           <h1 className={style.title}>{product.name}</h1>

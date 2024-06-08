@@ -21,7 +21,7 @@ const Index = () => {
             return [
               ...prevState,
               {
-                link: "https://dp-viganovsky.xn--80ahdri7a.site/backend/api/site/login",
+                link: "https://dp-viganovsky.xn--80ahdri7a.site/api/site/login",
                 image: "/IconAdmin-outlined.svg",
                 text: "Админ панель",
               }
