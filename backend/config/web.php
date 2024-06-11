@@ -72,7 +72,7 @@ $config = [
             'class' => 'yii\web\Response',
             'on beforeSend' => function ($event) {
                 $response = $event->sender;
-                $response->headers->set('Content-Security-Policy', "default-src 'self'; script-src 'self' 'unsafe-inline'; object-src 'none';");
+                $response->headers->set('Content-Security-Policy', "default-src 'self'; script-src 'self' 'unsafe-inline'; object-src 'none'; style-src 'self' 'unsafe-inline';");
                 $response->headers->set('X-Frame-Options', 'DENY');
                 $response->headers->set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
                 $response->headers->set('X-Content-Type-Options', 'nosniff');

@@ -1,6 +1,6 @@
 import { useState, useContext, useEffect } from "react";
 import style from "./Header.module.scss";
-import IconsNav from "../iconsNav";
+import IconsNav from "./iconsNav";
 import LogoBlock from "../LogoBlock";
 import BasketContext from "../../contexts/BasketContext";
 import { useAuth } from "../../contexts/AuthContext";

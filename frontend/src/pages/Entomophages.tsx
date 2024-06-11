@@ -1,6 +1,6 @@
 import ContactForm from "../components/ContactForm";
 import Hero from "../components/Hero";
-import Post from "../components/Post";
+import Post from "../components/Entomophages/Post";
 import Trust from "../components/Trust";
 import Text from "../components/Text";
 import Problems from "../components/Entomophages/Problems";

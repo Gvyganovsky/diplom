@@ -1,6 +1,7 @@
 import style from "./Where We Work.module.scss";
-import { places } from "../../Data";
-import Title from "../Title";
+import { ReactElement, JSXElementConstructor, ReactNode, ReactPortal, Key } from "react";
+import { places } from "../../../Data";
+import Title from "../../Title";
 
 const index = () => {
   return (
@@ -15,7 +16,7 @@ const index = () => {
       <div className={style.container}>
         <Title text="Где мы работаем" />
         <ul className={style.list}>
-          {places.map((place, index) => (
+          {places.map((place: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined, index: Key | null | undefined) => (
             <li key={index} className={style.item}>
               {place}
             </li>

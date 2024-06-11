@@ -39,7 +39,7 @@ const Orders: React.FC = () => {
             "Authorization": `Bearer ${token}`
           }
         });
-        
+
         if (response.data.success) {
           const sortedOrders = response.data.orders.sort((a: Order, b: Order) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
           const ordersWithPrices = await Promise.all(sortedOrders.map(async (order: Order) => {
@@ -59,7 +59,7 @@ const Orders: React.FC = () => {
               products: productsWithPrices
             };
           }));
-          
+
           setOrders(ordersWithPrices);
         } else {
           console.error("Ошибка при получении данных о заказах");
@@ -100,7 +100,10 @@ const Orders: React.FC = () => {
 
                 return (
                   <Link key={product.productId} to={`/Product/${product.productId}`} className={style.productCard}>
-                    <img src={`/Product/${product.productName}/${firstImage}`} alt={product.productName} height={100} />
+                    <img
+                      src={`/backend/api/uploads/products/${product.productId}/${firstImage}`}
+                      alt={product.productName}
+                      height={100} />
                     <h3>{product.productName}</h3>
                     <p>Количество: {product.quantity}</p>
                     <p>Цена за единицу: ${product.price}</p>

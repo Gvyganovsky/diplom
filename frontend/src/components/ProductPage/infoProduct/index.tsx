@@ -1,6 +1,6 @@
 import style from "./infoProduct.module.scss";
 import Button from "../../Button";
-import FeatureList from "../../FeatureList/FeatureList";
+import FeatureList from "../FeatureList";
 import ImageCatalog from "../ImageCatalog";
 import Breadcrumbs from "../../Breadcrumbs";
 import { FeatureListData } from "../../../Data";

@@ -1,6 +1,6 @@
 import Breadcrumbs from "../components/Breadcrumbs";
 import style from "../App.module.scss";
-import Filter from "../components/Catalog/Filter";
+import Filter from "../components/Filter/index.tsx";
 import Product from "../components/Product/index.tsx";
 import Hero from "../components/Hero/index.tsx";
 import React from "react";

@@ -1,6 +1,6 @@
 import Breadcrumbs from "../../components/Breadcrumbs";
 import Hero from "../../components/Hero";
-import Advantages from "../../components/Spraying/Advantages";
+import Advantages from "../../components/Advantages";
 import Text from "../../components/Text";
 import style from "./Spraying.module.scss";
 

@@ -4,7 +4,7 @@ import OurOffers from "../components/Home/OurOffers";
 import Applications from "../components/Home/Applications";
 import Clients from "../components/Home/Clients";
 import News from "../components/Home/News";
-import WhereWeWork from "../components/Where We Work";
+import WhereWeWork from "../components/Home/WhereWeWork";
 import Text from "../components/Text";
 import { trustData } from "../Data";
 

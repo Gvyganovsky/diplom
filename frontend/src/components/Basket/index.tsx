@@ -210,7 +210,7 @@ const Basket = () => {
                 <li className={style.item} key={index}>
                   <div className={style.hero}>
                     <img
-                      src={`/Product/${item.productDetails.name}/${item.productDetails.image[0]}`}
+                      src={`/backend/api/uploads/products/${item.productDetails.id}/${item.productDetails.image[0]}`}
                       alt={item.productDetails.name}
                       width={225}
                       height={150}

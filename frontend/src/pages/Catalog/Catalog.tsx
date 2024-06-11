@@ -1,10 +1,10 @@
 import { useState, useEffect, ChangeEvent } from "react";
-import Breadcrumbs from "../../components/Breadcrumbs/index.tsx";
+import Breadcrumbs from "../../components/Breadcrumbs";
 import style from "./Catalog.module.scss";
-import Filter from "../../components/Catalog/Filter/index.tsx";
-import Product from "../../components/Product/index.tsx";
-import Hero from "../../components/Hero/index.tsx";
-import Title from "../../components/Title/index.tsx";
+import Filter from "../../components/Filter";
+import Product from "../../components/Product";
+import Hero from "../../components/Hero";
+import Title from "../../components/Title";
 import { MoonLoader } from "react-spinners";
 
 interface Product {

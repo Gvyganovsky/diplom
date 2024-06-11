@@ -1,5 +1,5 @@
-import ListAltItems from "../ListAltItems";
-import ListItems from "../listItems";
+import ListAltItems from "./ListAltItems";
+import ListItems from "./listItems";
 import style from "./Hero.module.scss";
 
 const index = (props: any) => {

@@ -18,8 +18,8 @@ import Profile from "./pages/Profile";
 import { AuthProvider } from './contexts/AuthContext';
 import BasketContext from "./contexts/BasketContext";
 import Orders from "./pages/Orders/Orders";
-import ProtectedRoute from "./components/ProtectedRoute";
 import NotFound from "./pages/NotFound";
+import './App.module.scss';
 
 function App() {
   const [basketOpened, setBasketOpened] = React.useState(false);
