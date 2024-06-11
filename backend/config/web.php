@@ -66,6 +66,9 @@ $config = [
                 'GET users' => 'user/users',
                 'GET user/get-data' => 'user/get-data',
                 'userWeb' => 'user-web/index',
+
+                'GET news' => 'news/news',
+                'GET news/<id:\d+>' => 'news/get-news',
             ],
         ],
         'response' => [

@@ -1,9 +1,11 @@
 RewriteEngine On
 
+# Перенаправление запросов к API
 RewriteCond %{REQUEST_URI} ^/api/
 RewriteRule ^api/(.*)$ backend/api/index.php/$1 [L,QSA]
 
+# Перенаправление всех остальных запросов к фронтенду (React)
+RewriteCond %{REQUEST_URI} !^/frontend/dist/
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME} !-l
 RewriteRule ^(.*)$ frontend/dist/index.html [L]

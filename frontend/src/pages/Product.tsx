@@ -44,7 +44,7 @@ const ProductDetail = () => {
     <>
       <InfoProduct product={product} />
 
-      <Trust data={bonusData} />
+      <Trust data={bonusData} title={undefined} />
 
       <DescriptionProduct product={product} />
 

@@ -20,6 +20,7 @@ import BasketContext from "./contexts/BasketContext";
 import Orders from "./pages/Orders/Orders";
 import NotFound from "./pages/NotFound";
 import './App.module.scss';
+import NewsDetails from "./pages/NewsDetails";
 
 function App() {
   const [basketOpened, setBasketOpened] = React.useState(false);
@@ -39,7 +40,7 @@ function App() {
   return (
     <AuthProvider>
       <BasketContext.Provider value={{ setBasketOpened }}>
-        
+
         <Header />
         {basketOpened && <Basket />}
         <Routes>
@@ -51,6 +52,7 @@ function App() {
           <Route path="/Product" element={<Product />} />
           <Route path="/Contact" element={<Contact />} />
           <Route path="/News" element={<News />} />
+          <Route path="/News/:id" element={<NewsDetails />} />
           <Route path="/Catalog" element={<Catalog />} />
           <Route path="/Product/:id" element={<Product />} />
           <Route path="/Orders" element={<Orders />} />

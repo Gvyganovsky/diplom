@@ -10,6 +10,7 @@ interface UserData {
     email: string;
     phone: string;
     address: string;
+    admin: number;
 }
 
 const Profile: React.FC = () => {
@@ -60,6 +61,11 @@ const Profile: React.FC = () => {
                                 <label className={style.label}>Адрес:</label>
                                 <p className={style.profileText}>{userData.address}</p>
                             </div>
+
+                            {userData && userData.admin === 1 && (
+                                <a href="https://dp-viganovsky.xn--80ahdri7a.site/api/site/login" className={style.profileLink}>Админ панель</a>
+                            )}
+
                             <a href={`https://dp-viganovsky.xn--80ahdri7a.site/backend/api/user-web/update?id=${userData.id}`} className={style.profileLink}>Редактировать профиль</a>
                             <Button title="Выйти" className="buttonRed" onClick={handleLogout} />
                         </>

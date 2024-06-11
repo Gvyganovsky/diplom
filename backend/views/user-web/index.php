@@ -60,6 +60,6 @@ $this->title = 'Пользователи';
     </div>
 <?php else : ?>
     <div class="alert alert-warning">
-        <p>Вы не являетесь администратором. Пожалуйста, вернитесь на <a href="http://front-viganovsky.xn--80ahdri7a.site/">главную страницу</a>.</p>
+        <p>Вы не являетесь администратором. Пожалуйста, вернитесь на <a href="http://dp-viganovsky.xn--80ahdri7a.site/">главную страницу</a>.</p>
     </div>
 <?php endif; ?>

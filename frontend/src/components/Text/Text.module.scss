@@ -9,10 +9,16 @@
   font-size: 18px;
   line-height: 172%;
   margin-top: 60px;
+  transition: opacity 0.3s ease-in-out;
 }
 
 .img {
   cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+}
+
+.img.rotated {
+  transform: rotate(180deg);
 }
 
 .lineBlock {

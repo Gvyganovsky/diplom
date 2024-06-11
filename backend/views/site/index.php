@@ -15,6 +15,7 @@ $this->title = 'Админ панель';
             <?= Html::a('Управление корзиной', ['/basket'], ['class' => 'list-group-item list-group-item-action']) ?>
             <?= Html::a('Управление заказами', ['/order'], ['class' => 'list-group-item list-group-item-action']) ?>
             <?= Html::a('Управление товарами в заказе', ['/order-product'], ['class' => 'list-group-item list-group-item-action']) ?>
+            <?= Html::a('Управление новостями', ['/news/index'], ['class' => 'list-group-item list-group-item-action']) ?>
         </div>
     <?php endif; ?>
 

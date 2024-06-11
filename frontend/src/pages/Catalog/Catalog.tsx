@@ -17,7 +17,7 @@ interface Product {
   category: string;
 }
 
-const Catalog: React.FC = () => {
+const index: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedBrand, setSelectedBrand] = useState("");
@@ -157,4 +157,4 @@ const Catalog: React.FC = () => {
   );
 };
 
-export default Catalog;
+export default index;
