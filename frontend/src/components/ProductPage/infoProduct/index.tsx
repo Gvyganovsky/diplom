@@ -5,6 +5,7 @@ import ImageCatalog from "../ImageCatalog";
 import Breadcrumbs from "../../Breadcrumbs";
 import { FeatureListData } from "../../../Data";
 import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 
 interface Product {
   id: string;
@@ -21,7 +22,15 @@ interface Props {
 const Index = (props: Props) => {
   const { product } = props;
   const navigate = useNavigate();
+  const [addedToCart, setAddedToCart] = useState(false); // Состояние для отслеживания добавления в корзину
 
+  useEffect(() => {
+    if (product && parseInt(product.price, 10) <= 200000 && !addedToCart) {
+      addToBasket(); // Вызываем функцию добавления в корзину
+      navigate("/catalog");
+    }
+  }, [product, addedToCart]); // Зависимость от product и addedToCart
+  
   const addToBasket = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -29,15 +38,15 @@ const Index = (props: Props) => {
         navigate("/auth/signin");
         return;
       }
-
+  
       const requestBody = JSON.stringify({
         token: token,
         product: parseInt(product.id, 10),
         count: 1,
       });
-
+  
       console.log("Тело запроса:", requestBody);
-
+  
       const response = await fetch(
         "https://dp-viganovsky.xn--80ahdri7a.site/api/basket/add",
         {
@@ -49,17 +58,19 @@ const Index = (props: Props) => {
           body: requestBody,
         }
       );
-
+  
       if (!response.ok) {
         console.error("Ошибка HTTP:", response.status, response.statusText);
         alert("Ошибка при добавлении товара в корзину.");
         return;
       }
-
+  
       const data = await response.json();
       console.log(data);
-
+  
       if (data.success) {
+        setAddedToCart(true); // Устанавливаем состояние добавления в корзину в true
+        navigate("/Catalog");
         alert("Товар успешно добавлен в корзину.");
       } else {
         alert("Ошибка при добавлении товара в корзину.");
@@ -68,6 +79,7 @@ const Index = (props: Props) => {
       console.error("Произошла ошибка при выполнении запроса:", error);
     }
   };
+  
 
   if (!product) {
     return <div>Продукт не найден</div>;
