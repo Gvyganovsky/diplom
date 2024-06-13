@@ -147,11 +147,11 @@ export const items = [
 
 export const FeatureListData = [
   { img: "/IconFuel.svg", text: "Бак для распыления 22 л" },
-  { img: "/iconWidth.svg", text: "Ширина захвата 5-8 м" },
+  { img: "/iconWidth.svg", text: `Ширина захвата 5 м` },
   { img: "/RTK.svg", text: "Высокоточное позиционирование" },
   { img: "/iconTree.svg", text: "Датчик высоты и обхода препятствий" },
   { img: "/IP67.svg", text: "Воднепроницаемость" },
-  { img: "/iconDroneone.svg", text: "Скорость полета 10 м/с" },
+  { img: "/iconDroneone.svg", text: `Скорость полета 8 м/с` },
 ];
 
 export const trustData = [

@@ -18,11 +18,11 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'phone')->textInput(['maxlength' => true])->label('Телефон') ?>
 
-    <?= $form->field($model, 'address')->textInput(['maxlength' => true])->label('Адресс') ?>
+    <?= $form->field($model, 'address')->textInput(['maxlength' => true])->label('Адрес') ?>
 
     <?= $form->field($model, 'password')->passwordInput(['maxlength' => true])->label('Пароль') ?>
 
-    <?php if ($model->admin == 1) : ?>
+    <?php if (!yii::$app->user->isGuest && yii::$app->user->identity->admin === 1) : ?>
         <?= $form->field($model, 'admin')->textInput()->label('Админ') ?>
     <?php endif; ?>
 

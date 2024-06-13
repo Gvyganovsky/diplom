@@ -135,7 +135,18 @@ class NewsController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+
+        // Получение пути к файлу фотографии
+        $filePath = Yii::getAlias('@webroot/uploads/news/') . $model->img;
+
+        // Попытка удалить файл фотографии
+        if (file_exists($filePath) && is_file($filePath)) {
+            unlink($filePath);
+        }
+
+        // Удаление записи из базы данных
+        $model->delete();
 
         return $this->redirect(['index']);
     }

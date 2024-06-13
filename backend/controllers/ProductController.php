@@ -83,21 +83,28 @@ class ProductController extends Controller
     public function actionCreate()
     {
         $model = new Product();
-
+    
         if ($this->request->isPost) {
             $model->load($this->request->post());
             $model->imageFiles = UploadedFile::getInstances($model, 'imageFiles');
-            if ($model->upload() && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            
+            if ($model->save()) {
+                if ($model->upload()) {
+                    return $this->redirect(['view', 'id' => $model->id]);
+                } else {
+                    // Handle upload error
+                    Yii::$app->session->setFlash('error', 'Failed to upload files.');
+                }
             }
         } else {
             $model->loadDefaultValues();
         }
-
+    
         return $this->render('create', [
             'model' => $model,
         ]);
     }
+    
 
     /**
      * Updates an existing Product model.
@@ -169,14 +176,39 @@ class ProductController extends Controller
     {
         $model = $this->findModel($id);
         $relatedOrders = \app\models\OrderProduct::find()->where(['product_id' => $id])->exists();
-
+    
         if ($relatedOrders) {
             Yii::$app->session->setFlash('error', 'Cannot delete the product as there are orders related to it.');
             return $this->redirect(['index']);
         }
-
+    
+        // Delete the directory with product images
+        $uploadPath = 'uploads/products/' . $model->id . '/';
+        if (is_dir($uploadPath)) {
+            $this->deleteDirectory($uploadPath);
+        }
+    
         $model->delete();
-
+    
         return $this->redirect(['index']);
     }
+    
+    private function deleteDirectory($dirPath)
+    {
+        if (!is_dir($dirPath)) {
+            return;
+        }
+    
+        $files = glob($dirPath . '*', GLOB_MARK);
+        foreach ($files as $file) {
+            if (is_dir($file)) {
+                $this->deleteDirectory($file);
+            } else {
+                unlink($file);
+            }
+        }
+    
+        rmdir($dirPath);
+    }
+    
 }

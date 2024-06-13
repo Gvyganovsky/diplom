@@ -21,7 +21,7 @@ const ProductDetail = () => {
         setIsLoading(false);
       } catch (error) {
         console.error('Ошибка при получении продукта:', error);
-        setIsLoading(false); 
+        setIsLoading(false);
       }
     };
 
@@ -37,8 +37,19 @@ const ProductDetail = () => {
   }
 
   if (!product) {
-    return <div>Ошибка при загрузке данных</div>;
+    return (
+      <div style={{ margin: "0 auto", display: 'block', height: '80vh' }}>
+        <img
+          src="/basketNull.svg"
+          alt="basketNull"
+          width={320}
+          height={230}
+        />
+        <p>Корзина пуста</p>
+      </div>
+    );
   }
+
 
   return (
     <>

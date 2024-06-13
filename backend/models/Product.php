@@ -54,9 +54,13 @@ class Product extends \yii\db\ActiveRecord
     {
         if (parent::beforeSave($insert)) {
             if (is_array($this->imageFiles) && !empty($this->imageFiles)) {
-                $this->image = json_encode(array_map(function ($file) {
-                    return basename($file);
-                }, $this->imageFiles));
+                // Extract file names
+                $fileNames = [];
+                foreach ($this->imageFiles as $file) {
+                    $fileNames[] = $file->baseName . '.' . $file->extension;
+                }
+                // Save as JSON array of file names
+                $this->image = json_encode($fileNames);
             }
             return true;
         }
@@ -67,16 +71,28 @@ class Product extends \yii\db\ActiveRecord
     {
         if ($this->validate()) {
             $uploadedFiles = [];
+
+            // Assume $id is the ID of the current product instance
+            $uploadPath = 'uploads/products/' . $this->id . '/';
+
+            // Create directory if it doesn't exist
+            if (!is_dir($uploadPath)) {
+                mkdir($uploadPath, 0777, true);
+            }
+
             foreach ($this->imageFiles as $file) {
-                $dir = 'uploads/' . $file->baseName;
-                if (!is_dir($dir)) {
-                    mkdir($dir, 0777, true);
-                }
-                $filePath = $dir . '/' . $file->baseName . '.' . $file->extension;
+                $fileName = $file->baseName . '.' . $file->extension;
+                $filePath = $uploadPath . $fileName;
+
                 if ($file->saveAs($filePath)) {
-                    $uploadedFiles[] = $file->baseName . '.' . $file->extension;
+                    $uploadedFiles[] = $fileName;
+                } else {
+                    // Handle error saving file if needed
+                    return false;
                 }
             }
+
+            // Update imageFiles attribute with uploaded file names
             $this->imageFiles = $uploadedFiles;
             return true;
         } else {

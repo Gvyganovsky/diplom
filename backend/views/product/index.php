@@ -21,7 +21,8 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Создать продукт', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php // echo $this->render('_search', ['model' => $searchModel]); 
+    ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -39,7 +40,31 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'image',
                 'label' => 'Фотографии',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    $output = [];
+
+                    // Ensure $model->image is a string containing valid JSON
+                    if (!empty($model->image)) {
+                        $images = json_decode($model->image, true);
+
+                        // Check if decoding was successful and $images is an array
+                        if (is_array($images)) {
+                            foreach ($images as $image) {
+                                // Ensure $image is a string before using it
+                                if (is_string($image)) {
+                                    $imageUrl = Yii::$app->request->baseUrl . '/' . 'uploads/' . '/' . 'products/' . $model->id . '/' . $image;
+                                    $output[] = Html::img($imageUrl, ['alt' => $image, 'style' => 'max-width:100px']);
+                                }
+                            }
+                        }
+                    }
+
+                    return implode(' ', $output);
+                },
             ],
+
+
             [
                 'attribute' => 'brand',
                 'label' => 'Брэнд',
@@ -64,7 +89,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Product $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
-                 }
+                }
             ],
         ],
     ]); ?>

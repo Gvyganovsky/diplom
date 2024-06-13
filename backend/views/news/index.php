@@ -44,6 +44,11 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'img',
                 'label' => 'Изображение',
+                'format' => 'html',
+                'value' => function ($model) {
+                    $imageUrl = '/backend/api/uploads/news/' . $model->img;
+                    return Html::img($imageUrl, ['width' => '100px']);
+                },
             ],
             [
                 'attribute' => 'created_at',
@@ -57,6 +62,5 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ],
     ]); ?>
-
 
 </div>
