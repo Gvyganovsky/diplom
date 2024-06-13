@@ -246,7 +246,7 @@ const Basket = () => {
                       </p>
                     </div>
                     <p className={style.price}>
-                      ${item.productDetails.price}
+                      {item.productDetails.price}
                     </p>
                     <img
                       src="/iconUrn.svg"

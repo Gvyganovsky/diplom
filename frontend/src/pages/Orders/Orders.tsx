@@ -106,13 +106,13 @@ const Orders: React.FC = () => {
                       height={100} />
                     <h3>{product.productName}</h3>
                     <p>Количество: {product.quantity}</p>
-                    <p>Цена за единицу: ${product.price}</p>
-                    <p>Общая стоимость: ${product.price * product.quantity}</p>
+                    <p>Цена за единицу: {product.price}</p>
+                    <p>Общая стоимость: {product.price * product.quantity}</p>
                   </Link>
                 );
               })}
             </div>
-            <h3 className={style.totalPrice}>Общая стоимость заказа: ${calculateTotalPrice(order.products)}</h3>
+            <h3 className={style.totalPrice}>Общая стоимость заказа: {calculateTotalPrice(order.products)}</h3>
           </div>
         ))
       ) : (
