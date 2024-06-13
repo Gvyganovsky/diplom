@@ -54,19 +54,34 @@ class Product extends \yii\db\ActiveRecord
     {
         if (parent::beforeSave($insert)) {
             if (is_array($this->imageFiles) && !empty($this->imageFiles)) {
-                // Extract file names
                 $fileNames = [];
                 foreach ($this->imageFiles as $file) {
-                    $fileNames[] = $file->baseName . '.' . $file->extension;
+                    // Проверяем, является ли $file строкой (именем файла)
+                    if (is_string($file)) {
+                        $fileNames[] = $file; // Просто добавляем имя файла
+                    } elseif ($file instanceof UploadedFile) {
+                        // Генерируем уникальное имя файла для предотвращения коллизий
+                        $fileName = $file->baseName . '_' . time() . '.' . $file->extension;
+                        // Путь, куда сохранять файл, включая папку с идентификатором продукта
+                        $savePath = 'uploads/products/' . $this->id . '/' . $fileName;
+                        // Создаем папку, если она не существует
+                        if (!file_exists(dirname(Yii::getAlias('@webroot') . '/' . $savePath))) {
+                            mkdir(dirname(Yii::getAlias('@webroot') . '/' . $savePath), 0777, true);
+                        }
+                        // Сохраняем файл
+                        $file->saveAs(Yii::getAlias('@webroot') . '/' . $savePath);
+                        // Добавляем имя файла в массив $fileNames
+                        $fileNames[] = $fileName;
+                    }
                 }
-                // Save as JSON array of file names
+                // Сохраняем массив имен файлов в виде JSON
                 $this->image = json_encode($fileNames);
             }
             return true;
         }
         return false;
     }
-
+    
     public function upload()
     {
         if ($this->validate()) {

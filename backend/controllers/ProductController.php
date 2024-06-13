@@ -83,11 +83,11 @@ class ProductController extends Controller
     public function actionCreate()
     {
         $model = new Product();
-    
+
         if ($this->request->isPost) {
             $model->load($this->request->post());
             $model->imageFiles = UploadedFile::getInstances($model, 'imageFiles');
-            
+
             if ($model->save()) {
                 if ($model->upload()) {
                     return $this->redirect(['view', 'id' => $model->id]);
@@ -99,12 +99,12 @@ class ProductController extends Controller
         } else {
             $model->loadDefaultValues();
         }
-    
+
         return $this->render('create', [
             'model' => $model,
         ]);
     }
-    
+
 
     /**
      * Updates an existing Product model.
@@ -116,24 +116,56 @@ class ProductController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+    
+        // Декодируем JSON в массив, если это необходимо
         $model->imageFiles = json_decode($model->image, true);
-
-        if ($this->request->isPost) {
-            $model->load($this->request->post());
+    
+        if ($model->load(Yii::$app->request->post())) {
+            // Получаем экземпляры загруженных файлов
             $newFiles = UploadedFile::getInstances($model, 'imageFiles');
-            if ($newFiles) {
-                $model->imageFiles = array_merge($model->imageFiles, $newFiles);
+    
+            // Удаляем старые файлы перед сохранением новых
+            $this->deleteOldFiles($model);
+    
+            // Если были загружены новые файлы
+            if ($newFiles !== null) {
+                $fileNames = [];
+                foreach ($newFiles as $file) {
+                    // Делаем что-то с каждым файлом (например, сохраняем его)
+                    $fileName = $file->baseName . '.' . $file->extension;
+                    $file->saveAs('uploads/products/' . $id . '/' . $fileName);
+                    // Сохраняем имя файла для дальнейшего использования
+                    $fileNames[] = $fileName;
+                }
+                // Присваиваем имена файлов модели
+                $model->imageFiles = $fileNames;
             }
-            if ($model->upload() && $model->save()) {
+    
+            // Сохраняем модель
+            if ($model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         }
-
+    
+        // Отображаем форму для редактирования
         return $this->render('update', [
             'model' => $model,
         ]);
     }
-
+    
+    private function deleteOldFiles($model)
+    {
+        $oldFiles = json_decode($model->image, true);
+        if (!empty($oldFiles)) {
+            foreach ($oldFiles as $file) {
+                $filePath = Yii::getAlias('@webroot') . '/uploads/products/' . $model->id . '/' . $file;
+                if (file_exists($filePath)) {
+                    unlink($filePath);
+                }
+            }
+        }
+    }
+    
     /**
      * Finds the Product model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
@@ -176,29 +208,29 @@ class ProductController extends Controller
     {
         $model = $this->findModel($id);
         $relatedOrders = \app\models\OrderProduct::find()->where(['product_id' => $id])->exists();
-    
+
         if ($relatedOrders) {
             Yii::$app->session->setFlash('error', 'Cannot delete the product as there are orders related to it.');
             return $this->redirect(['index']);
         }
-    
+
         // Delete the directory with product images
         $uploadPath = 'uploads/products/' . $model->id . '/';
         if (is_dir($uploadPath)) {
             $this->deleteDirectory($uploadPath);
         }
-    
+
         $model->delete();
-    
+
         return $this->redirect(['index']);
     }
-    
+
     private function deleteDirectory($dirPath)
     {
         if (!is_dir($dirPath)) {
             return;
         }
-    
+
         $files = glob($dirPath . '*', GLOB_MARK);
         foreach ($files as $file) {
             if (is_dir($file)) {
@@ -207,8 +239,7 @@ class ProductController extends Controller
                 unlink($file);
             }
         }
-    
+
         rmdir($dirPath);
     }
-    
 }
