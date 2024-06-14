@@ -71,23 +71,12 @@ class ProductController extends Controller
             $model->imageFiles = UploadedFile::getInstances($model, 'imageFiles');
 
             if ($model->save()) {
-                $directory = Yii::getAlias('@app') . '/api/uploads/products/' . $model->id;
-                if (!file_exists($directory)) {
-                    mkdir($directory, 0777, true);
+                if ($model->upload()) {
+                    return $this->redirect(['view', 'id' => $model->id]);
+                } else {
+                    Yii::$app->session->setFlash('error', 'Failed to upload files. Please check your files and try again.');
+                    return $this->redirect(['create']);
                 }
-
-                foreach ($model->imageFiles as $file) {
-                    $filePath = $directory . '/' . $file->baseName . '.' . $file->extension;
-                    if ($file->saveAs($filePath)) {
-                        Yii::info("File '{$file->name}' uploaded successfully to '{$filePath}'.");
-                    } else {
-                        Yii::error("Failed to save file '{$file->name}': " . $file->error);
-                        Yii::$app->session->setFlash('error', 'Failed to upload files. Please check your file and try again.');
-                        return $this->redirect(['create']);
-                    }
-                }
-
-                return $this->redirect(['view', 'id' => $model->id]);
             } else {
                 Yii::$app->session->setFlash('error', 'Failed to save product.');
             }
@@ -116,10 +105,15 @@ class ProductController extends Controller
                     $existingFiles[] = $file->baseName . '.' . $file->extension;
                 }
 
+                $model->imageFiles = $newFiles;
                 $model->image = json_encode($existingFiles);
             }
 
             if ($model->save()) {
+                if (!empty($newFiles) && !$model->upload()) {
+                    Yii::$app->session->setFlash('error', 'Failed to upload files. Please check your files and try again.');
+                }
+
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         }

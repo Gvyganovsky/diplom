@@ -56,26 +56,30 @@ class Product extends \yii\db\ActiveRecord
         return false;
     }
 
-    public function upload($newFiles)
+    public function upload()
     {
+        if (empty($this->imageFiles)) {
+            return false;
+        }
+
         $uploadedFiles = [];
         $uploadPath = 'uploads/products/' . $this->id . '/';
-    
+
         if (!is_dir($uploadPath)) {
             mkdir($uploadPath, 0777, true);
         }
-    
-        foreach ($newFiles as $file) {
+
+        foreach ($this->imageFiles as $file) {
             $fileName = $file->baseName . '.' . $file->extension;
             $filePath = $uploadPath . $fileName;
-    
+
             if ($file->saveAs($filePath)) {
                 $uploadedFiles[] = $fileName;
             } else {
                 return false;
             }
         }
-    
+
         $this->image = json_encode($uploadedFiles);
         return true;
     }
