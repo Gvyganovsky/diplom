@@ -25,8 +25,8 @@ const ImageCatalog: React.FC<ImageCatalogProps> = ({ id, images }) => {
                 <img
                     src={`/backend/api/uploads/products/${id}/${selectedImage}`}
                     alt="Product"
-                    width={630}
-                    height={370}
+                    width={600}
+                    height={340}
                     className={style.heroImage}
                 />
             )}
@@ -36,8 +36,8 @@ const ImageCatalog: React.FC<ImageCatalogProps> = ({ id, images }) => {
                         <img
                             src={`/backend/api/uploads/products/${id}/${imageUrl}`}
                             alt="Product"
-                            width={200}
-                            height={160}
+                            width={180}
+                            height={150}
                             className={style.image}
                         />
                     </li>
