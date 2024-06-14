@@ -93,24 +93,10 @@ class ProductController extends Controller
 
         if ($this->request->isPost) {
             $model->load($this->request->post());
-            $newFiles = UploadedFile::getInstances($model, 'imageFiles');
-
-            if (!empty($newFiles)) {
-                $existingFiles = json_decode($model->image, true);
-                if (!is_array($existingFiles)) {
-                    $existingFiles = [];
-                }
-
-                foreach ($newFiles as $file) {
-                    $existingFiles[] = $file->baseName . '.' . $file->extension;
-                }
-
-                $model->imageFiles = $newFiles;
-                $model->image = json_encode($existingFiles);
-            }
+            $model->imageFiles = UploadedFile::getInstances($model, 'imageFiles');
 
             if ($model->save()) {
-                if (!empty($newFiles) && !$model->upload()) {
+                if (!empty($model->imageFiles) && !$model->upload()) {
                     Yii::$app->session->setFlash('error', 'Failed to upload files. Please check your files and try again.');
                 }
 

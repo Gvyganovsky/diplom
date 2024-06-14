@@ -69,6 +69,9 @@ class Product extends \yii\db\ActiveRecord
             mkdir($uploadPath, 0777, true);
         }
 
+        // Удаляем старые фотографии перед загрузкой новых
+        $this->deleteOldImages($uploadPath);
+
         foreach ($this->imageFiles as $file) {
             $fileName = $file->baseName . '.' . $file->extension;
             $filePath = $uploadPath . $fileName;
@@ -82,5 +85,17 @@ class Product extends \yii\db\ActiveRecord
 
         $this->image = json_encode($uploadedFiles);
         return true;
+    }
+
+    private function deleteOldImages($uploadPath)
+    {
+        if (is_dir($uploadPath)) {
+            $files = glob($uploadPath . '*', GLOB_MARK);
+            foreach ($files as $file) {
+                if (!is_dir($file)) {
+                    unlink($file);
+                }
+            }
+        }
     }
 }
