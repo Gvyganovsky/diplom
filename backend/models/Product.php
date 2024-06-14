@@ -9,17 +9,11 @@ class Product extends \yii\db\ActiveRecord
 {
     public $imageFiles;
 
-    /**
-     * {@inheritdoc}
-     */
     public static function tableName()
     {
         return 'product';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function rules()
     {
         return [
@@ -31,9 +25,6 @@ class Product extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function attributeLabels()
     {
         return [
@@ -54,12 +45,10 @@ class Product extends \yii\db\ActiveRecord
     {
         if (parent::beforeSave($insert)) {
             if (is_array($this->imageFiles) && !empty($this->imageFiles)) {
-                // Extract file names
                 $fileNames = [];
                 foreach ($this->imageFiles as $file) {
                     $fileNames[] = $file->baseName . '.' . $file->extension;
                 }
-                // Save as JSON array of file names
                 $this->image = json_encode($fileNames);
             }
             return true;
@@ -67,36 +56,27 @@ class Product extends \yii\db\ActiveRecord
         return false;
     }
 
-    public function upload()
+    public function upload($newFiles)
     {
-        if ($this->validate()) {
-            $uploadedFiles = [];
-
-            // Assume $id is the ID of the current product instance
-            $uploadPath = 'uploads/products/' . $this->id . '/';
-
-            // Create directory if it doesn't exist
-            if (!is_dir($uploadPath)) {
-                mkdir($uploadPath, 0777, true);
-            }
-
-            foreach ($this->imageFiles as $file) {
-                $fileName = $file->baseName . '.' . $file->extension;
-                $filePath = $uploadPath . $fileName;
-
-                if ($file->saveAs($filePath)) {
-                    $uploadedFiles[] = $fileName;
-                } else {
-                    // Handle error saving file if needed
-                    return false;
-                }
-            }
-
-            // Update imageFiles attribute with uploaded file names
-            $this->imageFiles = $uploadedFiles;
-            return true;
-        } else {
-            return false;
+        $uploadedFiles = [];
+        $uploadPath = 'uploads/products/' . $this->id . '/';
+    
+        if (!is_dir($uploadPath)) {
+            mkdir($uploadPath, 0777, true);
         }
+    
+        foreach ($newFiles as $file) {
+            $fileName = $file->baseName . '.' . $file->extension;
+            $filePath = $uploadPath . $fileName;
+    
+            if ($file->saveAs($filePath)) {
+                $uploadedFiles[] = $fileName;
+            } else {
+                return false;
+            }
+        }
+    
+        $this->image = json_encode($uploadedFiles);
+        return true;
     }
 }

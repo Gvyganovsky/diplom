@@ -28,9 +28,6 @@ class ProductController extends Controller
         return true;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function behaviors()
     {
         return array_merge(
@@ -46,11 +43,6 @@ class ProductController extends Controller
         );
     }
 
-    /**
-     * Lists all Product models.
-     *
-     * @return string
-     */
     public function actionIndex()
     {
         $searchModel = new ProductSearch();
@@ -62,12 +54,6 @@ class ProductController extends Controller
         ]);
     }
 
-    /**
-     * Displays a single Product model.
-     * @param int $id ID
-     * @return string
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     public function actionView($id)
     {
         return $this->render('view', [
@@ -75,56 +61,65 @@ class ProductController extends Controller
         ]);
     }
 
-    /**
-     * Creates a new Product model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return string|\yii\web\Response
-     */
     public function actionCreate()
     {
         $model = new Product();
-    
+
         if ($this->request->isPost) {
             $model->load($this->request->post());
+
             $model->imageFiles = UploadedFile::getInstances($model, 'imageFiles');
-            
+
             if ($model->save()) {
-                if ($model->upload()) {
-                    return $this->redirect(['view', 'id' => $model->id]);
-                } else {
-                    // Handle upload error
-                    Yii::$app->session->setFlash('error', 'Failed to upload files.');
+                $directory = Yii::getAlias('@app') . '/api/uploads/products/' . $model->id;
+                if (!file_exists($directory)) {
+                    mkdir($directory, 0777, true);
                 }
+
+                foreach ($model->imageFiles as $file) {
+                    $filePath = $directory . '/' . $file->baseName . '.' . $file->extension;
+                    if ($file->saveAs($filePath)) {
+                        Yii::info("File '{$file->name}' uploaded successfully to '{$filePath}'.");
+                    } else {
+                        Yii::error("Failed to save file '{$file->name}': " . $file->error);
+                        Yii::$app->session->setFlash('error', 'Failed to upload files. Please check your file and try again.');
+                        return $this->redirect(['create']);
+                    }
+                }
+
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                Yii::$app->session->setFlash('error', 'Failed to save product.');
             }
-        } else {
-            $model->loadDefaultValues();
         }
-    
+
         return $this->render('create', [
             'model' => $model,
         ]);
     }
-    
 
-    /**
-     * Updates an existing Product model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $id ID
-     * @return string|\yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $model->imageFiles = json_decode($model->image, true);
 
         if ($this->request->isPost) {
             $model->load($this->request->post());
             $newFiles = UploadedFile::getInstances($model, 'imageFiles');
-            if ($newFiles) {
-                $model->imageFiles = array_merge($model->imageFiles, $newFiles);
+
+            if (!empty($newFiles)) {
+                $existingFiles = json_decode($model->image, true);
+                if (!is_array($existingFiles)) {
+                    $existingFiles = [];
+                }
+
+                foreach ($newFiles as $file) {
+                    $existingFiles[] = $file->baseName . '.' . $file->extension;
+                }
+
+                $model->image = json_encode($existingFiles);
             }
-            if ($model->upload() && $model->save()) {
+
+            if ($model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         }
@@ -134,13 +129,6 @@ class ProductController extends Controller
         ]);
     }
 
-    /**
-     * Finds the Product model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $id ID
-     * @return Product the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     protected function findModel($id)
     {
         if (($model = Product::findOne(['id' => $id])) !== null) {
@@ -176,29 +164,28 @@ class ProductController extends Controller
     {
         $model = $this->findModel($id);
         $relatedOrders = \app\models\OrderProduct::find()->where(['product_id' => $id])->exists();
-    
+
         if ($relatedOrders) {
             Yii::$app->session->setFlash('error', 'Cannot delete the product as there are orders related to it.');
             return $this->redirect(['index']);
         }
-    
-        // Delete the directory with product images
+
         $uploadPath = 'uploads/products/' . $model->id . '/';
         if (is_dir($uploadPath)) {
             $this->deleteDirectory($uploadPath);
         }
-    
+
         $model->delete();
-    
+
         return $this->redirect(['index']);
     }
-    
+
     private function deleteDirectory($dirPath)
     {
         if (!is_dir($dirPath)) {
             return;
         }
-    
+
         $files = glob($dirPath . '*', GLOB_MARK);
         foreach ($files as $file) {
             if (is_dir($file)) {
@@ -207,8 +194,7 @@ class ProductController extends Controller
                 unlink($file);
             }
         }
-    
+
         rmdir($dirPath);
     }
-    
 }
